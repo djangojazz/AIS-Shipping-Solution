@@ -60,11 +60,13 @@
     <Folder Include="Tables" />
     <Folder Include="Inserts" />
     <Folder Include="Procedures" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
     <Build Include="Tables\Orders.sql" />
-    <Build Include="Procedures\GetOrdersByPersonId.sql" />
+    <Build Include="Procedures\pGetOrdersByPersonId.sql" />
+    <Build Include="Views\vPersonOrders.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

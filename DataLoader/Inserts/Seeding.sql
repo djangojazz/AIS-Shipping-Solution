@@ -17,6 +17,10 @@ DBCC CHECKIDENT ('dbo.Person', RESEED, 0);
 GO
 
 --INSERTS
-INSERT INTO dbo.Person (FirstName, LastName) VALUES ('Brett', 'Morin'),('Emily', 'Morin');
-INSERT INTO dbo.[Order] ( PersonId, [Description]) VALUES (1, 'Shirt'),(1, 'Pants'),(1, 'Shoes'),(2, 'Dress'),(2, 'Shoes');
+SET IDENTITY_INSERT dbo.Person ON;
+INSERT INTO dbo.Person (PersonId, FirstName, LastName) VALUES (1, 'Brett', 'Morin'),(2, 'Emily', 'Morin');
+SET IDENTITY_INSERT dbo.Person OFF;
+SET IDENTITY_INSERT dbo.Orders ON;
+INSERT INTO dbo.Orders ( OrderId, PersonId, [Description]) VALUES (1, 1, 'Shirt'),(2, 1, 'Pants'),(3, 1, 'Shoes'),(4, 2, 'Dress'),(5, 2, 'Shoes');
+SET IDENTITY_INSERT dbo.Orders OFF;
 GO
