@@ -67,6 +67,7 @@
     <Build Include="Tables\Orders.sql" />
     <Build Include="Procedures\pGetOrdersByPersonId.sql" />
     <Build Include="Views\vPersonOrders.sql" />
+    <Build Include="Tables\ShipDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

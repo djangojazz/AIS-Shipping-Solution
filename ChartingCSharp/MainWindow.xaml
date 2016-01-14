@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
     <ListBox Background="Black">
-      <TextBox Text="{Binding Text}" Height="50" Width="100" />
+      <TextBox Text="{Binding Text}" Height="50" Width="200" />
     </ListBox>
   </Grid>
 </Window>
