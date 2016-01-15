@@ -1,59 +1,96 @@
 ﻿namespace ChartingCSharp.ViewModels
 {
-  using DataAccessCSharp;
-  using System.Data.SqlClient;
-  using System.Configuration;
-  using System.Data;
-  public class MainWindowViewModel
+  using System;
+  using System.ComponentModel;
+  using System.Threading.Tasks;
+  using System.Timers;
+  using System.Windows.Input;
+
+  public class MainWindowViewModel : INotifyPropertyChanged
   {
-    public string Text { get; set; }
+    private string _address;
+    private string _locationName;
+    private string _locationAddress;
+    private string _latitude;
+    private string _longitude;
+
+    #region Public Properties
+    public string Address
+    {
+      get { return _address; }
+      set
+      {
+        _address = value;
+        OnPropertyChanged("Address");
+      }
+    }
+    public string LocationName
+    {
+      get { return _locationName; }
+      set
+      {
+        _locationName = value;
+        OnPropertyChanged("LocationName");
+      }
+    }
+
+    public string LocationAddress
+    {
+      get { return _locationAddress; }
+      set
+      {
+        _locationAddress = value;
+        OnPropertyChanged("LocationAddress");
+      }
+    }
+
+    public string Latitude
+    {
+      get { return _latitude; }
+      set
+      {
+        _latitude = value;
+        OnPropertyChanged("Latitude");
+      }
+    }
+
+    public string Longitude
+    {
+      get { return _longitude; }
+      set
+      {
+        _longitude = value;
+        OnPropertyChanged("Longitude");
+      }
+    }
+    #endregion
+
+    public ICommand GeocodeAddressCommand { get; private set; }
 
     public MainWindowViewModel()
     {
-      Text = "Hello There";
-      GetData();
+      Address = "7560 SW Lara St., Portland OR";
+      TimerSetupWithRefresh(5000);
+      LocationName = "Here I am";
     }
 
-    private void GetData()
+    private void TimerSetupWithRefresh(int refreshDuration)
     {
-      var testerData = new TesterData();
+      Timer timer = new Timer(refreshDuration);
+      timer.Elapsed += async (sender, e) => await RefreshShips();
+      timer.Enabled = true;
+    }
 
-      string query = "Select top 10 * from dbo.Person";
-      string proc = "EXEC pGetOrdersByPersonId 1";
-      var connection = ConfigurationManager.ConnectionStrings["LocalDB"].ConnectionString;
-
-      var sqlTalker = new SQLTalker(".", "Tester");
-        //.Procer(proc, true);
-        //.Reader(query, ',', '"', true);
-
-      var thing = "Hello";
-
-      //using (SqlConnection sqlConn = new SqlConnection(connection))
-      //using (SqlCommand cmd = new SqlCommand(query, sqlConn))
-      //using (SqlDataAdapter adapter = new SqlDataAdapter())
-      //using (DataTable table = new DataTable())
-      //{
-      //  sqlConn.Open();
-      //  adapter.SelectCommand = cmd;
-      //  adapter.Fill(table);
-      //  sqlConn.Close();
-      //  var thing = table;
-      //  //int count = (int)cmd.ExecuteScalar();
-      //  //Text = count.ToString();
-
-        
-      //}
-
-      //var tables = testerData.Tables;
-      //var view = testerData.vPersonOrders;
-
-      //var rdr = testerData.vPersonOrders.CreateDataReader();
-      //while(rdr.Read())
-      //{
-      //  Text = rdr["FirstName"].ToString();
-      //}
-
-
+    private async Task RefreshShips()
+    {
+      LocationName = "Now it is: " + DateTime.Now;
+    }
+    
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+      if (PropertyChanged != null)
+        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }
