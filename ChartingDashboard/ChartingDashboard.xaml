@@ -1,17 +1,16 @@
-﻿<Window x:Class="ChartingCSharp.MainWindow"
+﻿<Window x:Class="ChartingDashboard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChartingCSharp"
+        xmlns:local="clr-namespace:ChartingDashboard"
         xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-        xmlns:business="clr-namespace:ChartingCSharp.Business"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="350" Width="525">
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
       <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" />
-      <!--MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>--> 
+      <!--MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>-->
     </DataTemplate>
   </Window.Resources>
   <Grid Background="{StaticResource brushMainBoard}">
@@ -23,17 +22,18 @@
     <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0" >
       <TextBox x:Name="txtAddress" MinWidth="250" Text="{Binding Address}" />
       <Button Content="Map It" IsDefault="True" Command="{Binding GeocodeAddressCommand}"/>
+      <TextBox x:Name="txtAddressResult" MinWidth="250" Text="{Binding LocationAddress, UpdateSourceTrigger=PropertyChanged}" />
     </StackPanel>
-    <bing:Map x:Name="map" Grid.Row="1" CredentialsProvider="{StaticResource BingCredentials}" Center="45.48,-122.75" ZoomLevel="13" AnimationLevel="Full" Margin="10" >
+    <!--<bing:Map x:Name="map" Grid.Row="1" CredentialsProvider="{StaticResource BingCredentials}" Center="45.48,-122.75" ZoomLevel="13" AnimationLevel="Full" Margin="10" >
       <bing:MapItemsControl ItemsSource="{Binding Ships}" ItemTemplate="{StaticResource ShipTemplate}" />
-      <!--<bing:MapLayer x:Name="ContentPopupLayer">
+      --><!--<bing:MapLayer x:Name="ContentPopupLayer">
         <Grid x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
           <TextBlock x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" Text="Hello!" />
         </Grid>
-      </bing:MapLayer>-->
-    </bing:Map>
+      </bing:MapLayer>--><!--
+    </bing:Map>-->
 
-    <Grid Grid.Row="2" x:Name="gridMainFooter">
+    <!--<Grid Grid.Row="2" x:Name="gridMainFooter" Height="50">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="*"/>
@@ -41,9 +41,9 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
-      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding LocationAddress}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
+      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding LocationAddress}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
       <Label Grid.Column="2" x:Name="lblLat" Content="{Binding Latitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
       <Label Grid.Column="4" x:Name="lblLong" Content="{Binding Longitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
-    </Grid>
+    </Grid>-->
   </Grid>
 </Window>

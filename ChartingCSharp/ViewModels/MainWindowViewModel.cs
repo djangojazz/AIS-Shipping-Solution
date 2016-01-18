@@ -126,7 +126,7 @@
         Latitude = GeocodeResult.Locations[0].Latitude;
         Longitude = GeocodeResult.Locations[0].Longitude;
         Location = new Location(Latitude, Longitude);
-        //PinVisible = Visibility.Hidden;
+        PinVisible = Visibility.Visible;
       }
     }
 
@@ -135,8 +135,6 @@
       Pushpin pin = new Pushpin();
       pin.Location = GeocodeResult.Locations.Select(x => new Location(x.Latitude, x.Longitude)).FirstOrDefault();
       pin.ToolTip = Address;
-      
-
     }
   }
 }
