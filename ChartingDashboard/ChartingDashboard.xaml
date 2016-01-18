@@ -9,31 +9,30 @@
         Title="MainWindow" Height="350" Width="525">
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
-      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" />
-      <!--MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>-->
+      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>
     </DataTemplate>
   </Window.Resources>
   <Grid Background="{StaticResource brushMainBoard}">
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
+      <!--<RowDefinition Height="Auto"/>-->
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0" >
+    <!--<StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0" >
       <TextBox x:Name="txtAddress" MinWidth="250" Text="{Binding Address}" />
       <Button Content="Map It" IsDefault="True" Command="{Binding GeocodeAddressCommand}"/>
-      <TextBox x:Name="txtAddressResult" MinWidth="250" Text="{Binding LocationAddress, UpdateSourceTrigger=PropertyChanged}" />
-    </StackPanel>
-    <!--<bing:Map x:Name="map" Grid.Row="1" CredentialsProvider="{StaticResource BingCredentials}" Center="45.48,-122.75" ZoomLevel="13" AnimationLevel="Full" Margin="10" >
+    </StackPanel>-->
+    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="45.48,-122.75" ZoomLevel="13" AnimationLevel="Full" Margin="10" >
       <bing:MapItemsControl ItemsSource="{Binding Ships}" ItemTemplate="{StaticResource ShipTemplate}" />
-      --><!--<bing:MapLayer x:Name="ContentPopupLayer">
+      <bing:MapLayer x:Name="ContentPopupLayer">
         <Grid x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
-          <TextBlock x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" Text="Hello!" />
+          <TextBlock x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" />
+          <TextBlock x:Name="ContentPopupDescription"  FontSize="12" />
         </Grid>
-      </bing:MapLayer>--><!--
-    </bing:Map>-->
+      </bing:MapLayer>
+    </bing:Map>
 
-    <!--<Grid Grid.Row="2" x:Name="gridMainFooter" Height="50">
+    <Grid Grid.Row="1" x:Name="gridMainFooter">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="*"/>
@@ -41,9 +40,9 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
-      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding LocationAddress}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
+      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding LocationAddress}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
       <Label Grid.Column="2" x:Name="lblLat" Content="{Binding Latitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
       <Label Grid.Column="4" x:Name="lblLong" Content="{Binding Longitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
-    </Grid>-->
+    </Grid>
   </Grid>
 </Window>
