@@ -76,6 +76,7 @@
     </ApplicationDefinition>
     <Compile Include="Business\DelegateCommand.vb" />
     <Compile Include="Business\ShipsService.vb" />
+    <Compile Include="Models\ShipModel.vb" />
     <Compile Include="Service References\GeocodeService\Reference.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,7 +117,7 @@
     <Import Include="System.Windows.Navigation" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Ship.vb" />
+    <Compile Include="Models\ShipDb.vb" />
     <Compile Include="My Project\AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>

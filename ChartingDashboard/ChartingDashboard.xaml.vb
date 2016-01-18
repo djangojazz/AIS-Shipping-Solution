@@ -13,10 +13,10 @@ Class ChartingDashboard
     MapLayer.SetPosition(ContentPopup, MapLayer.GetPosition(pin))
     MapLayer.SetPositionOffset(ContentPopup, New Point(20, -15))
 
-    Dim location = DirectCast(pin.Tag, Ship)
+    Dim location = DirectCast(pin.Tag, ShipModel)
 
     ContentPopupText.Text = location.ShipName
-    ContentPopupDescription.Text = $"MMSI: {location.MMSI} Lat: {location.Latitude} Long: {location.Longitude}"
+    ContentPopupDescription.Text = $"MMSI: {location.MMSI} Lat: {location.Location.Latitude} Long: {location.Location.Longitude}"
     ContentPopup.Visibility = Visibility.Visible
   End Sub
 

@@ -136,12 +136,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessCSharp\DataAccessCSharp.csproj">
-      <Project>{1421c557-c82b-4cac-80bd-4ea3518eb0ec}</Project>
-      <Name>DataAccessCSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
