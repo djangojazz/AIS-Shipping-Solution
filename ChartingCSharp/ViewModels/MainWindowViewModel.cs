@@ -1,20 +1,43 @@
 ﻿namespace ChartingCSharp.ViewModels
 {
   using System;
-  using System.ComponentModel;
   using System.Threading.Tasks;
   using System.Timers;
   using System.Windows.Input;
-
-  public class MainWindowViewModel : INotifyPropertyChanged
+  using Business;
+  using Microsoft.Maps.MapControl.WPF;
+  using System.Linq;
+  using System.Windows;
+  public class MainWindowViewModel : BaseViewModel
   {
+    private Visibility _pinVisible;
     private string _address;
-    private string _locationName;
     private string _locationAddress;
-    private string _latitude;
-    private string _longitude;
+    private double _latitude;
+    private double _longitude;
+    private GeocodeService.GeocodeResult _geocodeResult;
+    private Location _location;
 
     #region Public Properties
+    public Location Location
+    {
+      get { return _location; }
+      set
+      {
+        _location = value;
+      }
+    }
+
+    public Visibility PinVisible
+    {
+      get { return _pinVisible; }
+      set
+      {
+        _pinVisible = value;
+        OnPropertyChanged("PinHidden");
+      }
+    }
+    
     public string Address
     {
       get { return _address; }
@@ -22,15 +45,6 @@
       {
         _address = value;
         OnPropertyChanged("Address");
-      }
-    }
-    public string LocationName
-    {
-      get { return _locationName; }
-      set
-      {
-        _locationName = value;
-        OnPropertyChanged("LocationName");
       }
     }
 
@@ -44,7 +58,7 @@
       }
     }
 
-    public string Latitude
+    public double Latitude
     {
       get { return _latitude; }
       set
@@ -54,7 +68,7 @@
       }
     }
 
-    public string Longitude
+    public double Longitude
     {
       get { return _longitude; }
       set
@@ -63,15 +77,28 @@
         OnPropertyChanged("Longitude");
       }
     }
+
+    public GeocodeService.GeocodeResult GeocodeResult
+    {
+      get { return _geocodeResult; }
+      set
+      {
+        _geocodeResult = value;
+        OnPropertyChanged("GeocodeResult");
+      }
+    }
     #endregion
 
+    
     public ICommand GeocodeAddressCommand { get; private set; }
 
     public MainWindowViewModel()
     {
+      //PinVisible = Visibility.Hidden;
       Address = "7560 SW Lara St., Portland OR";
-      TimerSetupWithRefresh(5000);
-      LocationName = "Here I am";
+      //TimerSetupWithRefresh(5000);
+      GeocodeAddressCommand = new DelegateCommand<string>(GeocodeAddress);
+      //AddMapLayer();
     }
 
     private void TimerSetupWithRefresh(int refreshDuration)
@@ -83,14 +110,33 @@
 
     private async Task RefreshShips()
     {
-      LocationName = "Now it is: " + DateTime.Now;
+      LocationAddress = "Now it is: " + DateTime.Now;
     }
-    
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
+
+    private void GeocodeAddress(string input)
     {
-      if (PropertyChanged != null)
-        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      using (GeocodeService.GeocodeServiceClient client = new GeocodeService.GeocodeServiceClient("CustomBinding_IGeocodeService"))
+      {
+        GeocodeService.GeocodeRequest request = new GeocodeService.GeocodeRequest();
+        request.Credentials = new Credentials() { ApplicationId = (App.Current.Resources["BingCredentials"] as ApplicationIdCredentialsProvider).ApplicationId };
+        request.Query = Address;
+        GeocodeResult = client.Geocode(request).Results[0];
+
+        LocationAddress = GeocodeResult.Address.FormattedAddress;
+        Latitude = GeocodeResult.Locations[0].Latitude;
+        Longitude = GeocodeResult.Locations[0].Longitude;
+        Location = new Location(Latitude, Longitude);
+        //PinVisible = Visibility.Hidden;
+      }
+    }
+
+    private void AddMapLayer()
+    {
+      Pushpin pin = new Pushpin();
+      pin.Location = GeocodeResult.Locations.Select(x => new Location(x.Latitude, x.Longitude)).FirstOrDefault();
+      pin.ToolTip = Address;
+      
+
     }
   }
 }
