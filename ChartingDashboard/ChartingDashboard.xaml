@@ -17,11 +17,8 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <!--<StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0" >
-      <TextBox x:Name="txtAddress" MinWidth="250" Text="{Binding Address}" />
-      <Button Content="Map It" IsDefault="True" Command="{Binding GeocodeAddressCommand}"/>
-    </StackPanel>-->
-    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10" >
+    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="{Binding MapCore.Center}" ZoomLevel="5" AnimationLevel="Full" Margin="10" >
+              <!--Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10" >-->
       <bing:MapItemsControl ItemsSource="{Binding ShipLocations}" ItemTemplate="{StaticResource ShipTemplate}" />
       <bing:MapLayer x:Name="ContentPopupLayer">
         <StackPanel x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
@@ -30,7 +27,6 @@
         </StackPanel>
       </bing:MapLayer>
     </bing:Map>
-
     <Grid Grid.Row="1" x:Name="gridMainFooter">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto"/>

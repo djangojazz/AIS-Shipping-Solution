@@ -13,7 +13,7 @@ Public Class ShipsService
 
   End Function
 
-  Public Function GeocodeAddress(input As String) As GeocodeService.GeocodeResult
+  Public Async Function GeocodeAddress(input As String) As Task(Of GeocodeService.GeocodeResult)
     Using client As New GeocodeService.GeocodeServiceClient("CustomBinding_IGeocodeService")
       Dim request As New GeocodeService.GeocodeRequest()
       request.Credentials = New Credentials() With {
