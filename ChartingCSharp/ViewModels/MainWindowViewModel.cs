@@ -96,7 +96,7 @@
     {
       //PinVisible = Visibility.Hidden;
       Address = "7560 SW Lara St., Portland OR";
-      //TimerSetupWithRefresh(5000);
+      TimerSetupWithRefresh(2000);
       GeocodeAddressCommand = new DelegateCommand<string>(GeocodeAddress);
       //AddMapLayer();
     }

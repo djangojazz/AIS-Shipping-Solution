@@ -3,7 +3,7 @@ Imports Microsoft.Maps.MapControl.WPF
 
 Public Class ShipsService
   Public Async Function LoadShipLocations() As Task(Of IList(Of ShipModel))
-    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pGetAllShips"))
+    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pShipsMockService 's', 100000"))
     Return dBships.Select(Function(x) New ShipModel With
                           {
                           .MMSI = x.MMSI,

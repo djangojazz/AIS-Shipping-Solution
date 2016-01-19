@@ -14,7 +14,7 @@ Public Class ChartingDashboardViewModel
     End Get
     Set
       _shipLocations = Value
-      OnPropertyChanged("ShipLocations")
+      OnPropertyChanged(NameOf(ShipLocations))
     End Set
   End Property
 
@@ -25,34 +25,23 @@ Public Class ChartingDashboardViewModel
     End Get
     Set(ByVal value As String)
       _locationAddress = value
-      OnPropertyChanged("LocationAddress")
-    End Set
-  End Property
-
-
-  Public Property Center As Location
-
-    Get
-      Return _center
-    End Get
-    Set(ByVal value As Location)
-      _center = value
-      OnPropertyChanged("Center")
+      OnPropertyChanged(NameOf(LocationAddress))
     End Set
   End Property
 
   Public Sub New()
-    Center = New Location With {.Latitude = -128, .Longitude = 48}
-    'New MapCore With {.Center = New Location With {.Latitude = -123, .Longitude = 48}}
+    RefreshShips()
     ShipRefreshFrequency(3000)
   End Sub
 
   Private Async Sub ShipRefreshFrequency(refreshDuration As Integer)
     Dim timer As New Timer(refreshDuration)
-    LocationAddress = "Test" + DateTime.Now
-    'ShipLocations = New ObservableCollection(Of ShipModel)(Await New ShipsService().LoadShipLocations())
+    AddHandler timer.Elapsed, AddressOf RefreshShips
     timer.Enabled = True
-
   End Sub
+
+  Private Async Function RefreshShips() As Task
+    ShipLocations = New ObservableCollection(Of ShipModel)(Await New ShipsService().LoadShipLocations())
+  End Function
 
 End Class
