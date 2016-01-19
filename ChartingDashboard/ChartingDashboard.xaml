@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChartingDashboard"
         xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:core="clr-namespace:ChartingDashboard"
         mc:Ignorable="d"
-        Title="Charting is fun times" Height="350" Width="525">
+        Title="Charting is fun times" 
+        Height="{local:SettingBinding Height}" 
+        Width="{local:SettingBinding Width}"
+        >
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
       <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>
@@ -17,10 +21,9 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10" >
-              <!--Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10" >-->
+    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10">
       <bing:MapItemsControl ItemsSource="{Binding ShipLocations}" ItemTemplate="{StaticResource ShipTemplate}" />
-      <bing:MapLayer x:Name="ContentPopupLayer">
+      <bing:MapLayer x:Name="ContentPopupLayer" >
         <StackPanel x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
           <TextBlock Grid.Row="0" x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" />
           <TextBlock Grid.Row="1" x:Name="ContentPopupDescription"  FontSize="12" />

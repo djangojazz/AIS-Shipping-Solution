@@ -1,6 +1,5 @@
 ﻿Class Application
-
-  ' Application-level events, such as Startup, Exit, and DispatcherUnhandledException
-  ' can be handled in this file.
-
+  Public Sub Application_Exit(sender As Object, e As ExitEventArgs)
+    MySettings.Default.Save()
+  End Sub
 End Class

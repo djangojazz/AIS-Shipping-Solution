@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:ChartingDashboard"
     xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-    StartupUri="ChartingDashboard.xaml">
+    StartupUri="ChartingDashboard.xaml" Exit="Application_Exit">
   <Application.Resources>
     <bing:ApplicationIdCredentialsProvider x:Key="BingCredentials" ApplicationId="4wwABwPqJTIzweS04zqN~Il7hqTmhmXUplRUI47C2UA~AuSnma8mpsiLLyo_IExmgJ9dSs4YN5rYzyPA7tbrnFeNLLLEopgviL2b9oZpFHUu" />
     <LinearGradientBrush x:Key="brushMainBoard" EndPoint="0.5,0" StartPoint="0.5,1">

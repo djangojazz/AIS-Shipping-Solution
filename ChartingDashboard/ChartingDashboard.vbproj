@@ -48,6 +48,13 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
@@ -75,6 +82,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Business\DelegateCommand.vb" />
+    <Compile Include="Business\MapInteractivity.vb" />
+    <Compile Include="Business\SettingBindingExtension.vb" />
     <Compile Include="Business\ShipsService.vb" />
     <Compile Include="Models\ShipModel.vb" />
     <Compile Include="Service References\GeocodeService\Reference.vb">
@@ -140,6 +149,7 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -152,18 +162,38 @@
     <None Include="Service References\GeocodeService\ChartingDashboard.GeocodeService.GeocodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\GeocodeService\ChartingDashboard.GeocodeService.MajorRoutesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GeocodeService\ChartingDashboard.GeocodeService.RouteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\GeocodeService\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\common1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\GeocodeService\contracts.wsdl" />
     <None Include="Service References\GeocodeService\contracts.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\GeocodeService\contracts1.wsdl" />
+    <None Include="Service References\GeocodeService\contracts1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\GeocodeService\geocode.wsdl" />
     <None Include="Service References\GeocodeService\geocode.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\GeocodeService\route.wsdl" />
+    <None Include="Service References\GeocodeService\route.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\GeocodeService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
