@@ -4,30 +4,35 @@ Imports System.Linq
 Imports System.Windows
 
 Public Class MapInteractivity
+  Inherits BaseViewModel
+
+  Sub New()
+    ErrorMessage = "Bad"
+  End Sub
+
 #Region "GeocodeResult"
+  Public Shared ReadOnly GeocodeResultProperty As DependencyProperty = DependencyProperty.RegisterAttached("GeocodeResult",
+    GetType(GeocodeService.GeocodeResult),
+    GetType(MapInteractivity),
+    New UIPropertyMetadata(Nothing, AddressOf OnGeocodeResultChanged))
 
-  'Public Shared ReadOnly GeocodeResultProperty As DependencyProperty = DependencyProperty.RegisterAttached("GeocodeResult",
-  '  GetType(GeocodeService.GeocodeResult),
-  '  GetType(MapInteractivity),
-  '  New UIPropertyMetadata(Nothing, AddressOf OnGeocodeResultChanged))
+  Public Shared Function GetGeocodeResult(target As Map) As GeocodeService.GeocodeResult
+    Return DirectCast(target.GetValue(GeocodeResultProperty), GeocodeService.GeocodeResult)
+  End Function
 
-  'Public Shared Function GetGeocodeResult(target As Map) As GeocodeService.GeocodeResult
-  '  Return DirectCast(target.GetValue(GeocodeResultProperty), GeocodeService.GeocodeResult)
-  'End Function
+  Public Shared Sub SetGeocodeResult(target As Map, value As GeocodeService.GeocodeResult)
+    target.SetValue(GeocodeResultProperty, value)
+  End Sub
 
-  'Public Shared Sub SetGeocodeResult(target As Map, value As GeocodeService.GeocodeResult)
-  '  target.SetValue(GeocodeResultProperty, value)
-  'End Sub
+  Private Shared Sub OnGeocodeResultChanged(o As DependencyObject, e As DependencyPropertyChangedEventArgs)
+    OnGeocodeResultChanged(DirectCast(o, Map), DirectCast(e.OldValue, GeocodeService.GeocodeResult), DirectCast(e.NewValue, GeocodeService.GeocodeResult))
+  End Sub
 
-  'Private Shared Sub OnGeocodeResultChanged(o As DependencyObject, e As DependencyPropertyChangedEventArgs)
-  '  OnGeocodeResultChanged(DirectCast(o, Map), DirectCast(e.OldValue, GeocodeService.GeocodeResult), DirectCast(e.NewValue, GeocodeService.GeocodeResult))
-  'End Sub
+  Private Shared Sub OnGeocodeResultChanged(map As Map, oldValue As GeocodeService.GeocodeResult, newValue As GeocodeService.GeocodeResult)
+    Dim location As Location = newValue.Locations.[Select](Function(x) New Location(x.Latitude, x.Longitude)).First()
 
-  'Private Shared Sub OnGeocodeResultChanged(map As Map, oldValue As GeocodeService.GeocodeResult, newValue As GeocodeService.GeocodeResult)
-  '  Dim location As Location = newValue.Locations.[Select](Function(x) New Location(x.Latitude, x.Longitude)).First()
-
-  '  map.SetView(location, map.ZoomLevel)
-  'End Sub
+    map.SetView(location, map.ZoomLevel)
+  End Sub
 #End Region
 
 #Region "LocationRectangle"
@@ -46,12 +51,22 @@ Public Class MapInteractivity
   End Sub
 
   Private Shared Sub OnLocationRectangleChanged(o As DependencyObject, e As DependencyPropertyChangedEventArgs)
-    OnLocationRectangleChanged(DirectCast(o, Map), DirectCast(e.OldValue, LocationRect), DirectCast(e.NewValue, LocationRect))
+    'OnLocationRectangleChanged(DirectCast(o, Map), DirectCast(e.OldValue, LocationRect), DirectCast(e.NewValue, LocationRect))
+    Dim map = DirectCast(o, Map)
+    Dim rectangle = DirectCast(e.NewValue, LocationRect)
+    Try
+      map.SetView(rectangle)
+    Catch ex As Exception
+      ErrorMessage = "Map could not be properly Set!"
+      'map.SetView(New Location With {.Latitude = 44, .Longitude = -126}, 5)
+    End Try
+
+
   End Sub
 
-  Private Shared Sub OnLocationRectangleChanged(map As Map, oldValue As LocationRect, newValue As LocationRect)
-    map.SetView(newValue)
-  End Sub
+
+
+
 #End Region
 
 End Class

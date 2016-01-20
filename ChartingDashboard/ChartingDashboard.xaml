@@ -9,8 +9,7 @@
         mc:Ignorable="d"
         Title="Charting is fun times" 
         Height="{local:SettingBinding Height}" 
-        Width="{local:SettingBinding Width}"
-        >
+        Width="{local:SettingBinding Width}">
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
       <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>
@@ -20,13 +19,9 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" Center="48,-123" ZoomLevel="5" AnimationLevel="Full" Margin="10"
-              core:MapInteractivity.LocationRectangle="{Binding LocationRectangle}"
-              >
-      <!--core:MapInteractivity.GeocodeResult="{Binding GeocodeResult}"-->
-              
-              
+    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" core:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" Margin="10">
       <bing:MapItemsControl ItemsSource="{Binding ShipLocations}" ItemTemplate="{StaticResource ShipTemplate}" />
       <bing:MapLayer x:Name="ContentPopupLayer" >
         <StackPanel x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
@@ -35,7 +30,7 @@
         </StackPanel>
       </bing:MapLayer>
     </bing:Map>
-    <Grid Grid.Row="1" x:Name="gridMainFooter">
+    <Grid Grid.Row="1" x:Name="ShipDetails">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="*"/>
@@ -43,9 +38,14 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
-      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding LocationAddress}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
+      <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding ShipName}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
       <Label Grid.Column="2" x:Name="lblLat" Content="{Binding Latitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
       <Label Grid.Column="4" x:Name="lblLong" Content="{Binding Longitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
     </Grid>
+    <Label x:Name="StorageFolderField" Grid.Row="2" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
+    <!--<TextBox x:Name="StorageFolderField" Background="AliceBlue" Text="{Binding Path=(local:AppSettings.StorageFolder), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    <TextBlock x:Name="StorageFolderDisplay" Text="{Binding Path=(local:AppSettings.StorageFolder)}" />
+    </StackPanel>
+    Source={StaticResource BaseViewModel}, Path=ErrorMessage}" />-->
   </Grid>
 </Window>

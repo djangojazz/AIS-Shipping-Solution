@@ -76,6 +76,18 @@ Partial Friend NotInheritable Class MySettings
             Me("Width") = value
         End Set
     End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.5")>  _
+    Public Property Padding() As Double
+        Get
+            Return CType(Me("Padding"),Double)
+        End Get
+        Set
+            Me("Padding") = value
+        End Set
+    End Property
 End Class
 
 Namespace My

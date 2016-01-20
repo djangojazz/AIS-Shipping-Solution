@@ -19,11 +19,11 @@ Public Class ShipsService
     Return New GeocodeService.GeocodeResult With {.Locations = {New GeocodeService.GeocodeLocation With {.Latitude = averageLat, .Longitude = averageLong}}}
   End Function
 
-  Public Async Function GetRectangleOfLocation(ships As IList(Of ShipModel)) As Task(Of LocationRect)
-    Dim lowestLat = ships.OrderBy(Function(x) x.Location.Latitude).First().Location.Latitude
-    Dim highestLat = ships.OrderByDescending(Function(x) x.Location.Latitude).First().Location.Latitude
-    Dim lowestLong = ships.OrderBy(Function(x) x.Location.Longitude).First().Location.Longitude
-    Dim highestLong = ships.OrderByDescending(Function(x) x.Location.Longitude).First().Location.Longitude
+  Public Async Function GetRectangleOfLocation(ships As IList(Of ShipModel), Optional padding As Double = 0) As Task(Of LocationRect)
+    Dim lowestLat = ships.OrderBy(Function(x) x.Location.Latitude).First().Location.Latitude - padding
+    Dim highestLat = ships.OrderByDescending(Function(x) x.Location.Latitude).First().Location.Latitude + padding
+    Dim lowestLong = ships.OrderBy(Function(x) x.Location.Longitude).First().Location.Longitude - padding
+    Dim highestLong = ships.OrderByDescending(Function(x) x.Location.Longitude).First().Location.Longitude + padding
 
     Return New LocationRect With
     {
