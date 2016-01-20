@@ -9,15 +9,15 @@ Public Class ChartingDashboardViewModel
   Private _center As Location
   Private _locationAddress As String
   Private _geocodeResult As GeocodeService.GeocodeResult
-  Private _geocodeRectangle As GeocodeService.Rectangle
+  Private _locationRectangle As LocationRect
 
-  Public Property GeocodeRectangle() As GeocodeService.Rectangle
+  Public Property LocationRectangle() As LocationRect
     Get
-      Return _geocodeRectangle
+      Return _locationRectangle
     End Get
-    Set(ByVal value As GeocodeService.Rectangle)
-      _geocodeRectangle = value
-      OnPropertyChanged(NameOf(GeocodeRectangle))
+    Set
+      _locationRectangle = Value
+      OnPropertyChanged(NameOf(LocationRectangle))
     End Set
   End Property
 
@@ -45,8 +45,8 @@ Public Class ChartingDashboardViewModel
     Get
       Return _locationAddress
     End Get
-    Set(ByVal value As String)
-      _locationAddress = value
+    Set
+      _locationAddress = Value
       OnPropertyChanged(NameOf(LocationAddress))
     End Set
   End Property
@@ -68,7 +68,8 @@ Public Class ChartingDashboardViewModel
 
   Private Async Function RefreshShipsAndResetMap() As Task
     ShipLocations = New ObservableCollection(Of ShipModel)(Await New ShipsService().LoadShipLocations())
-    GeocodeResult = Await New ShipsService().GetAverageLocation(ShipLocations)
+    LocationRectangle = Await New ShipsService().GetRectangleOfLocation(ShipLocations)
+    'GeocodeResult = Await New ShipsService().GetAverageLocation(ShipLocations)
   End Function
 
 End Class

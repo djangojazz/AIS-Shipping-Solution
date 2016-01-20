@@ -19,6 +19,19 @@ Public Class ShipsService
     Return New GeocodeService.GeocodeResult With {.Locations = {New GeocodeService.GeocodeLocation With {.Latitude = averageLat, .Longitude = averageLong}}}
   End Function
 
+  Public Async Function GetRectangleOfLocation(ships As IList(Of ShipModel)) As Task(Of LocationRect)
+    Dim lowestLat = ships.OrderBy(Function(x) x.Location.Latitude).First().Location.Latitude
+    Dim highestLat = ships.OrderByDescending(Function(x) x.Location.Latitude).First().Location.Latitude
+    Dim lowestLong = ships.OrderBy(Function(x) x.Location.Longitude).First().Location.Longitude
+    Dim highestLong = ships.OrderByDescending(Function(x) x.Location.Longitude).First().Location.Longitude
+
+    Return New LocationRect With
+    {
+      .Northeast = New Location With {.Latitude = highestLat, .Longitude = highestLong},
+      .Southwest = New Location With {.Latitude = lowestLat, .Longitude = lowestLong}
+    }
+  End Function
+
   Public Async Function GeocodeAddress(input As String) As Task(Of GeocodeService.GeocodeResult)
     Using client As New GeocodeService.GeocodeServiceClient("CustomBinding_IGeocodeService")
       Dim request As New GeocodeService.GeocodeRequest()
