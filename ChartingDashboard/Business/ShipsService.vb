@@ -3,14 +3,20 @@ Imports Microsoft.Maps.MapControl.WPF
 
 Public Class ShipsService
   Public Async Function LoadShipLocations() As Task(Of IList(Of ShipModel))
-    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pShipsMockService 's', 100000"))
+    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pShipsMockService 's', 5000"))
     Return dBships.Select(Function(x) New ShipModel With
                           {
                           .MMSI = x.MMSI,
                           .ShipName = x.ShipName,
                           .Location = New Location() With {.Latitude = x.Latitude, .Longitude = x.Longitude}
                           }).ToList()
+  End Function
 
+  Public Async Function GetAverageLocation(ships As IList(Of ShipModel)) As Task(Of GeocodeService.GeocodeResult)
+    Dim averageLat = ships.Average(Function(x) x.Location.Latitude)
+    Dim averageLong = ships.Average(Function(x) x.Location.Longitude)
+
+    Return New GeocodeService.GeocodeResult With {.Locations = {New GeocodeService.GeocodeLocation With {.Latitude = averageLat, .Longitude = averageLong}}}
   End Function
 
   Public Async Function GeocodeAddress(input As String) As Task(Of GeocodeService.GeocodeResult)

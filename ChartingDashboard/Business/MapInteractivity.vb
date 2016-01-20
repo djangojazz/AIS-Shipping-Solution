@@ -26,19 +26,6 @@ Public Class MapInteractivity
   Private Shared Sub OnGeocodeResultChanged(map As Map, oldValue As GeocodeService.GeocodeResult, newValue As GeocodeService.GeocodeResult)
     Dim location As Location = newValue.Locations.[Select](Function(x) New Location(x.Latitude, x.Longitude)).First()
 
-    Dim pin As New Pushpin()
-    pin.Location = location
-    pin.ToolTip = newValue.Address.FormattedAddress
-
-    Dim locationLayer = GetGeocodeResultLayer(map)
-    If locationLayer Is Nothing Then
-      locationLayer = New MapLayer()
-      SetGeocodeResultLayer(map, locationLayer)
-    End If
-
-    locationLayer.Children.Clear()
-    locationLayer.Children.Add(pin)
-
     map.SetView(location, map.ZoomLevel)
   End Sub
 
