@@ -96,9 +96,18 @@
     {
       //PinVisible = Visibility.Hidden;
       Address = "7560 SW Lara St., Portland OR";
-      TimerSetupWithRefresh(2000);
+      //TimerSetupWithRefresh(1000);
+      var task = RefreshShips();
+      TimerGeneric(1000, task);
       GeocodeAddressCommand = new DelegateCommand<string>(GeocodeAddress);
       //AddMapLayer();
+    }
+
+    private void TimerGeneric(int duration, Task timerDuration)
+    {
+      var timer = new Timer(duration);
+      timer.Elapsed += async (sender, e) => await timerDuration;
+      timer.Enabled = true;
     }
 
     private void TimerSetupWithRefresh(int refreshDuration)

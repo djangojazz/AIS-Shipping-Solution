@@ -10,10 +10,9 @@
       <GradientStop Color="#FF0C1526" Offset="1"/>
       <GradientStop Color="#FF347F71"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="brushMainText" EndPoint="0.5,1" StartPoint="0.5,0">
-      <GradientStop Color="#FF4652D1" Offset="1"/>
-      <GradientStop Color="White"/>
-      <GradientStop Color="#FFC1C5E4" Offset="0.54"/>
+    <LinearGradientBrush x:Key="brushMainText" EndPoint="0.5,0" StartPoint="0.5,1">
+      <GradientStop Color="#FF0C1526" Offset="1"/>
+      <GradientStop Color="#FF347F71"/>
     </LinearGradientBrush>
   </Application.Resources>
 </Application>

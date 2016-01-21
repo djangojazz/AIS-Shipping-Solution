@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Timers
 
 Public Class BaseViewModel
   Implements INotifyPropertyChanged
@@ -24,5 +25,11 @@ Public Class BaseViewModel
 
   Private Shared Sub NotifyStaticPropertyChanged(propertyName As String)
     RaiseEvent StaticPropertyChanged(Nothing, New PropertyChangedEventArgs(propertyName))
+  End Sub
+
+  Public Shared Sub TimerHelper(duration As Integer, timerDuration As Func(Of Task))
+    Dim timer = New Timer(duration)
+    AddHandler timer.Elapsed, Sub() timerDuration.Invoke()
+    timer.Enabled = True
   End Sub
 End Class

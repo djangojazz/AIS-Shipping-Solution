@@ -54,21 +54,14 @@ Public Class MapInteractivity
   End Sub
 
   Private Shared Sub OnLocationRectangleChanged(o As DependencyObject, e As DependencyPropertyChangedEventArgs)
-    'OnLocationRectangleChanged(DirectCast(o, Map), DirectCast(e.OldValue, LocationRect), DirectCast(e.NewValue, LocationRect))
     Dim map = DirectCast(o, Map)
     Dim rectangle = DirectCast(e.NewValue, LocationRect)
     Try
+      'Throw New Exception
       map.SetView(rectangle)
     Catch ex As Exception
       ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
     End Try
-
-
   End Sub
-
-
-
-
 #End Region
-
 End Class

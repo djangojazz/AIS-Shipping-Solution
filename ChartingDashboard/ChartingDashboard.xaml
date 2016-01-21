@@ -12,7 +12,7 @@
         Background="{StaticResource brushMainBoard}" Icon="Compass.ico">
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
-      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>
+      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" />
     </DataTemplate>
   </Window.Resources>
   <Grid>
@@ -30,7 +30,7 @@
         </StackPanel>
       </bing:MapLayer>
     </bing:Map>
-    <Grid Grid.Row="1" x:Name="ShipDetails">
+    <!--<Grid Grid.Row="1" x:Name="ShipDetails">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="*"/>
@@ -41,7 +41,17 @@
       <Label Grid.Column="0" x:Name="lblLocationText" Content="{Binding ShipName}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center" />
       <Label Grid.Column="2" x:Name="lblLat" Content="{Binding Latitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
       <Label Grid.Column="4" x:Name="lblLong" Content="{Binding Longitude}" Foreground="{StaticResource brushMainText}" FontSize="14"  Width="Auto" HorizontalAlignment="Center"/>
-    </Grid>
+    </Grid>-->
+    <DataGrid  Grid.Row="1" x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}" AutoGenerateColumns="False" MaxHeight="200" HorizontalAlignment="Center" FontSize="14" Background="Transparent"
+               Foreground="{StaticResource brushMainText}" MinHeight="200">
+      <!--HorizontalAlignment="Left" VerticalAlignment="Top" IsSynchronizedWithCurrentItem="True" MaxHeight="700" >-->
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ShipName" Binding="{Binding ShipName}" CanUserReorder="True"/>
+        <DataGridTextColumn Header="MMSI" Binding="{Binding MMSI}" CanUserReorder="True"/>
+        <DataGridTextColumn Header="Latitude" Binding="{Binding Location.Latitude}" CanUserReorder="True"/>
+        <DataGridTextColumn Header="Longitude" Binding="{Binding Location.Longitude}" CanUserReorder="True"/>
+      </DataGrid.Columns>
+    </DataGrid>
     <Label x:Name="StorageFolderField" Grid.Row="2" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
     <!--<TextBox x:Name="StorageFolderField" Background="AliceBlue" Text="{Binding Path=(local:AppSettings.StorageFolder), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     <TextBlock x:Name="StorageFolderDisplay" Text="{Binding Path=(local:AppSettings.StorageFolder)}" />

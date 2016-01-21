@@ -230,5 +230,8 @@
   <ItemGroup>
     <Resource Include="Compass.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
