@@ -29,9 +29,12 @@ Public Class MapInteractivity
   End Sub
 
   Private Shared Sub OnGeocodeResultChanged(map As Map, oldValue As GeocodeService.GeocodeResult, newValue As GeocodeService.GeocodeResult)
-    Dim location As Location = newValue.Locations.[Select](Function(x) New Location(x.Latitude, x.Longitude)).First()
-
-    map.SetView(location, map.ZoomLevel)
+    Try
+      Dim location As Location = newValue.Locations.[Select](Function(x) New Location(x.Latitude, x.Longitude)).First()
+      map.SetView(location, map.ZoomLevel)
+    Catch ex As Exception
+      ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
+    End Try
   End Sub
 #End Region
 
@@ -57,8 +60,7 @@ Public Class MapInteractivity
     Try
       map.SetView(rectangle)
     Catch ex As Exception
-      ErrorMessage = "Map could not be properly Set!"
-      'map.SetView(New Location With {.Latitude = 44, .Longitude = -126}, 5)
+      ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
     End Try
 
 

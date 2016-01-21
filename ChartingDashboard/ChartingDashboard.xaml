@@ -7,15 +7,15 @@
         xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:core="clr-namespace:ChartingDashboard"
         mc:Ignorable="d"
-        Title="Charting is fun times" 
         Height="{local:SettingBinding Height}" 
-        Width="{local:SettingBinding Width}">
+        Width="{local:SettingBinding Width}"
+        Background="{StaticResource brushMainBoard}" Icon="Compass.ico">
   <Window.Resources>
     <DataTemplate x:Key="ShipTemplate">
       <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave"/>
     </DataTemplate>
   </Window.Resources>
-  <Grid Background="{StaticResource brushMainBoard}">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>

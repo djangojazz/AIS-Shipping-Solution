@@ -3,8 +3,6 @@
 Public Class BaseViewModel
   Implements INotifyPropertyChanged
 
-  Public Shared Event ErrorMessageChanged As EventHandler
-
   Private Shared _errorMessage As String = String.Empty
   Public Shared Property ErrorMessage() As String
     Get
@@ -12,7 +10,7 @@ Public Class BaseViewModel
     End Get
     Set
       _errorMessage = Value
-      RaiseEvent ErrorMessageChanged(Nothing, EventArgs.Empty)
+      NotifyStaticPropertyChanged(NameOf(ErrorMessage))
     End Set
   End Property
 
