@@ -20,13 +20,13 @@
       <DropShadowBitmapEffect/>
     </Border.BitmapEffect>
     <StackPanel>
-      <Label x:Name="lblCustomDataGridHeader" Content="{local:SettingBinding DataGridLegend}" Foreground="{StaticResource brushLegendCustomDataGrid}" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold">
+      <Label x:Name="lblCustomDataGridHeader" Content="{local:SettingBinding DataGridLegend}" Foreground="{StaticResource brushLegendCustomDataGrid}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">
         <Label.BitmapEffect>
           <EmbossBitmapEffect/>
         </Label.BitmapEffect>
       </Label>
       <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{StaticResource brushTextCustomDataGrid}" BorderThickness="0"              
-                  Background="Transparent" RowBackground="Transparent"   GridLinesVisibility="None" IsReadOnly="True" HorizontalAlignment="Center" FontSize="20">
+                  Background="Transparent" RowBackground="Transparent"   GridLinesVisibility="None" IsReadOnly="True" HorizontalAlignment="Center" FontSize="14">
       </DataGrid>
     </StackPanel>
   </Border>

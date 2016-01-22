@@ -42,9 +42,9 @@ Public Class ChartingDashboardViewModel
     End Set
   End Property
 
-  Public ReadOnly Property DatagridHeight() As Integer
+  Public ReadOnly Property ContentHeight() As Integer
     Get
-      Return MySettings.Default.Height * MySettings.Default.GridHeightPercent
+      Return MySettings.Default.Height * MySettings.Default.ContentHeightPercent
     End Get
   End Property
 

@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="CustomMapControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChartingDashboard"
+             xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <UserControl.Resources>
+    <DataTemplate x:Key="ShipTemplate">
+      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" />
+    </DataTemplate>
+  </UserControl.Resources>
+  <Border CornerRadius="15" Background="{StaticResource brushMainBoard}">
+    <Border.BitmapEffect>
+      <DropShadowBitmapEffect/>
+    </Border.BitmapEffect>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Label Grid.Row="0" x:Name="lblCustomMapHeader" Content="{local:SettingBinding MapLegend}" Foreground="{StaticResource brushLegendCustomDataGrid}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">
+        <Label.BitmapEffect>
+          <EmbossBitmapEffect/>
+        </Label.BitmapEffect>
+      </Label>
+      <bing:Map Grid.Row="1" x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" Margin="5">
+        <bing:MapItemsControl ItemsSource="{Binding ShipLocations}" ItemTemplate="{StaticResource ShipTemplate}" />
+      </bing:Map>
+    </Grid>
+  </Border>
+</UserControl>

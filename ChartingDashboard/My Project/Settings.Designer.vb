@@ -91,7 +91,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("3")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
     Public Property PagingSize() As String
         Get
             Return CType(Me("PagingSize"),String)
@@ -103,13 +103,13 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.2")>  _
-    Public Property GridHeightPercent() As Double
+     Global.System.Configuration.DefaultSettingValueAttribute("0.91")>  _
+    Public Property ContentHeightPercent() As Double
         Get
-            Return CType(Me("GridHeightPercent"),Double)
+            Return CType(Me("ContentHeightPercent"),Double)
         End Get
         Set
-            Me("GridHeightPercent") = value
+            Me("ContentHeightPercent") = value
         End Set
     End Property
     
@@ -127,13 +127,25 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.4")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.25")>  _
     Public Property GridWidthPercent() As String
         Get
             Return CType(Me("GridWidthPercent"),String)
         End Get
         Set
             Me("GridWidthPercent") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Mapping Details")>  _
+    Public Property MapLegend() As String
+        Get
+            Return CType(Me("MapLegend"),String)
+        End Get
+        Set
+            Me("MapLegend") = value
         End Set
     End Property
 End Class

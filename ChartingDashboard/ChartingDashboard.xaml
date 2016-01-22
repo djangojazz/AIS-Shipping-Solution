@@ -4,12 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChartingDashboard"
-        xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-        xmlns:core="clr-namespace:ChartingDashboard"
         mc:Ignorable="d"
         Height="{local:SettingBinding Height}" 
         Width="{local:SettingBinding Width}"
-        Background="{StaticResource brushMainBoard}" Icon="Compass.ico">
+        Background="{StaticResource brushMainBoard}" Icon="SmallBoat.ico">
   <Window.Resources>
     <Style TargetType="{x:Type DataGridColumnHeader}">
       <Setter Property="Background" Value="Transparent" />
@@ -18,26 +16,21 @@
     <Style TargetType="{x:Type DataGridRowHeader}">
       <Setter Property="Background" Value="Transparent" />
     </Style>
-    <DataTemplate x:Key="ShipTemplate">
-      <bing:Pushpin bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" />
-    </DataTemplate>
+    
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <bing:Map x:Name="map" Grid.Row="0" CredentialsProvider="{StaticResource BingCredentials}" core:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" Margin="10">
-      <bing:MapItemsControl ItemsSource="{Binding ShipLocations}" ItemTemplate="{StaticResource ShipTemplate}" />
-      <bing:MapLayer x:Name="ContentPopupLayer" >
-        <StackPanel x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
-          <TextBlock Grid.Row="0" x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" />
-          <TextBlock Grid.Row="1" x:Name="ContentPopupDescription"  FontSize="12" />
-        </StackPanel>
-      </bing:MapLayer>
-    </bing:Map>
-    <local:CustomDataGrid Grid.Row="1" Height="{Binding DatagridHeight}" Margin="10" Width="{Binding DatagridWidth}" />
-    <Label x:Name="lblErrorMessageFooter" Grid.Row="2" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <local:CustomDataGrid Grid.Column="0" Height="{Binding ContentHeight}" Margin="2" Width="{Binding DatagridWidth}" />
+      <local:CustomMapControl Grid.Column="1" Height="{Binding ContentHeight}" Margin="2" />
+    </Grid>
+    <Label x:Name="lblErrorMessageFooter" Grid.Row="1" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
   </Grid>
 </Window>

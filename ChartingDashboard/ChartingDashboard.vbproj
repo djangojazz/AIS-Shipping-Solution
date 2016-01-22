@@ -56,7 +56,7 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Compass.ico</ApplicationIcon>
+    <ApplicationIcon>SmallBoat.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,6 +99,9 @@
     <Compile Include="Views\CustomDataGrid.xaml.vb">
       <DependentUpon>CustomDataGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CustomMapControl.xaml.vb">
+      <DependentUpon>CustomMapControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChartingDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,6 +115,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CustomDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomMapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,6 +244,11 @@
   <ItemGroup>
     <Resource Include="Compass.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="LittleBoat.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SmallBoat.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

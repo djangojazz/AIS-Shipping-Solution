@@ -12,16 +12,19 @@
       <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="PagingSize" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="GridHeightPercent" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+    <Setting Name="ContentHeightPercent" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.91</Value>
     </Setting>
     <Setting Name="DataGridLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ships Details</Value>
     </Setting>
     <Setting Name="GridWidthPercent" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.25</Value>
+    </Setting>
+    <Setting Name="MapLegend" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mapping Details</Value>
     </Setting>
   </Settings>
 </SettingsFile>
