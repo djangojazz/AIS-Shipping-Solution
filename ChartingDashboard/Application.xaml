@@ -10,9 +10,23 @@
       <GradientStop Color="#FF0C1526" Offset="1"/>
       <GradientStop Color="#FF347F71"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="brushMainText" EndPoint="0.5,0" StartPoint="0.5,1">
-      <GradientStop Color="#FF0C1526" Offset="1"/>
-      <GradientStop Color="#FF347F71"/>
+    <LinearGradientBrush x:Key="brushMainText" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FF918572" Offset="0" />
+      <GradientStop Color="#FFFFEBC6" Offset="0.50" />
+      <GradientStop Color="#FFCEBDA1" Offset="0.95" />
+      <GradientStop Color="#FF3A883A" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="brushLegendCustomDataGrid" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FFE8E8E8" Offset="1"/>
+      <GradientStop Color="#F9D6BD88" Offset="0.867"/>
+      <GradientStop Color="#FF91712C" Offset="0.256"/>
+      <GradientStop Color="#E5AAA986"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="brushTextCustomDataGrid" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="White" Offset="1"/>
+      <GradientStop Color="#F9A08860" Offset="0.273"/>
+      <GradientStop Color="#FFFFEBC6" Offset="0.813"/>
+      <GradientStop Color="#E5F1EADE"/>
     </LinearGradientBrush>
   </Application.Resources>
 </Application>

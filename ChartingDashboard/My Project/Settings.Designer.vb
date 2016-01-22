@@ -56,9 +56,9 @@ Partial Friend NotInheritable Class MySettings
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
-    Public Property Height() As Double
+    Public Property Height() As Integer
         Get
-            Return CType(Me("Height"),Double)
+            Return CType(Me("Height"),Integer)
         End Get
         Set
             Me("Height") = value
@@ -68,9 +68,9 @@ Partial Friend NotInheritable Class MySettings
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("525")>  _
-    Public Property Width() As Double
+    Public Property Width() As Integer
         Get
-            Return CType(Me("Width"),Double)
+            Return CType(Me("Width"),Integer)
         End Get
         Set
             Me("Width") = value
@@ -98,6 +98,42 @@ Partial Friend NotInheritable Class MySettings
         End Get
         Set
             Me("PagingSize") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.2")>  _
+    Public Property GridHeightPercent() As Double
+        Get
+            Return CType(Me("GridHeightPercent"),Double)
+        End Get
+        Set
+            Me("GridHeightPercent") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Ships Details")>  _
+    Public Property DataGridLegend() As String
+        Get
+            Return CType(Me("DataGridLegend"),String)
+        End Get
+        Set
+            Me("DataGridLegend") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.4")>  _
+    Public Property GridWidthPercent() As String
+        Get
+            Return CType(Me("GridWidthPercent"),String)
+        End Get
+        Set
+            Me("GridWidthPercent") = value
         End Set
     End Property
 End Class

@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="Height" Type="System.Double" Scope="User">
+    <Setting Name="Height" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">300</Value>
     </Setting>
-    <Setting Name="Width" Type="System.Double" Scope="User">
+    <Setting Name="Width" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">525</Value>
     </Setting>
     <Setting Name="Padding" Type="System.Double" Scope="User">
@@ -13,6 +13,15 @@
     </Setting>
     <Setting Name="PagingSize" Type="System.String" Scope="User">
       <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="GridHeightPercent" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.2</Value>
+    </Setting>
+    <Setting Name="DataGridLegend" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ships Details</Value>
+    </Setting>
+    <Setting Name="GridWidthPercent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

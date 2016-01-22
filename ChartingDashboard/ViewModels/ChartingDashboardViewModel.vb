@@ -42,11 +42,23 @@ Public Class ChartingDashboardViewModel
     End Set
   End Property
 
+  Public ReadOnly Property DatagridHeight() As Integer
+    Get
+      Return MySettings.Default.Height * MySettings.Default.GridHeightPercent
+    End Get
+  End Property
+
+  Public ReadOnly Property DatagridWidth() As Integer
+    Get
+      Return MySettings.Default.Width * MySettings.Default.GridWidthPercent
+    End Get
+  End Property
+
   Public Sub New()
     RefreshShipsAndResetMap()
-    TimerHelper(6000, Function() RefreshShipsAndResetMap())
+    TimerHelper(4000, Function() RefreshShipsAndResetMap())
     FilterRefreshShips()
-    TimerHelper(2000, Function() FilterRefreshShips())
+    TimerHelper(1000, Function() FilterRefreshShips())
   End Sub
 
   Private Async Function RefreshShipsAndResetMap() As Task
@@ -56,14 +68,22 @@ Public Class ChartingDashboardViewModel
 
   Private Async Function FilterRefreshShips() As Task
     If ShipLocations.Count >= MySettings.Default.PagingSize Then
-      ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(_shipLocations.Where(Function(x) Not _oldFiltered.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
+
       If (ShipLocations.Count <> _oldFiltered.Count) Then
-        ShipLocationsFiltered.ToList().ForEach(Sub(x) _oldFiltered.Add(x.MMSI))
+        ObtainFilteredShips()
       Else
         _oldFiltered.Clear()
+        ObtainFilteredShips()
       End If
     End If
   End Function
+
+  Private Sub ObtainFilteredShips()
+    ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(_shipLocations.Where(Function(x) Not _oldFiltered.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
+    ShipLocationsFiltered.ToList().ForEach(Sub(x) _oldFiltered.Add(x.MMSI))
+  End Sub
+
+
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose

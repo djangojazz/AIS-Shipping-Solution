@@ -96,6 +96,9 @@
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.vb" />
     <Compile Include="ViewModels\ChartingDashboardViewModel.vb" />
+    <Compile Include="Views\CustomDataGrid.xaml.vb">
+      <DependentUpon>CustomDataGrid.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChartingDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,6 +111,10 @@
       <DependentUpon>ChartingDashboard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CustomDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Threading.Tasks" />
@@ -230,8 +237,6 @@
   <ItemGroup>
     <Resource Include="Compass.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
