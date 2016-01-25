@@ -15,17 +15,17 @@
       <Setter Property="Background" Value="Transparent" />
     </Style>
   </UserControl.Resources>
-  <Border CornerRadius="15" Background="{StaticResource brushMainBoard}">
+  <Border CornerRadius="15" Background="{DynamicResource brushMainBoard}">
     <Border.BitmapEffect>
       <DropShadowBitmapEffect/>
     </Border.BitmapEffect>
     <StackPanel>
-      <Label x:Name="lblCustomDataGridHeader" Content="{local:SettingBinding DataGridLegend}" Foreground="{StaticResource brushLegendCustomDataGrid}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">
+      <Label x:Name="lblCustomDataGridHeader" Content="{local:SettingBinding DataGridLegend}" Foreground="{DynamicResource brushMainText}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">
         <Label.BitmapEffect>
           <EmbossBitmapEffect/>
         </Label.BitmapEffect>
       </Label>
-      <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{StaticResource brushTextCustomDataGrid}" BorderThickness="0"              
+      <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{DynamicResource brushMainText}" BorderThickness="0"              
                   Background="Transparent" RowBackground="Transparent"   GridLinesVisibility="None" IsReadOnly="True" HorizontalAlignment="Center" FontSize="14">
       </DataGrid>
     </StackPanel>
