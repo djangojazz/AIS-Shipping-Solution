@@ -91,10 +91,10 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
-    Public Property PagingSize() As String
+     Global.System.Configuration.DefaultSettingValueAttribute("40")>  _
+    Public Property PagingSize() As Integer
         Get
-            Return CType(Me("PagingSize"),String)
+            Return CType(Me("PagingSize"),Integer)
         End Get
         Set
             Me("PagingSize") = value
@@ -128,9 +128,9 @@ Partial Friend NotInheritable Class MySettings
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("0.25")>  _
-    Public Property GridWidthPercent() As String
+    Public Property GridWidthPercent() As Double
         Get
-            Return CType(Me("GridWidthPercent"),String)
+            Return CType(Me("GridWidthPercent"),Double)
         End Get
         Set
             Me("GridWidthPercent") = value
@@ -146,6 +146,30 @@ Partial Friend NotInheritable Class MySettings
         End Get
         Set
             Me("MapLegend") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
+    Public Property MapRefreshFrequencyInSeconds() As Integer
+        Get
+            Return CType(Me("MapRefreshFrequencyInSeconds"),Integer)
+        End Get
+        Set
+            Me("MapRefreshFrequencyInSeconds") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+    Public Property DetailsRefreshFrequencyInSeconds() As Integer
+        Get
+            Return CType(Me("DetailsRefreshFrequencyInSeconds"),Integer)
+        End Get
+        Set
+            Me("DetailsRefreshFrequencyInSeconds") = value
         End Set
     End Property
 End Class

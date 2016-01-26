@@ -2,7 +2,7 @@
 Imports Microsoft.Maps.MapControl.WPF
 
 Public Class ShipsService
-  Public Async Function LoadShipLocations() As Task(Of IList(Of ShipModel))
+  Public Function LoadShipLocations() As IList(Of ShipModel)
     Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pShipsMockService 's', 10000"))
     Return dBships.Select(Function(x) New ShipModel With
                           {
@@ -19,7 +19,7 @@ Public Class ShipsService
     Return New GeocodeService.GeocodeResult With {.Locations = {New GeocodeService.GeocodeLocation With {.Latitude = averageLat, .Longitude = averageLong}}}
   End Function
 
-  Public Async Function GetRectangleOfLocation(ships As IList(Of ShipModel), Optional padding As Double = 0) As Task(Of LocationRect)
+  Public Function GetRectangleOfLocation(ships As IList(Of ShipModel), Optional padding As Double = 0) As LocationRect
     Dim lowestLat = ships.OrderBy(Function(x) x.Location.Latitude).First().Location.Latitude - padding
     Dim highestLat = ships.OrderByDescending(Function(x) x.Location.Latitude).First().Location.Latitude + padding
     Dim lowestLong = ships.OrderBy(Function(x) x.Location.Longitude).First().Location.Longitude - padding
@@ -32,14 +32,15 @@ Public Class ShipsService
     }
   End Function
 
-  Public Async Function GeocodeAddress(input As String) As Task(Of GeocodeService.GeocodeResult)
-    Using client As New GeocodeService.GeocodeServiceClient("CustomBinding_IGeocodeService")
-      Dim request As New GeocodeService.GeocodeRequest()
-      request.Credentials = New Credentials() With {
-          .ApplicationId = TryCast(Application.Current.Resources("BingCredentials"), ApplicationIdCredentialsProvider).ApplicationId
-        }
-      request.Query = input
-      Return client.Geocode(request).Results(0)
-    End Using
-  End Function
+  'May never be needed
+  'Public Async Function GeocodeAddress(input As String) As Task(Of GeocodeService.GeocodeResult)
+  '  Using client As New GeocodeService.GeocodeServiceClient("CustomBinding_IGeocodeService")
+  '    Dim request As New GeocodeService.GeocodeRequest()
+  '    request.Credentials = New Credentials() With {
+  '        .ApplicationId = TryCast(Application.Current.Resources("BingCredentials"), ApplicationIdCredentialsProvider).ApplicationId
+  '      }
+  '    request.Query = input
+  '    Return client.Geocode(request).Results(0)
+  '  End Using
+  'End Function
 End Class

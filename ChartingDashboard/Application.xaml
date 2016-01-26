@@ -6,15 +6,15 @@
     StartupUri="ChartingDashboard.xaml" Exit="Application_Exit">
   <Application.Resources>
     <bing:ApplicationIdCredentialsProvider x:Key="BingCredentials" ApplicationId="4wwABwPqJTIzweS04zqN~Il7hqTmhmXUplRUI47C2UA~AuSnma8mpsiLLyo_IExmgJ9dSs4YN5rYzyPA7tbrnFeNLLLEopgviL2b9oZpFHUu" />
-    <LinearGradientBrush x:Key="brushMainBoard" EndPoint="0.5,1" StartPoint="0.5,0">
+    <LinearGradientBrush x:Key="brush.Foreground.MainBoard" EndPoint="0.5,1" StartPoint="0.5,0">
       <GradientStop Color="#FF0C1526" Offset="1"/>
       <GradientStop Color="#FF347F71"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="brushMainText" EndPoint="0.5,1" StartPoint="0.5,0">
+    <LinearGradientBrush x:Key="brush.Foreground.MainText" EndPoint="0.5,1" StartPoint="0.5,0">
       <GradientStop Color="#FF76B3C5" Offset="0.574"/>
       <GradientStop Color="White" Offset="0.003"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="brushBoatGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+    <LinearGradientBrush x:Key="brush.Foreground.BoatGradient" EndPoint="0.5,1" StartPoint="0.5,0">
       <GradientStop Color="#FF112363" Offset="0.916"/>
       <GradientStop Color="#FF535F87" Offset="1"/>
       <GradientStop Color="#FF5A6AA4" Offset="0.544"/>

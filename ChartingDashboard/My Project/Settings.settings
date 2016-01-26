@@ -11,8 +11,8 @@
     <Setting Name="Padding" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
-    <Setting Name="PagingSize" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5</Value>
+    <Setting Name="PagingSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="ContentHeightPercent" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.91</Value>
@@ -20,11 +20,17 @@
     <Setting Name="DataGridLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ships Details</Value>
     </Setting>
-    <Setting Name="GridWidthPercent" Type="System.String" Scope="User">
+    <Setting Name="GridWidthPercent" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="MapLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mapping Details</Value>
+    </Setting>
+    <Setting Name="MapRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="DetailsRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
     </Setting>
   </Settings>
 </SettingsFile>

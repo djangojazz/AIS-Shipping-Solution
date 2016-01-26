@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Height="{local:SettingBinding Height}" 
         Width="{local:SettingBinding Width}"
-        Background="{StaticResource brushMainBoard}" Icon="SmallBoat.ico">
+        Background="{StaticResource brush.Foreground.MainBoard}" Icon="SmallBoat.ico">
   <Window.Resources>
     <Style TargetType="{x:Type DataGridColumnHeader}">
       <Setter Property="Background" Value="Transparent" />
