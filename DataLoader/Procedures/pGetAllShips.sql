@@ -1,4 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[pGetAllShips]
+﻿CREATE PROCEDURE [Ships].[pGetAllShips]
 AS
-	Select ShipId, MMSI, ShipName, Latitude, Longitude from dbo.teShipDetail
+	Select ShipId, MMSI, ShipName, Latitude, Longitude, ShipTypeId
+	FROM Ships.teShipDetail sd
+		
 RETURN 0

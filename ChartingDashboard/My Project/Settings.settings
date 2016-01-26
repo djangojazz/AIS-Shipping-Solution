@@ -12,7 +12,7 @@
       <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="PagingSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="ContentHeightPercent" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.91</Value>

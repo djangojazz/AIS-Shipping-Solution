@@ -53,7 +53,7 @@ Public Class ChartingDashboardViewModel
   End Function
 
   Private Sub FilterRefreshShips()
-    If ShipLocations.Count >= MySettings.Default.PagingSize Then
+    If ShipLocations?.Count > 0 Then
       If (ShipLocations.Count <> _oldFiltered.Count) Then
         ObtainFilteredShips()
       Else

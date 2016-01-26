@@ -61,6 +61,7 @@
     <Folder Include="Inserts" />
     <Folder Include="Procedures" />
     <Folder Include="Views" />
+    <Folder Include="Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tePerson.sql" />
@@ -72,6 +73,7 @@
     <Build Include="Procedures\pGetAllShips.sql" />
     <Build Include="Procedures\pShipsMockService.sql" />
     <Build Include="Tables\tdShipType.sql" />
+    <Build Include="Schemas\Ships.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

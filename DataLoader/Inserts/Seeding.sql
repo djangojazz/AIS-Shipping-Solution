@@ -12,48 +12,60 @@ Post-Deployment Script Template
 --DELETIONS
 DELETE dbo.teOrder
 DBCC CHECKIDENT ('dbo.teOrder', RESEED, 0);
+
 DELETE dbo.tePerson
 DBCC CHECKIDENT ('dbo.tePerson', RESEED, 0);
-TRUNCATE TABLE dbo.teShipDetail
+
+DELETE Ships.teShipDetail
+DBCC CHECKIDENT ('Ships.teShipDetail', RESEED, 0);
+
+DELETE Ships.tdShipType
+DBCC CHECKIDENT ('Ships.tdShipType', RESEED, 0);
 GO
 
 --INSERTS
 SET IDENTITY_INSERT dbo.tePerson ON;
 INSERT INTO dbo.tePerson (PersonId, FirstName, LastName) VALUES (1, 'Brett', 'Morin'),(2, 'Emily', 'Morin');
 SET IDENTITY_INSERT dbo.tePerson OFF;
+
 SET IDENTITY_INSERT dbo.teOrder ON;
 INSERT INTO dbo.teOrder ( OrderId, PersonId, [Description]) VALUES (1, 1, 'Shirt'),(2, 1, 'Pants'),(3, 1, 'Shoes'),(4, 2, 'Dress'),(5, 2, 'Shoes');
 SET IDENTITY_INSERT dbo.teOrder OFF;
-INSERT INTO dbo.teShipDetail (MMSI, ShipName, Latitude, Longitude) VALUES 
-(111111111, 'Anne Sleuth', 46.851859, -129.322418),
-(111112211, 'Bon Voyage', 47.871859, -130.322418),
-(367197230, 'Buck & Ann', 46.451859, -124.322418),
-(371321345, 'Chrimeney Jeeps', 51.421869, -135.322418),
-(381321345, 'Chappy Pappy', 51.456469, -131.135418),
-(371341345, 'Charlies Cheepo', 40.456469, -126.155418),
-(384841345, 'Dudes Dud', 43.756854, -124.456789),
-(397541345, 'Earles Agony', 43.897445, -124.557781),
-(471233478, 'Franks SingleFleet', 45.114445, -127.654811),
-(124835678, 'Forget Flying', 40.458123, -120.151451),
-(813545664, 'Genas Sinker', 46.124545, -127.654811),
-(876541242, 'Hectors Habit', 40.114445, -127.774811),
-(991233478, 'Icant Float', 45.548123, -129.811451),
-(871233478, 'Jacks Rwild', 42.712387, -133.887451),
-(888233478, 'Kelly CanUStop', 41.112387, -128.457451),
-(678433478, 'Larry Leaper', 40.512387, -125.877451),
-(367150410, 'Major Major', 46.333302, -124.116333),
-(387150410, 'Neato Torpedo', 47.333302, -124.056333),
-(487150410, 'October Ocean', 48.333302, -126.556333),
-(587230410, 'Pauls PushingIt', 46.583302, -127.586333),
-(467230410, 'Quest4 Johnny', 48.183302, -128.686333),
-(547230410, 'Roger DodgerOver', 49.283302, -124.786333),
-(847251152, 'Sarah Sleeting', 48.285102, -127.586333),
-(947252151, 'Tom And Jerry', 39.285102, -128.456333),
-(101252151, 'Ugotta B KiddingMe', 30.285102, -128.452233),
-(132452151, 'Versions Unknown', 33.285102, -140.454233),
-(242452151, 'Wild For The Sea', 40.518102, -145.334233),
-(587452151, 'X The Racer', 45.518102, -120.344233),
-(681452151, 'Yes I can', 40.418202, -123.486233)
+
+SET IDENTITY_INSERT Ships.tdShipType ON;
+INSERT INTO Ships.tdShipType ( ShipTypeID, ShipTypeName) VALUES (1, 'Owned'),(2, 'Contractor'),(3, 'Other');
+SET IDENTITY_INSERT Ships.tdShipType OFF;
+
+INSERT INTO Ships.teShipDetail (MMSI, ShipName, Latitude, Longitude, ShipTypeID) VALUES 
+(111111111, 'Anne Sleuth', 46.851859, -129.322418, 1),
+(111112211, 'Bon Voyage', 47.871859, -130.322418, 2),
+(367197230, 'Buck & Ann', 46.451859, -124.322418, 1),
+(371321345, 'Chrimeney Jeeps', 51.421869, -135.322418, 1),
+(381321345, 'Chappy Pappy', 51.456469, -131.135418, 3),
+(371341345, 'Charlies Cheepo', 40.456469, -126.155418, 3),
+(384841345, 'Dudes Dud', 43.756854, -124.456789, 3),
+(397541345, 'Earles Agony', 43.897445, -124.557781, 3),
+(471233478, 'Franks SingleFleet', 45.114445, -127.654811, 2),
+(124835678, 'Forget Flying', 40.458123, -120.151451, 3),
+(813545664, 'Genas Sinker', 46.124545, -127.654811, 3),
+(876541242, 'Hectors Habit', 40.114445, -127.774811, 2),
+(991233478, 'Icant Float', 45.548123, -129.811451, 3),
+(871233478, 'Jacks Rwild', 42.712387, -133.887451, 3),
+(888233478, 'Kelly CanUStop', 41.112387, -128.457451, 1),
+(678433478, 'Larry Leaper', 40.512387, -125.877451, 3),
+(367150410, 'Major Major', 46.333302, -124.116333, 3),
+(387150410, 'Neato Torpedo', 47.333302, -124.056333, 3),
+(487150410, 'October Ocean', 48.333302, -126.556333, 3),
+(587230410, 'Pauls PushingIt', 46.583302, -127.586333, 3),
+(467230410, 'Quest4 Johnny', 48.183302, -128.686333, 3),
+(547230410, 'Roger DodgerOver', 49.283302, -124.786333, 3),
+(847251152, 'Sarah Sleeting', 48.285102, -127.586333, 1),
+(947252151, 'Tom And Jerry', 39.285102, -128.456333, 3),
+(101252151, 'Ugotta B KiddingMe', 30.285102, -128.452233, 3),
+(132452151, 'Versions Unknown', 33.285102, -140.454233, 3),
+(242452151, 'Wild For The Sea', 40.518102, -145.334233, 3),
+(587452151, 'X The Racer', 45.518102, -120.344233, 2),
+(681452151, 'Yes I can', 40.418202, -123.486233, 3)
 
 --(876452151, 'Zuess', 41.418202, -128.546233),
 --(367002170, 'Edward Brusco', 46.256516, -124.023048),
