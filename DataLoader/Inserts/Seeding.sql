@@ -10,21 +10,21 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 --DELETIONS
-DELETE dbo.Orders
-DBCC CHECKIDENT ('dbo.Orders', RESEED, 0);
-DELETE dbo.Person
-DBCC CHECKIDENT ('dbo.Person', RESEED, 0);
-TRUNCATE TABLE dbo.ShipDetail
+DELETE dbo.teOrder
+DBCC CHECKIDENT ('dbo.teOrder', RESEED, 0);
+DELETE dbo.tePerson
+DBCC CHECKIDENT ('dbo.tePerson', RESEED, 0);
+TRUNCATE TABLE dbo.teShipDetail
 GO
 
 --INSERTS
-SET IDENTITY_INSERT dbo.Person ON;
-INSERT INTO dbo.Person (PersonId, FirstName, LastName) VALUES (1, 'Brett', 'Morin'),(2, 'Emily', 'Morin');
-SET IDENTITY_INSERT dbo.Person OFF;
-SET IDENTITY_INSERT dbo.Orders ON;
-INSERT INTO dbo.Orders ( OrderId, PersonId, [Description]) VALUES (1, 1, 'Shirt'),(2, 1, 'Pants'),(3, 1, 'Shoes'),(4, 2, 'Dress'),(5, 2, 'Shoes');
-SET IDENTITY_INSERT dbo.Orders OFF;
-INSERT INTO dbo.ShipDetail (MMSI, ShipName, Latitude, Longitude) VALUES 
+SET IDENTITY_INSERT dbo.tePerson ON;
+INSERT INTO dbo.tePerson (PersonId, FirstName, LastName) VALUES (1, 'Brett', 'Morin'),(2, 'Emily', 'Morin');
+SET IDENTITY_INSERT dbo.tePerson OFF;
+SET IDENTITY_INSERT dbo.teOrder ON;
+INSERT INTO dbo.teOrder ( OrderId, PersonId, [Description]) VALUES (1, 1, 'Shirt'),(2, 1, 'Pants'),(3, 1, 'Shoes'),(4, 2, 'Dress'),(5, 2, 'Shoes');
+SET IDENTITY_INSERT dbo.teOrder OFF;
+INSERT INTO dbo.teShipDetail (MMSI, ShipName, Latitude, Longitude) VALUES 
 (111111111, 'Anne Sleuth', 46.851859, -129.322418),
 (111112211, 'Bon Voyage', 47.871859, -130.322418),
 (367197230, 'Buck & Ann', 46.451859, -124.322418),

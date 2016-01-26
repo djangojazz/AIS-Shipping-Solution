@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[ShipDetail]
+﻿CREATE TABLE [dbo].[teShipDetail]
 (
 	[ShipId] INT IDENTITY NOT NULL CONSTRAINT PK_ShipDetail_ShipId PRIMARY KEY,
 	[MMSI] INT NOT NULL,

@@ -7,8 +7,8 @@ BEGIN
 	,	p.LastName
 	,	o.OrderId
 	,	o.Description
-	FROM dbo.Person p
-		JOIN dbo.Orders o ON p.PersonId = o.PersonId
+	FROM dbo.tePerson p
+		JOIN dbo.teOrder o ON p.PersonId = o.PersonId
 	WHERE p.PersonId = @PersonId
 RETURN 0  
 END

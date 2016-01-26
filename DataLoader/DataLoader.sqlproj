@@ -63,14 +63,15 @@
     <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Person.sql" />
-    <Build Include="Tables\Orders.sql" />
+    <Build Include="Tables\tePerson.sql" />
+    <Build Include="Tables\teOrder.sql" />
     <Build Include="Procedures\pGetOrdersByPersonId.sql" />
     <Build Include="Views\vPersonOrders.sql" />
-    <Build Include="Tables\ShipDetail.sql" />
+    <Build Include="Tables\teShipDetail.sql" />
     <Build Include="Procedures\pGetShipByShipId.sql" />
     <Build Include="Procedures\pGetAllShips.sql" />
     <Build Include="Procedures\pShipsMockService.sql" />
+    <Build Include="Tables\tdShipType.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

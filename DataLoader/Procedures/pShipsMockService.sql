@@ -21,7 +21,7 @@ BEGIN
 	,	ShipName
 	,	CASE WHEN @Bit = 0 THEN Latitude + @Num ELSE Latitude - @Num END AS Latitude
 	,	CASE WHEN @Bit = 0 THEN Longitude + @Num ELSE Longitude - @Num END AS Longitude
-	FROM dbo.ShipDetail
+	FROM dbo.teShipDetail
 
 END
 GO
