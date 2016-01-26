@@ -22,7 +22,7 @@ Public Class ChartingDashboardViewModel
 
 
   'PROPERTY
-  Public Property LocationRectangle() As LocationRect
+  Public Property LocationRectangle As LocationRect
 
   Public Property ShipLocations As ObservableCollection(Of ShipModel)
 
@@ -46,7 +46,7 @@ Public Class ChartingDashboardViewModel
   'METHODS
   Private Function RefreshShipsAndResetMap() As Task
     Dim otask = Task.Factory.StartNew(Sub()
-                                        ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().LoadShipLocations())
+                                        ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().TestLoadShipLocations())
                                         LocationRectangle = New ShipsService().GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
                                       End Sub)
     Return otask
@@ -78,7 +78,10 @@ Public Class ChartingDashboardViewModel
   Protected Overridable Sub Dispose(disposing As Boolean)
     If disposing Then
       _timers.ForEach(Sub(x As Timer) x.Dispose())
-      ErrorMessage = String.Empty
+      ErrorMessage = Nothing
+      LocationRectangle = Nothing
+      ShipLocations = Nothing
+      ShipLocationsFiltered = Nothing
     End If
   End Sub
 #End Region

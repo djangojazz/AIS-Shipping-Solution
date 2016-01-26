@@ -91,7 +91,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("40")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
     Public Property PagingSize() As Integer
         Get
             Return CType(Me("PagingSize"),Integer)

@@ -2,7 +2,7 @@
 Imports Microsoft.Maps.MapControl.WPF
 
 Public Class ShipsService
-  Public Function LoadShipLocations() As IList(Of ShipModel)
+  Public Function TestLoadShipLocations() As IList(Of ShipModel)
     Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC dbo.pShipsMockService 's', 10000"))
     Return dBships.Select(Function(x) New ShipModel With
                           {
