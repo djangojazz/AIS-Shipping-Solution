@@ -21,7 +21,7 @@
       <Value Profile="(Default)">Ships Details</Value>
     </Setting>
     <Setting Name="GridWidthPercent" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="MapLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mapping Details</Value>

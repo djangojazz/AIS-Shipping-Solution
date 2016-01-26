@@ -4,5 +4,5 @@
   Public Property ShipName As String
   Public Property Latitude As Double
   Public Property Longitude As Double
-
+  Public Property ShipTypeId As Integer
 End Class

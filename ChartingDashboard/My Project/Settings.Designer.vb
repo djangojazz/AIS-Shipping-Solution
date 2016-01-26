@@ -127,7 +127,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.25")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.3")>  _
     Public Property GridWidthPercent() As Double
         Get
             Return CType(Me("GridWidthPercent"),Double)

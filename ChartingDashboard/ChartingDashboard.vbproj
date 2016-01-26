@@ -100,9 +100,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Business\DelegateCommand.vb" />
+    <Compile Include="Business\EnumBindingSourceExtensions.vb" />
     <Compile Include="Business\MapInteractivity.vb" />
     <Compile Include="Business\SettingBindingExtension.vb" />
     <Compile Include="Business\ShipsService.vb" />
+    <Compile Include="Models\Enums.vb" />
     <Compile Include="Models\ShipModel.vb" />
     <Compile Include="Service References\GeocodeService\Reference.vb">
       <AutoGen>True</AutoGen>
@@ -256,12 +258,6 @@
       <Project>{546b1996-6c93-41f9-b277-cdb9aee9e39d}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Compass.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="LittleBoat.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SmallBoat.ico" />

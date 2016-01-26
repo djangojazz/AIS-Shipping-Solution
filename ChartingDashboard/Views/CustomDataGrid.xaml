@@ -25,8 +25,14 @@
           <EmbossBitmapEffect/>
         </Label.BitmapEffect>
       </Label>
-      <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{DynamicResource brush.Foreground.MainText}" BorderThickness="0"              
+      <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{DynamicResource brush.Foreground.MainText}" BorderThickness="0" AutoGenerateColumns="False"             
                   Background="Transparent" RowBackground="Transparent"   GridLinesVisibility="None" IsReadOnly="True" HorizontalAlignment="Center" FontSize="14">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="MMSI" Binding="{Binding MMSI}" CanUserReorder="True"/>
+          <DataGridTextColumn Header="ShipName" Binding="{Binding ShipName}" CanUserReorder="True"/>
+          <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserReorder="False"/>
+          <DataGridComboBoxColumn Header="ShipType" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:ShipType}}}" SelectedItemBinding="{Binding ShipType}" />
+        </DataGrid.Columns>
       </DataGrid>
     </StackPanel>
   </Border>

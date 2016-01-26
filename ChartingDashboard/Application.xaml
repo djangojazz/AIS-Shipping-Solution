@@ -14,11 +14,23 @@
       <GradientStop Color="#FF76B3C5" Offset="0.574"/>
       <GradientStop Color="White" Offset="0.003"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="brush.Foreground.BoatGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+    <LinearGradientBrush x:Key="brush.Foreground.BoatGradientOwned" EndPoint="0.5,1" StartPoint="0.5,0">
       <GradientStop Color="#FF112363" Offset="0.916"/>
       <GradientStop Color="#FF535F87" Offset="1"/>
       <GradientStop Color="#FF5A6AA4" Offset="0.544"/>
       <GradientStop Color="#FFD0D8F1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="brush.Foreground.BoatGradientContractor" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FF116345" Offset="0.916"/>
+      <GradientStop Color="#FF53876F" Offset="1"/>
+      <GradientStop Color="#FF5AA47C" Offset="0.544"/>
+      <GradientStop Color="#FFD0F1E5"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="brush.Foreground.BoatGradientOther" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FF631111" Offset="0.916"/>
+      <GradientStop Color="#FF875353" Offset="1"/>
+      <GradientStop Color="#FFA45A5A" Offset="0.544"/>
+      <GradientStop Color="#FFF1D0D2"/>
     </LinearGradientBrush>
   </Application.Resources>
 </Application>
