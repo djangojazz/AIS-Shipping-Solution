@@ -4,7 +4,7 @@ Public Class CustomMapControl
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)
     Dim pin As FrameworkElement = TryCast(sender, FrameworkElement)
     MapLayer.SetPosition(ContentPopup, MapLayer.GetPosition(pin))
-    MapLayer.SetPositionOffset(ContentPopup, New Point(20, -15))
+    MapLayer.SetPositionOffset(ContentPopup, New Point(-160, -160))
 
     Dim location = DirectCast(pin.Tag, ShipModel)
 

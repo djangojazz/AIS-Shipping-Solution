@@ -79,7 +79,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.5")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.01")>  _
     Public Property Padding() As Double
         Get
             Return CType(Me("Padding"),Double)
@@ -151,7 +151,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
     Public Property MapRefreshFrequencyInSeconds() As Integer
         Get
             Return CType(Me("MapRefreshFrequencyInSeconds"),Integer)
