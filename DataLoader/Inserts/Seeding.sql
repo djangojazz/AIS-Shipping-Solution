@@ -10,6 +10,14 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 --DELETIONS
+DELETE dbo.tbPerson_Address
+DBCC CHECKIDENT ('dbo.tbPerson_Address', RESEED, 0);
+GO
+
+DELETE dbo.teAddress
+DBCC CHECKIDENT ('dbo.teAddress', RESEED, 0);
+GO
+
 DELETE dbo.teOrder
 DBCC CHECKIDENT ('dbo.teOrder', RESEED, 0);
 
@@ -24,9 +32,17 @@ DBCC CHECKIDENT ('Ships.tdShipType', RESEED, 0);
 GO
 
 --INSERTS
+SET IDENTITY_INSERT dbo.teAddress ON;
+INSERT INTO dbo.teAddress (AddressId, StreetAddress, City, [State], ZipCode, Latitude, Longitude) VALUES (1, '7560 SW Lara St.', 'Portland', 'OR', 97223, 45.4573057, -122.7565177);
+SET IDENTITY_INSERT dbo.teAddress OFF;
+
 SET IDENTITY_INSERT dbo.tePerson ON;
 INSERT INTO dbo.tePerson (PersonId, FirstName, LastName) VALUES (1, 'Brett', 'Morin'),(2, 'Emily', 'Morin');
 SET IDENTITY_INSERT dbo.tePerson OFF;
+
+SET IDENTITY_INSERT dbo.tbPerson_Address ON;
+INSERT INTO dbo.tbPerson_Address (Person_AddressId, PersonId, AddressId) VALUES (1, 1, 1);
+SET IDENTITY_INSERT dbo.tbPerson_Address OFF;
 
 SET IDENTITY_INSERT dbo.teOrder ON;
 INSERT INTO dbo.teOrder ( OrderId, PersonId, [Description]) VALUES (1, 1, 'Shirt'),(2, 1, 'Pants'),(3, 1, 'Shoes'),(4, 2, 'Dress'),(5, 2, 'Shoes');

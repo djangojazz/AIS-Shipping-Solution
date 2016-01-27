@@ -74,6 +74,9 @@
     <Build Include="Procedures\pShipsMockService.sql" />
     <Build Include="Tables\tdShipType.sql" />
     <Build Include="Schemas\Ships.sql" />
+    <Build Include="Procedures\pFindMyAddress.sql" />
+    <Build Include="Tables\teAddress.sql" />
+    <Build Include="Tables\tbPerson_Address.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

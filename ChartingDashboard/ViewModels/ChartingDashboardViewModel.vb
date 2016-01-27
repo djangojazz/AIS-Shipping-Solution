@@ -28,6 +28,19 @@ Public Class ChartingDashboardViewModel
 
   Public Property ShipLocationsFiltered As ObservableCollection(Of ShipModel)
 
+  Public Property Dimension As Double
+
+  Private _zoomLevel As Integer
+  Public Property ZoomLevel As Integer
+    Get
+      Return _zoomLevel
+    End Get
+    Set(ByVal value As Integer)
+      _zoomLevel = value
+      Dimension = _zoomLevel * 20
+    End Set
+  End Property
+
   <SafeForDependencyAnalysis>
   Public ReadOnly Property ContentHeight As Double
     Get

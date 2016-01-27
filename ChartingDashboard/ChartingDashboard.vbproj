@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\ConverterNegHalf.vb" />
     <Compile Include="Business\DelegateCommand.vb" />
     <Compile Include="Business\EnumBindingSourceExtensions.vb" />
     <Compile Include="Business\MapInteractivity.vb" />
