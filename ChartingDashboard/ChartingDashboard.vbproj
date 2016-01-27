@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\Converters\ColorConverter.vb" />
     <Compile Include="Business\Converters\HeightConverter.vb" />
     <Compile Include="Business\Converters\WidthConverter.vb" />
     <Compile Include="Business\DelegateCommand.vb" />

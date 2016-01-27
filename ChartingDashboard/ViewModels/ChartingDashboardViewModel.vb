@@ -37,7 +37,7 @@ Public Class ChartingDashboardViewModel
     End Get
     Set(ByVal value As Integer)
       _zoomLevel = value
-      Dimension = _zoomLevel * 20
+      Dimension = _zoomLevel * 15
     End Set
   End Property
 

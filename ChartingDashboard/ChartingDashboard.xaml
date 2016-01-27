@@ -9,28 +9,36 @@
         Width="{local:SettingBinding Width}"
         Background="{StaticResource brush.Foreground.MainBoard}" Icon="SmallBoat.ico">
   <Window.Resources>
-    <Style TargetType="{x:Type DataGridColumnHeader}">
-      <Setter Property="Background" Value="Transparent" />
-      <Setter Property="FontWeight" Value="Bold" />
+    <Style TargetType="{x:Type Label}" x:Key="LegendText">
+      <Setter Property="VerticalAlignment" Value="Bottom" />
+      <Setter Property="Foreground" Value="{StaticResource brush.Foreground.MainText}" />
     </Style>
-    <Style TargetType="{x:Type DataGridRowHeader}">
-      <Setter Property="Background" Value="Transparent" />
-    </Style>
-    
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <local:CustomDataGrid Grid.Column="0" Height="{Binding ContentHeight}" Margin="2" Width="{Binding DatagridWidth}" />
-      <local:CustomMapControl Grid.Column="1" Height="{Binding ContentHeight}" Margin="2" />
-    </Grid>
-    <Label x:Name="lblErrorMessageFooter" Grid.Row="1" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <UniformGrid Rows="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="2">
+      <Label Content="Pacific Owned:"  Style="{StaticResource LegendText}" />
+      <Path Fill="{StaticResource brush.Foreground.BoatGradientOwned}" Style="{StaticResource BoatPathData}" />
+      <Label Content="Contractor:"  Style="{StaticResource LegendText}"  />
+      <Path Fill="{StaticResource brush.Foreground.BoatGradientContractor}" Style="{StaticResource BoatPathData}" />
+      <Label Content="Other:"  Style="{StaticResource LegendText}" />
+      <Path Fill="{StaticResource brush.Foreground.BoatGradientOther}" Style="{StaticResource BoatPathData}" />
+    </UniformGrid>
+
+    <local:CustomDataGrid Grid.Row="1" Grid.Column="0" Height="{Binding ContentHeight}" Margin="2" Width="{Binding DatagridWidth}" />
+    <local:CustomMapControl Grid.Row="1" Grid.Column="1" Height="{Binding ContentHeight}" Margin="2" />
+
+    <Label x:Name="lblErrorMessageFooter" Grid.Row="2" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
   </Grid>
+  
+  
+  
 </Window>
