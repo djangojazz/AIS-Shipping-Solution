@@ -11,6 +11,7 @@
   <Window.Resources>
     <Style TargetType="{x:Type Label}" x:Key="LegendText">
       <Setter Property="VerticalAlignment" Value="Bottom" />
+      <Setter Property="Margin" Value="30,0" />
       <Setter Property="Foreground" Value="{StaticResource brush.Foreground.MainText}" />
     </Style>
   </Window.Resources>
@@ -19,12 +20,9 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
-    <UniformGrid Rows="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="2">
+    <UniformGrid Rows="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5">
       <Label Content="Pacific Owned:"  Style="{StaticResource LegendText}" />
       <Path Fill="{StaticResource brush.Foreground.BoatGradientOwned}" Style="{StaticResource BoatPathData}" />
       <Label Content="Contractor:"  Style="{StaticResource LegendText}"  />
@@ -32,11 +30,9 @@
       <Label Content="Other:"  Style="{StaticResource LegendText}" />
       <Path Fill="{StaticResource brush.Foreground.BoatGradientOther}" Style="{StaticResource BoatPathData}" />
     </UniformGrid>
-
-    <local:CustomDataGrid Grid.Row="1" Grid.Column="0" Height="{Binding ContentHeight}" Margin="2" Width="{Binding DatagridWidth}" />
-    <local:CustomMapControl Grid.Row="1" Grid.Column="1" Height="{Binding ContentHeight}" Margin="2" />
-
-    <Label x:Name="lblErrorMessageFooter" Grid.Row="2" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
+    <local:CustomMapControl Grid.Row="1" Grid.Column="1" Height="{Binding MapContentHeight}" Margin="2" />
+    <local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />
+    <Label x:Name="lblErrorMessageFooter" Grid.Row="3" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
   </Grid>
   
   

@@ -14,6 +14,12 @@
     <Style TargetType="{x:Type DataGridRowHeader}">
       <Setter Property="Background" Value="Transparent" />
     </Style>
+    <Style TargetType="{x:Type ComboBox}" x:Key="ColorConverterComboBox">
+      <Setter Property="Foreground" Value="{Binding ShipType, Converter={StaticResource ConvertColor}}"/>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}" x:Key="ColorConverterTextBox">
+      <Setter Property="Foreground" Value="{Binding ShipType, Converter={StaticResource ConvertColor}}"/>
+    </Style>
   </UserControl.Resources>
   <Border CornerRadius="15" Background="{DynamicResource brush.Foreground.MainBoard}">
     <Border.BitmapEffect>
@@ -28,10 +34,10 @@
       <DataGrid x:Name="ShipDetails" ItemsSource="{Binding ShipLocationsFiltered}"  Foreground="{DynamicResource brush.Foreground.MainText}" BorderThickness="0" AutoGenerateColumns="False"             
                   Background="Transparent" RowBackground="Transparent"   GridLinesVisibility="None" IsReadOnly="True" HorizontalAlignment="Center" FontSize="14">
         <DataGrid.Columns>
-          <DataGridTextColumn Header="MMSI" Binding="{Binding MMSI}" CanUserReorder="True"/>
-          <DataGridTextColumn Header="ShipName" Binding="{Binding ShipName}" CanUserReorder="True"/>
-          <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserReorder="False"/>
-          <DataGridComboBoxColumn Header="ShipType" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:ShipType}}}" SelectedItemBinding="{Binding ShipType}" />
+          <DataGridTextColumn Header="MMSI" Binding="{Binding MMSI}" CanUserReorder="True" ElementStyle="{StaticResource ColorConverterTextBox}"/>
+          <DataGridTextColumn Header="ShipName" Binding="{Binding ShipName}" CanUserReorder="True" ElementStyle="{StaticResource ColorConverterTextBox}"/>
+          <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserReorder="False" ElementStyle="{StaticResource ColorConverterTextBox}"/>
+          <DataGridComboBoxColumn Header="ShipType" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:ShipType}}}" SelectedItemBinding="{Binding ShipType}"   ElementStyle="{StaticResource ColorConverterComboBox}"  />
         </DataGrid.Columns>
       </DataGrid>
     </StackPanel>

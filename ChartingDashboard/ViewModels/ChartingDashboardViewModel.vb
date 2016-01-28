@@ -8,9 +8,10 @@ Public Class ChartingDashboardViewModel
   Implements IDisposable
 
   'VARIABLES
-  Private _oldFiltered As List(Of Integer) = New List(Of Integer)
+  Private _totalFilteredCount As Integer
+  Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
   Private _timers As New List(Of Timer)
-
+  Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
 
   'CONSTRUCTOR
   Public Sub New()
@@ -30,6 +31,14 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
+  <SafeForDependencyAnalysis>
+  Public ReadOnly Property Color As LinearGradientBrush
+    Get
+      Return CType(Application.Current.Resources("brush.Foreground.BoatGradientOther"), LinearGradientBrush)
+    End Get
+
+  End Property
+
   Private _zoomLevel As Integer
   Public Property ZoomLevel As Integer
     Get
@@ -42,16 +51,16 @@ Public Class ChartingDashboardViewModel
   End Property
 
   <SafeForDependencyAnalysis>
-  Public ReadOnly Property ContentHeight As Double
+  Public ReadOnly Property MapContentHeight As Double
     Get
-      Return MySettings.Default.Height * MySettings.Default.ContentHeightPercent
+      Return (MySettings.Default.Height * MySettings.Default.MapContentHeightPercent)
     End Get
   End Property
 
   <SafeForDependencyAnalysis>
-  Public ReadOnly Property DatagridWidth() As Double
+  Public ReadOnly Property MarqueeContentHeight As Double
     Get
-      Return MySettings.Default.Width * MySettings.Default.GridWidthPercent
+      Return (MySettings.Default.Height * MySettings.Default.MarqueeContentHeightPercentage)
     End Get
   End Property
 
@@ -66,19 +75,22 @@ Public Class ChartingDashboardViewModel
   End Function
 
   Private Sub FilterRefreshShips()
-    If ShipLocations?.Count > 0 Then
-      If (ShipLocations.Count <> _oldFiltered.Count) Then
+    If (ShipLocations?.Count > 0) Then
+      If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
         ObtainFilteredShips()
       Else
-        _oldFiltered.Clear()
+        _pagingMemoryOfFilteredShips.Clear()
         ObtainFilteredShips()
       End If
     End If
   End Sub
 
   Private Sub ObtainFilteredShips()
-    ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(_ShipLocations.Where(Function(x) Not _oldFiltered.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
-    ShipLocationsFiltered.ToList().ForEach(Sub(x) _oldFiltered.Add(x.MMSI))
+    Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.Where(Function(x) _acceptableShips.Contains(x.ShipType)))
+    _totalFilteredCount = totalsToFilter.Count
+
+    ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
+    ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
   End Sub
 
 
