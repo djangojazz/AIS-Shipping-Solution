@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
   <UserControl.Resources>
-    
+
     <local:WidthConverter x:Key="ConvertWidth"/>
     <local:HeightConverter x:Key="ConvertHeight"/>
     <local:ColorConverter x:Key="ConvertColor"/>
@@ -24,37 +24,42 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <Label Grid.Row="0" x:Name="lblCustomMapHeader" Content="{local:SettingBinding MapLegend}" Foreground="{DynamicResource brush.Foreground.MainText}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-      <StackPanel Orientation="Horizontal" />
-      <bing:Map Grid.Row="1" x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}">
-        <bing:MapItemsControl ItemsSource="{Binding ShipLocations}">
-          <bing:MapItemsControl.ItemTemplate>
-            <DataTemplate>
-              <bing:MapLayer VerticalAlignment="Bottom" bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave">
-                <Canvas>
-                  <Viewbox x:Name="BoatImage" 
-                                          Canvas.Left="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension, Converter={StaticResource ConvertWidth}}"
+      <Grid Grid.Row="1">
+        <bing:Map  x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}">
+          <bing:MapItemsControl ItemsSource="{Binding ShipLocations}">
+            <bing:MapItemsControl.ItemTemplate>
+              <DataTemplate>
+                <bing:MapLayer VerticalAlignment="Bottom" bing:MapLayer.Position="{Binding Location}" Tag="{Binding}" MouseEnter="Pushpin_MouseEnter" MouseLeave="Pushpin_MouseLeave">
+                  <Canvas>
+                    <Viewbox x:Name="BoatImage" Canvas.Left="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension, Converter={StaticResource ConvertWidth}}"
                                               Canvas.Top="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension, Converter={StaticResource ConvertHeight}}"
                                               Width="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" Height="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" 
                            Opacity="0.9" RenderOptions.BitmapScalingMode="HighQuality">
-                    <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource BoatPathData}">
-                      
-                    </Path>
-                  </Viewbox>
-                </Canvas>
-              </bing:MapLayer>
-            </DataTemplate>
-          </bing:MapItemsControl.ItemTemplate>
-        </bing:MapItemsControl>
-        <bing:MapLayer x:Name="ContentPopupLayer">
+                      <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource BoatPathData}">
+
+                      </Path>
+                    </Viewbox>
+                  </Canvas>
+                </bing:MapLayer>
+              </DataTemplate>
+            </bing:MapItemsControl.ItemTemplate>
+          </bing:MapItemsControl>
+          <bing:MapLayer x:Name="ContentPopupLayer">
             <Grid x:Name="ContentPopup" Visibility="Collapsed" Background="White" Opacity="0.85">
-            <StackPanel Margin="15">
-              <TextBlock x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" ></TextBlock>
-              <TextBlock x:Name="ContentPopupDescription"  FontSize="12"></TextBlock>
-              <TextBlock x:Name="ContentPopupSize"  FontSize="12"></TextBlock>
-            </StackPanel>
-          </Grid>
-        </bing:MapLayer>
-      </bing:Map>
+              <StackPanel Margin="15">
+                <TextBlock x:Name="ContentPopupText"  FontSize="14" FontWeight="Bold" ></TextBlock>
+                <TextBlock x:Name="ContentPopupDescription"  FontSize="12"></TextBlock>
+                <TextBlock x:Name="ContentPopupSize"  FontSize="12"></TextBlock>
+                <TextBlock x:Name="ContentPopupMapSize"  FontSize="12"></TextBlock>
+              </StackPanel>
+            </Grid>
+          </bing:MapLayer>
+        </bing:Map>
+        <Border Background="{StaticResource brush.Foreground.Legend}"  VerticalAlignment="Top" HorizontalAlignment="Left" Opacity="0.75" 
+                BorderBrush="{StaticResource brush.Foreground.MainBoard}" BorderThickness="2" CornerRadius="5" Margin="5">
+          <StackPanel x:Name="eventsPanel" />
+        </Border>
+      </Grid>
     </Grid>
   </Border>
 </UserControl>

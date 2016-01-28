@@ -2,7 +2,6 @@
 Imports System.Timers
 
 Public Class BaseViewModel
-  Implements INotifyPropertyChanged
 
   Private Shared _errorMessage As String = String.Empty
   Public Shared Property ErrorMessage() As String
@@ -14,12 +13,6 @@ Public Class BaseViewModel
       NotifyStaticPropertyChanged(NameOf(ErrorMessage))
     End Set
   End Property
-
-  Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-
-  Public Sub OnPropertyChanged(propertyName As String)
-    RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-  End Sub
 
   Public Shared Event StaticPropertyChanged As EventHandler(Of PropertyChangedEventArgs)
 

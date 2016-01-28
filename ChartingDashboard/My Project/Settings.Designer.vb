@@ -103,7 +103,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.68")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.91")>  _
     Public Property MapContentHeightPercent() As Double
         Get
             Return CType(Me("MapContentHeightPercent"),Double)
@@ -151,7 +151,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("400")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("4000")>  _
     Public Property MapRefreshFrequencyInSeconds() As Integer
         Get
             Return CType(Me("MapRefreshFrequencyInSeconds"),Integer)

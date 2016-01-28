@@ -36,5 +36,10 @@
       <GradientStop Color="#FFA45A5A" Offset="0.544"/>
       <GradientStop Color="#FFF1D0D2"/>
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="brush.Foreground.Legend" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="White" Offset="0"/>
+      <GradientStop Color="#FF6690CB" Offset="0.5"/>
+      <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
   </Application.Resources>
 </Application>

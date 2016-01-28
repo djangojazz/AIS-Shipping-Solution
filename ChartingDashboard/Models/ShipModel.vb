@@ -5,4 +5,5 @@ Public Class ShipModel
   Public Property ShipName As String
   Public Property ShipType As ShipType
   Public Property Location As Location
+  Public Property Overlaps As Boolean
 End Class
