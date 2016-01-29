@@ -6,7 +6,6 @@ Public Class CustomMapControl
 
   Public Sub New()
     InitializeComponent()
-    AddHandler map.ViewChangeOnFrame, AddressOf Map_ViewChangeOnFrame
   End Sub
 
   Private Sub Map_ViewChangeOnFrame(ByVal sender As Object, ByVal e As MapEventArgs)
@@ -23,6 +22,8 @@ Public Class CustomMapControl
     Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
 
     Dim myHome = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 1).Location
+
+    'dc.Dimension = map.ZoomLevel * 15
 
     'Dim thaiRoses = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 2).Location
     'Dim seattle = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 3).Location
@@ -58,32 +59,31 @@ Public Class CustomMapControl
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)
     Dim pin As FrameworkElement = TryCast(sender, FrameworkElement)
     Dim pos = MapLayer.GetPosition(pin)
-
-    Dim rightEdge = map.ActualWidth * 0.5
+    Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
 
     Dim point = New Point
 
     map.TryLocationToViewportPoint(pos, point)
-    Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
+
+    'Test
 
     Dim newLocation = map.ViewportPointToLocation(New Point(point.X + (dc.Dimension / 2), point.Y))
+    Dim bufferRadius = MapHelpers.HaversineDistance(pos, newLocation, DistanceUnit.Miles)
 
-    Dim newPin As New Pushpin()
-    newPin.Location = newLocation
+    map.Children.Add(New Pushpin With {.Location = newLocation})
 
-    map.Children.Add(newPin)
 
     Dim location = DirectCast(pin.Tag, ShipModel)
 
     Dictn = New Dictionary(Of String, String) From {
       {"MMSI", $"{location.MMSI}"},
       {"ShipName", $"{location.ShipName}"},
-      {"Position", $"{pos}"},
       {"Mapsize Height:", $"{map.ActualHeight}"},
-      {"Mapsize Width:", $"{map.ActualWidth}"}
+      {"Mapsize Width:", $"{map.ActualWidth}"},
+      {"buffer Radius:", $"{bufferRadius}"},
+      {"Collision", $"{location.Overlaps}"},
+      {"Position", $"{pos}"}
     }
-
-    '{"ViewPoint", $"{viewPoint}"},
 
     'eventsPanel.Children.Clear()
     AddTextBoxes()

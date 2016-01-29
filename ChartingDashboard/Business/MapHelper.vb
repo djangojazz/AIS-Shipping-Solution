@@ -38,4 +38,5 @@ Public Module MapHelpers
     Miles
     Kilometers
   End Enum
+
 End Module

@@ -26,7 +26,7 @@
       <Label Grid.Row="0" x:Name="lblCustomMapHeader" Content="{local:SettingBinding MapLegend}" Foreground="{DynamicResource brush.Foreground.MainText}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
       <Grid Grid.Row="1">
         <bing:Map  x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}" 
-                   MouseDoubleClick="map_MouseDoubleClick">
+                   MouseDoubleClick="map_MouseDoubleClick" ViewChangeOnFrame="Map_ViewChangeOnFrame" >
           <bing:MapItemsControl ItemsSource="{Binding ShipLocations}">
             <bing:MapItemsControl.ItemTemplate>
               <DataTemplate>
@@ -36,9 +36,7 @@
                                               Canvas.Top="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension, Converter={StaticResource ConvertHeight}}"
                                               Width="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" Height="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" 
                            Opacity="0.9" RenderOptions.BitmapScalingMode="HighQuality">
-                      <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource BoatPathData}">
-
-                      </Path>
+                      <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource BoatPathData}"/>
                     </Viewbox>
                   </Canvas>
                 </bing:Pushpin>

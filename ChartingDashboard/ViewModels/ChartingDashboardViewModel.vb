@@ -13,6 +13,7 @@ Public Class ChartingDashboardViewModel
   Private _timers As New List(Of Timer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
 
+
   'CONSTRUCTOR
   Public Sub New()
     RefreshShipsAndResetMap().Wait()
@@ -29,7 +30,6 @@ Public Class ChartingDashboardViewModel
 
   Public Property ShipLocationsFiltered As ObservableCollection(Of ShipModel)
 
-  Public Property Dimension As Double
 
   <SafeForDependencyAnalysis>
   Public ReadOnly Property Color As LinearGradientBrush
@@ -47,6 +47,17 @@ Public Class ChartingDashboardViewModel
     Set(ByVal value As Integer)
       _zoomLevel = value
       Dimension = _zoomLevel * 15
+    End Set
+  End Property
+
+  Private _doIt As Integer
+  Public Property DoIt As Integer
+    Get
+      Return _doIt
+    End Get
+    Set(ByVal value As Integer)
+      _doIt = value
+
     End Set
   End Property
 

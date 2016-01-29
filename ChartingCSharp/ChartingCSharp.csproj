@@ -64,7 +64,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Business\DelegateCommand.cs" />
-    <Compile Include="Business\MapHelper.cs" />
     <Compile Include="Model\Ship.cs" />
     <Compile Include="Service References\GeocodeService\Reference.cs">
       <AutoGen>True</AutoGen>
