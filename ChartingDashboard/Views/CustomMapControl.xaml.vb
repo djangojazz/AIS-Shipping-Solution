@@ -23,28 +23,33 @@ Public Class CustomMapControl
     Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
 
     Dim myHome = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 1).Location
-    Dim thaiRoses = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 2).Location
-    Dim seattle = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 3).Location
 
-    Dim homeThaiRoses = MapHelpers.HaversineDistance(myHome, thaiRoses, DistanceUnit.Miles)
-    Dim homeSeattle = MapHelpers.HaversineDistance(myHome, seattle, DistanceUnit.Miles)
+    'Dim thaiRoses = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 2).Location
+    'Dim seattle = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 3).Location
+
+    'Dim homeThaiRoses = MapHelpers.HaversineDistance(myHome, thaiRoses, DistanceUnit.Miles)
+    'Dim homeSeattle = MapHelpers.HaversineDistance(myHome, seattle, DistanceUnit.Miles)
 
     'Dim seattle = New Location With {.Latitude = 47.6149942, .Longitude = -122.4759882}
 
     Dictn = New Dictionary(Of String, String) From {
+      {"MAP SIZING", String.Empty},
+      {"Mapsize Height:", $"{map.ActualHeight}"},
+      {"Mapsize Width", $"{map.ActualWidth}"},
       {"Northwest", $"{bounds.Northwest:F5}"},
       {"Northeast", $"{bounds.Northeast:F5}"},
       {"Southwest", $"{bounds.Southwest:F5}"},
       {"Southeast", $"{bounds.Southeast:F5}"},
-      {"MAP DISTANCES", String.Empty},
-      {"DistanceNS", $"{distanceNS}"},
-      {"DistanceEW", $"{distanceEW}"},
-      {"KNOWN DISTANCES", String.Empty},
-      {"Distance Home To Thai Roses", $"{homeThaiRoses}"},
-      {"Distance Home To Seattle", $"{homeSeattle}"}
+      {"BOAT SIZE", String.Empty},
+      {"Boat Length", $"{dc.Dimension}"}
       }
-    '{"DistanceGardenHomeToHall", $"{distanceBetweenFixedPoint}"}
 
+    '{"KNOWN DISTANCES", String.Empty},
+    '{"Distance Home To Thai Roses", $"{homeThaiRoses}"},
+    '{"Distance Home To Seattle", $"{homeSeattle}"}
+    '{"MAP DISTANCES", String.Empty},
+    '{"DistanceNS", $"{distanceNS}"},
+    '{"DistanceEW", $"{distanceEW}"},
 
     eventsPanel.Children.Clear()
     AddTextBoxes()
@@ -56,7 +61,17 @@ Public Class CustomMapControl
 
     Dim rightEdge = map.ActualWidth * 0.5
 
-    Dim viewPoint = map.ViewportPointToLocation(New Point(rightEdge, 0))
+    Dim point = New Point
+
+    map.TryLocationToViewportPoint(pos, point)
+    Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
+
+    Dim newLocation = map.ViewportPointToLocation(New Point(point.X + (dc.Dimension / 2), point.Y))
+
+    Dim newPin As New Pushpin()
+    newPin.Location = newLocation
+
+    map.Children.Add(newPin)
 
     Dim location = DirectCast(pin.Tag, ShipModel)
 
@@ -64,12 +79,13 @@ Public Class CustomMapControl
       {"MMSI", $"{location.MMSI}"},
       {"ShipName", $"{location.ShipName}"},
       {"Position", $"{pos}"},
-      {"ViewPoint", $"{viewPoint}"},
       {"Mapsize Height:", $"{map.ActualHeight}"},
       {"Mapsize Width:", $"{map.ActualWidth}"}
     }
 
-    eventsPanel.Children.Clear()
+    '{"ViewPoint", $"{viewPoint}"},
+
+    'eventsPanel.Children.Clear()
     AddTextBoxes()
   End Sub
 
@@ -79,7 +95,7 @@ Public Class CustomMapControl
   End Sub
 
   Private Sub Pushpin_MouseLeave(sender As Object, e As MouseEventArgs)
-    'eventsPanel.Children.Clear()
+    eventsPanel.Children.Clear()
   End Sub
 
   Private Sub map_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
