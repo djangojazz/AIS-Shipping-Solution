@@ -69,7 +69,7 @@ Public Class ChartingDashboardViewModel
   Private Function RefreshShipsAndResetMap() As Task
     Dim otask = Task.Factory.StartNew(Sub()
                                         ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().TestLoadShipLocations())
-                                        LocationRectangle = New MapHelpers().GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
+                                        LocationRectangle = MapHelpers.GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
                                       End Sub)
     Return otask
   End Function

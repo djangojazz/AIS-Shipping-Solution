@@ -14,13 +14,37 @@ Public Class CustomMapControl
     Dim map As Map = CType(sender, Map)
     'Gets the bounded rectangle for the current frame
     Dim bounds As LocationRect = map.BoundingRectangle
+    Dim averageLong = (bounds.Northwest.Longitude + bounds.Northeast.Longitude) / 2
+    Dim averageLat = (bounds.Northeast.Latitude + bounds.Southeast.Latitude) / 2
+
+    Dim distanceNS = MapHelpers.HaversineDistance(bounds.Northwest, bounds.Southwest, DistanceUnit.Miles)
+    Dim distanceEW = MapHelpers.HaversineDistance(bounds.Northwest, bounds.Northeast, DistanceUnit.Miles)
+
+    Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
+
+    Dim myHome = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 1).Location
+    Dim thaiRoses = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 2).Location
+    Dim seattle = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 3).Location
+
+    Dim homeThaiRoses = MapHelpers.HaversineDistance(myHome, thaiRoses, DistanceUnit.Miles)
+    Dim homeSeattle = MapHelpers.HaversineDistance(myHome, seattle, DistanceUnit.Miles)
+
+    'Dim seattle = New Location With {.Latitude = 47.6149942, .Longitude = -122.4759882}
 
     Dictn = New Dictionary(Of String, String) From {
       {"Northwest", $"{bounds.Northwest:F5}"},
       {"Northeast", $"{bounds.Northeast:F5}"},
       {"Southwest", $"{bounds.Southwest:F5}"},
-      {"Southeast", $"{bounds.Southeast:F5}"}
+      {"Southeast", $"{bounds.Southeast:F5}"},
+      {"MAP DISTANCES", String.Empty},
+      {"DistanceNS", $"{distanceNS}"},
+      {"DistanceEW", $"{distanceEW}"},
+      {"KNOWN DISTANCES", String.Empty},
+      {"Distance Home To Thai Roses", $"{homeThaiRoses}"},
+      {"Distance Home To Seattle", $"{homeSeattle}"}
       }
+    '{"DistanceGardenHomeToHall", $"{distanceBetweenFixedPoint}"}
+
 
     eventsPanel.Children.Clear()
     AddTextBoxes()
