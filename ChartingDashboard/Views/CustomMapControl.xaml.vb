@@ -12,22 +12,7 @@ Public Class CustomMapControl
 
 
   Private Sub Map_ViewChangeOnFrame(ByVal sender As Object, ByVal e As MapEventArgs)
-    '  _parentDataContext = TryCast(DataContext, ChartingDashboardViewModel)
-
-
-    'Only the first Location is needed as we just need the radius of one point and the rest are uniform with their field distances
     SetDistanceThreshold()
-    'TryCast(DataContext, ChartingDashboardViewModel).ShipLocations.FirstOrDefault()?.Location)
-
-    'Dim thaiRoses = _parentDataContext.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 2).Location
-    'Dim seattle = dc.ShipLocations.FirstOrDefault(Function(x) x.MMSI = 3).Location
-
-    'Dim collision = _parentDataContext.LocationsCollide(myHome, thaiRoses)
-
-    '_textDictionary = New Dictionary(Of String, String) From {{"COLLISION", String.Empty}} '{"Collision:", $"{collision}"}
-
-    'eventsPanel.Children.Clear()
-    'AddTextBoxes()
   End Sub
 
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)

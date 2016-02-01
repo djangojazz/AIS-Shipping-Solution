@@ -8,7 +8,6 @@ Imports System.ComponentModel
 Public Class ChartingDashboardViewModel
   Inherits BaseViewModel
   Implements IDisposable
-  Implements INotifyPropertyChanged
 
   'VARIABLES
   Private _totalFilteredCount As Integer
@@ -18,7 +17,6 @@ Public Class ChartingDashboardViewModel
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
   Private _ships As List(Of ShipModel)
   Private _initialized As Boolean
-  Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
   Private TimerRefresh As Timer
   Private TimerFilter As Timer
 
@@ -51,7 +49,6 @@ Public Class ChartingDashboardViewModel
     End Get
     Set(value As Double)
       _DistanceThreshold = value
-      'OnPropertyChanged(NameOf(Dimension))
     End Set
   End Property
   Public Property MapItem As Map
@@ -165,9 +162,9 @@ Public Class ChartingDashboardViewModel
     Return ((DistanceThreshold * 2) > milesDistanceBetweenPoints)
   End Function
 
-  Public Sub OnPropertyChanged(fieldname As String)
-    RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(fieldname))
-  End Sub
+  'Public Sub OnPropertyChanged(fieldname As String)
+  '  RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(fieldname))
+  'End Sub
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose
