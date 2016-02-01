@@ -1,6 +1,7 @@
 ﻿Imports System.Timers
 Imports System.Collections.ObjectModel
 Imports Microsoft.Maps.MapControl.WPF
+Imports System.Linq
 
 <NotifyPropertyChanged>
 Public Class ChartingDashboardViewModel
@@ -32,14 +33,14 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
-  Public Shared Property DistanceThreshold As Double
+  Public Property DistanceThreshold As Double
+  Public Property MapItem As Map
 
   <SafeForDependencyAnalysis>
   Public ReadOnly Property Color As LinearGradientBrush
     Get
-      Return CType(Application.Current.Resources("brush.Foreground.BoatGradientOther"), LinearGradientBrush)
+      Return CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOther"), LinearGradientBrush)
     End Get
-
   End Property
 
   Private _zoomLevel As Integer
@@ -72,8 +73,8 @@ Public Class ChartingDashboardViewModel
   'METHODS
   Private Function RefreshShipsAndResetMap() As Task
     Dim otask = Task.Factory.StartNew(Sub()
-                                        ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().TestLoadShipLocations())
-                                        LocationRectangle = MapHelpers.GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
+                                        RetrieveShipsAndDetermineCollision()
+                                        LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
                                       End Sub)
     Return otask
   End Function
@@ -97,22 +98,19 @@ Public Class ChartingDashboardViewModel
     ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
   End Sub
 
-  'Private Function LocationsCollide(loc1 As Location, loc2 As Location) As Boolean
-  '  Dim point1 = New Point
-  '  Map.TryLocationToViewportPoint(loc1, point1)
+  Private Sub RetrieveShipsAndDetermineCollision()
+    ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().TestLoadShipLocations())
+  End Sub
 
-  '  'I only need to get a buffer zone for the radius once as both locations should have the same field for reference
-  '  Dim newLocation = Map.ViewportPointToLocation(New Point(point1.X + (dc.Dimension / 2), point1.Y))
-  '  Dim bufferRadius = HaversineDistance(loc1, newLocation, DistanceUnit.Miles)
+  Private Function LocationsCollide(loc1 As Location, loc2 As Location) As Boolean
+    Dim milesDistanceBetweenPoints = loc1.DistanceTo(loc2, DistanceUnit.Miles)
 
-  '  Dim distanceBetweenPoints = HaversineDistance(loc1, loc2, DistanceUnit.Miles)
-
-  '  If ((bufferRadius * 2) > distanceBetweenPoints) Then
-  '    Return True
-  '  Else
-  '    Return False
-  '  End If
-  'End Function
+    If ((DistanceThreshold * 2) > milesDistanceBetweenPoints) Then
+      Return True
+    Else
+      Return False
+    End If
+  End Function
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose

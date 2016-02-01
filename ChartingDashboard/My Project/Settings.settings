@@ -27,7 +27,7 @@
       <Value Profile="(Default)">Mapping Details</Value>
     </Setting>
     <Setting Name="MapRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="DetailsRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
