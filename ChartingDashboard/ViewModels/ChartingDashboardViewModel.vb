@@ -30,6 +30,9 @@ Public Class ChartingDashboardViewModel
 
   Public Property ShipLocationsFiltered As ObservableCollection(Of ShipModel)
 
+  Public Property Dimension As Double
+
+  Public Shared Property DistanceThreshold As Double
 
   <SafeForDependencyAnalysis>
   Public ReadOnly Property Color As LinearGradientBrush
@@ -50,16 +53,6 @@ Public Class ChartingDashboardViewModel
     End Set
   End Property
 
-  Private _doIt As Integer
-  Public Property DoIt As Integer
-    Get
-      Return _doIt
-    End Get
-    Set(ByVal value As Integer)
-      _doIt = value
-
-    End Set
-  End Property
 
   <SafeForDependencyAnalysis>
   Public ReadOnly Property MapContentHeight As Double
@@ -104,6 +97,22 @@ Public Class ChartingDashboardViewModel
     ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
   End Sub
 
+  'Private Function LocationsCollide(loc1 As Location, loc2 As Location) As Boolean
+  '  Dim point1 = New Point
+  '  Map.TryLocationToViewportPoint(loc1, point1)
+
+  '  'I only need to get a buffer zone for the radius once as both locations should have the same field for reference
+  '  Dim newLocation = Map.ViewportPointToLocation(New Point(point1.X + (dc.Dimension / 2), point1.Y))
+  '  Dim bufferRadius = HaversineDistance(loc1, newLocation, DistanceUnit.Miles)
+
+  '  Dim distanceBetweenPoints = HaversineDistance(loc1, loc2, DistanceUnit.Miles)
+
+  '  If ((bufferRadius * 2) > distanceBetweenPoints) Then
+  '    Return True
+  '  Else
+  '    Return False
+  '  End If
+  'End Function
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose
