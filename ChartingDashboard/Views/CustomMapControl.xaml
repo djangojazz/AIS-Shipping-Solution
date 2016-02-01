@@ -26,7 +26,7 @@
       <Label Grid.Row="0" x:Name="lblCustomMapHeader" Content="{local:SettingBinding MapLegend}" Foreground="{DynamicResource brush.Foreground.MainText}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
       <Grid Grid.Row="1">
         <bing:Map Tag="{Binding MapItem}" x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" 
-                  ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}" ViewChangeOnFrame="Map_ViewChangeOnFrame" Visibility="{Binding Visibility}">
+                  ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}" ViewChangeOnFrame="Map_ViewChangeOnFrame">
           <bing:MapItemsControl ItemsSource="{Binding ShipLocations}">
             <bing:MapItemsControl.ItemTemplate>
               <DataTemplate>
@@ -44,7 +44,7 @@
             </bing:MapItemsControl.ItemTemplate>
           </bing:MapItemsControl>
         </bing:Map>
-        <Border Background="{StaticResource brush.Foreground.Legend}"  VerticalAlignment="Top" HorizontalAlignment="Left" Opacity="0.75" 
+        <Border Background="{StaticResource brush.Foreground.Legend}"  VerticalAlignment="Top" HorizontalAlignment="Left" Opacity="0.75" x:Name="mapLegend"
                 BorderBrush="{StaticResource brush.Foreground.MainBoard}" BorderThickness="2" CornerRadius="5" Margin="5">
           <StackPanel x:Name="eventsPanel" />
         </Border>

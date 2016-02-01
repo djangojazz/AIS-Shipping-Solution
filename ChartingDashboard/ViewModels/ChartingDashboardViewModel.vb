@@ -11,9 +11,8 @@ Public Class ChartingDashboardViewModel
 
   'VARIABLES
   Private _totalFilteredCount As Integer
-  Private _instance As Integer
+
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
-  Private _timers As New List(Of Timer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
   Private _ships As List(Of ShipModel)
   Private _initialized As Boolean
@@ -22,8 +21,6 @@ Public Class ChartingDashboardViewModel
 
   'CONSTRUCTOR
   Public Sub New()
-    'DistanceThreshold = 2
-
     TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
     TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
 
@@ -42,26 +39,11 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
-  Private _DistanceThreshold As Double = 0R
-  Public Property DistanceThreshold As Double
-    Get
-      Return _DistanceThreshold
-    End Get
-    Set(value As Double)
-      _DistanceThreshold = value
-    End Set
-  End Property
-  Public Property MapItem As Map
+  Public Property RefreshInstance As Integer
 
-  <SafeForDependencyAnalysis>
-  Public ReadOnly Property Color As LinearGradientBrush
-    Get
-      Return CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOther"), LinearGradientBrush)
-    End Get
-  End Property
+  Public Property DistanceThreshold As Double
 
   Private _zoomLevel As Integer
-
 
   Public Property ZoomLevel As Integer
     Get
@@ -70,14 +52,6 @@ Public Class ChartingDashboardViewModel
     Set(ByVal value As Integer)
       _zoomLevel = value
       Dimension = _zoomLevel * 15
-
-      'If Not _initialized Then
-      '  TimerRefresh = TimerHelper(TimeSpan.FromSeconds(1).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
-      '  TimerFilter = TimerHelper(TimeSpan.FromSeconds(1).TotalMilliseconds, Sub() FilterRefreshShips())
-      '  _initialized = True
-      'End If
-
-
     End Set
   End Property
 
@@ -103,7 +77,12 @@ Public Class ChartingDashboardViewModel
     TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     RetrieveShipsAndDetermineCollision()
     LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
-    _instance += 1
+
+    If (RefreshInstance < 1) Then
+      ErrorMessage = "LOADING INITIAL MAP VALUES"
+    End If
+
+    RefreshInstance += 1
     TimerRefresh.Start()
   End Sub
 
@@ -153,7 +132,7 @@ Public Class ChartingDashboardViewModel
       Next
     End If
 
-    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {_instance.ToString}"
+    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
   End Sub
 
   Private Function DetectCollision(loc1 As Location, loc2 As Location) As Boolean
@@ -161,10 +140,6 @@ Public Class ChartingDashboardViewModel
 
     Return ((DistanceThreshold * 2) > milesDistanceBetweenPoints)
   End Function
-
-  'Public Sub OnPropertyChanged(fieldname As String)
-  '  RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(fieldname))
-  'End Sub
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose
@@ -174,7 +149,6 @@ Public Class ChartingDashboardViewModel
 
   Protected Overridable Sub Dispose(disposing As Boolean)
     If disposing Then
-      _timers.ForEach(Sub(x As Timer) x.Dispose())
       If Not IsNothing(TimerRefresh) Then TimerRefresh.Dispose()
       If Not IsNothing(TimerFilter) Then TimerFilter.Dispose()
       ErrorMessage = Nothing

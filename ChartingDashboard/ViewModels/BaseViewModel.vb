@@ -27,5 +27,4 @@ Public Class BaseViewModel
     Return timer
   End Function
 
-
 End Class
