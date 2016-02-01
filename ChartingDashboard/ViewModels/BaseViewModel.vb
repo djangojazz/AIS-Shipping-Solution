@@ -20,9 +20,12 @@ Public Class BaseViewModel
     RaiseEvent StaticPropertyChanged(Nothing, New PropertyChangedEventArgs(propertyName))
   End Sub
 
-  Public Shared Sub TimerHelper(duration As Double, timerDuration As Action)
+  Public Shared Function TimerHelper(duration As Double, timerDuration As Action) As Timer
     Dim timer = New Timer(duration)
     AddHandler timer.Elapsed, Sub() timerDuration.Invoke()
     timer.Enabled = True
-  End Sub
+    Return timer
+  End Function
+
+
 End Class

@@ -33,7 +33,7 @@ Public Class MapInteractivity
       'ErrorMessage = String.Empty
       map.SetView(rectangle)
     Catch ex As Exception
-      ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
+      'ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
     End Try
   End Sub
 #End Region

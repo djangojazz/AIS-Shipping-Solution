@@ -12,32 +12,27 @@ Public Class ChartingDashboardViewModel
 
   'VARIABLES
   Private _totalFilteredCount As Integer
+  Private _instance As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
   Private _timers As New List(Of Timer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
   Private _ships As List(Of ShipModel)
+  Private _initialized As Boolean
   Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-
+  Private TimerRefresh As Timer
+  Private TimerFilter As Timer
 
   'CONSTRUCTOR
   Public Sub New()
-    '    DistanceThreshold = 2
-    'RefreshShipsAndResetMap()
+    'DistanceThreshold = 2
+
+    TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
+    TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
+
+    RefreshShipsAndResetMap()
     FilterRefreshShips()
-
-    EnableAndThenRunOnce()
-    'EnableAndThenRunOnce()
-    'EnableAndThenRunOnce()
-
-    'TimerHelper(TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
-    TimerHelper(TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds, Sub() FilterRefreshShips())
-  End Sub
-
-  Private Sub EnableAndThenRunOnce()
-    Dim timer = New Timer(50)
-    AddHandler timer.Elapsed, Sub() RefreshShipsAndResetMap()
-    timer.Enabled = True
-
+    TimerRefresh.Interval = 500
+    TimerFilter.Interval = 500
   End Sub
 
   'PROPERTY
@@ -49,8 +44,6 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
-  Public Property Visibility As Visibility = Visibility.Visible
-
   Private _DistanceThreshold As Double = 0R
   Public Property DistanceThreshold As Double
     Get
@@ -58,7 +51,7 @@ Public Class ChartingDashboardViewModel
     End Get
     Set(value As Double)
       _DistanceThreshold = value
-      OnPropertyChanged(NameOf(Dimension))
+      'OnPropertyChanged(NameOf(Dimension))
     End Set
   End Property
   Public Property MapItem As Map
@@ -81,6 +74,13 @@ Public Class ChartingDashboardViewModel
       _zoomLevel = value
       Dimension = _zoomLevel * 15
 
+      'If Not _initialized Then
+      '  TimerRefresh = TimerHelper(TimeSpan.FromSeconds(1).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
+      '  TimerFilter = TimerHelper(TimeSpan.FromSeconds(1).TotalMilliseconds, Sub() FilterRefreshShips())
+      '  _initialized = True
+      'End If
+
+
     End Set
   End Property
 
@@ -102,11 +102,17 @@ Public Class ChartingDashboardViewModel
 
   'METHODS
   Private Sub RefreshShipsAndResetMap()
+    TimerRefresh.Stop()
+    TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     RetrieveShipsAndDetermineCollision()
     LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
+    _instance += 1
+    TimerRefresh.Start()
   End Sub
 
   Private Sub FilterRefreshShips()
+    TimerFilter.Stop()
+    TimerFilter.Interval = TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds
     If (ShipLocations?.Count > 0) Then
       If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
         ObtainFilteredShips()
@@ -115,9 +121,11 @@ Public Class ChartingDashboardViewModel
         ObtainFilteredShips()
       End If
     End If
+    TimerFilter.Start()
   End Sub
 
   Private Sub ObtainFilteredShips()
+
     Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.Where(Function(x) _acceptableShips.Contains(x.ShipType)))
     _totalFilteredCount = totalsToFilter.Count
 
@@ -148,7 +156,7 @@ Public Class ChartingDashboardViewModel
       Next
     End If
 
-    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision}"
+    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {_instance.ToString}"
   End Sub
 
   Private Function DetectCollision(loc1 As Location, loc2 As Location) As Boolean
@@ -170,6 +178,8 @@ Public Class ChartingDashboardViewModel
   Protected Overridable Sub Dispose(disposing As Boolean)
     If disposing Then
       _timers.ForEach(Sub(x As Timer) x.Dispose())
+      If Not IsNothing(TimerRefresh) Then TimerRefresh.Dispose()
+      If Not IsNothing(TimerFilter) Then TimerFilter.Dispose()
       ErrorMessage = Nothing
       LocationRectangle = Nothing
       ShipLocations = Nothing
