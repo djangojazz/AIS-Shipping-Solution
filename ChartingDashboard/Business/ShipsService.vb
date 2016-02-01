@@ -14,7 +14,8 @@ Public Class ShipsService
 
     Return {
       MakeABoat(1, "Brett Home", ShipType.Owned, 45.457302, -122.754326),
-      MakeABoat(2, "Thai Roses", ShipType.Other, 45.486155, -122.747739)
+      MakeABoat(2, "Thai Roses", ShipType.Other, 45.486155, -122.747739),
+      MakeABoat(3, "Seattle", ShipType.Other, 47.6149942, -122.4759882)
     }
     'MakeABoat(2, "Thai Roses", ShipType.Other, 45.486155, -122.747739)
     'MakeABoat(3, "Seattle", ShipType.Other, 47.6149942, -122.4759882)

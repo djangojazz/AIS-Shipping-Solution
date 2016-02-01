@@ -13,7 +13,7 @@ Public Class ChartingDashboardViewModel
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
   Private _timers As New List(Of Timer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
-
+  Private _ships As List(Of ShipModel)
 
   'CONSTRUCTOR
   Public Sub New()
@@ -99,17 +99,35 @@ Public Class ChartingDashboardViewModel
   End Sub
 
   Private Sub RetrieveShipsAndDetermineCollision()
-    ShipLocations = New ObservableCollection(Of ShipModel)(New ShipsService().TestLoadShipLocations())
+    _ships = New ShipsService().TestLoadShipLocations().ToList()
+    UpdateShipsInformation()
+
+    ShipLocations = New ObservableCollection(Of ShipModel)(_ships)
   End Sub
 
-  Private Function LocationsCollide(loc1 As Location, loc2 As Location) As Boolean
+  Private Sub UpdateShipsInformation()
+    If (_ships?.Count > 0) Then
+      For i = 0 To _ships.Count - 1
+        Dim shipToCompare = _ships(i)
+
+        _ships.Where(Function(x) x IsNot shipToCompare).ToList() _
+          .ForEach(Sub(x)
+                     Dim locationsCollide = DetectCollision(shipToCompare.Location, x.Location)
+                     If (locationsCollide) Then
+                       shipToCompare.Collision = True
+                       x.Collision = True
+                     End If
+                   End Sub)
+      Next
+    End If
+
+    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision}"
+  End Sub
+
+  Private Function DetectCollision(loc1 As Location, loc2 As Location) As Boolean
     Dim milesDistanceBetweenPoints = loc1.DistanceTo(loc2, DistanceUnit.Miles)
 
-    If ((DistanceThreshold * 2) > milesDistanceBetweenPoints) Then
-      Return True
-    Else
-      Return False
-    End If
+    Return ((DistanceThreshold * 2) > milesDistanceBetweenPoints)
   End Function
 
 #Region "Disposing"

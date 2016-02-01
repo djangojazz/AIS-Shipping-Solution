@@ -42,7 +42,7 @@ Public Class CustomMapControl
       {"ShipName", $"{location.ShipName}"},
       {"Mapsize Height:", $"{map.ActualHeight}"},
       {"Mapsize Width:", $"{map.ActualWidth}"},
-      {"Collision", $"{location.Overlaps}"},
+      {"Collision", $"{location.Collision}"},
       {"Position", $"{pos}"}
     }
 

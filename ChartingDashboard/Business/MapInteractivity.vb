@@ -30,7 +30,7 @@ Public Class MapInteractivity
     Dim rectangle = DirectCast(e.NewValue, LocationRect)
     Try
       'Throw New Exception
-      ErrorMessage = String.Empty
+      'ErrorMessage = String.Empty
       map.SetView(rectangle)
     Catch ex As Exception
       ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
