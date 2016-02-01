@@ -2,11 +2,13 @@
 Imports System.Collections.ObjectModel
 Imports Microsoft.Maps.MapControl.WPF
 Imports System.Linq
+Imports System.ComponentModel
 
 <NotifyPropertyChanged>
 Public Class ChartingDashboardViewModel
   Inherits BaseViewModel
   Implements IDisposable
+  Implements INotifyPropertyChanged
 
   'VARIABLES
   Private _totalFilteredCount As Integer
@@ -14,15 +16,29 @@ Public Class ChartingDashboardViewModel
   Private _timers As New List(Of Timer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
   Private _ships As List(Of ShipModel)
+  Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
 
   'CONSTRUCTOR
   Public Sub New()
-    RefreshShipsAndResetMap().Wait()
-    TimerHelper((MySettings.Default.MapRefreshFrequencyInSeconds * 1000), Sub() RefreshShipsAndResetMap())
+    '    DistanceThreshold = 2
+    'RefreshShipsAndResetMap()
     FilterRefreshShips()
-    TimerHelper((MySettings.Default.DetailsRefreshFrequencyInSeconds * 1000), Sub() FilterRefreshShips())
+
+    EnableAndThenRunOnce()
+    'EnableAndThenRunOnce()
+    'EnableAndThenRunOnce()
+
+    'TimerHelper(TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
+    TimerHelper(TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds, Sub() FilterRefreshShips())
   End Sub
 
+  Private Sub EnableAndThenRunOnce()
+    Dim timer = New Timer(50)
+    AddHandler timer.Elapsed, Sub() RefreshShipsAndResetMap()
+    timer.Enabled = True
+
+  End Sub
 
   'PROPERTY
   Public Property LocationRectangle As LocationRect
@@ -33,7 +49,18 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
+  Public Property Visibility As Visibility = Visibility.Visible
+
+  Private _DistanceThreshold As Double = 0R
   Public Property DistanceThreshold As Double
+    Get
+      Return _DistanceThreshold
+    End Get
+    Set(value As Double)
+      _DistanceThreshold = value
+      OnPropertyChanged(NameOf(Dimension))
+    End Set
+  End Property
   Public Property MapItem As Map
 
   <SafeForDependencyAnalysis>
@@ -44,6 +71,8 @@ Public Class ChartingDashboardViewModel
   End Property
 
   Private _zoomLevel As Integer
+
+
   Public Property ZoomLevel As Integer
     Get
       Return _zoomLevel
@@ -51,6 +80,7 @@ Public Class ChartingDashboardViewModel
     Set(ByVal value As Integer)
       _zoomLevel = value
       Dimension = _zoomLevel * 15
+
     End Set
   End Property
 
@@ -71,13 +101,10 @@ Public Class ChartingDashboardViewModel
 
 
   'METHODS
-  Private Function RefreshShipsAndResetMap() As Task
-    Dim otask = Task.Factory.StartNew(Sub()
-                                        RetrieveShipsAndDetermineCollision()
-                                        LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
-                                      End Sub)
-    Return otask
-  End Function
+  Private Sub RefreshShipsAndResetMap()
+    RetrieveShipsAndDetermineCollision()
+    LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
+  End Sub
 
   Private Sub FilterRefreshShips()
     If (ShipLocations?.Count > 0) Then
@@ -129,6 +156,10 @@ Public Class ChartingDashboardViewModel
 
     Return ((DistanceThreshold * 2) > milesDistanceBetweenPoints)
   End Function
+
+  Public Sub OnPropertyChanged(fieldname As String)
+    RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(fieldname))
+  End Sub
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose
