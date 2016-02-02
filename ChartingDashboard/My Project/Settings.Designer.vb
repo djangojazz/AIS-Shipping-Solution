@@ -103,18 +103,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.76")>  _
-    Public Property MapContentHeightPercent() As Double
-        Get
-            Return CType(Me("MapContentHeightPercent"),Double)
-        End Get
-        Set
-            Me("MapContentHeightPercent") = value
-        End Set
-    End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("Ships Details")>  _
     Public Property DataGridLegend() As String
         Get
