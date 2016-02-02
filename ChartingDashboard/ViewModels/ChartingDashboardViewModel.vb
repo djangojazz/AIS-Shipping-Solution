@@ -50,11 +50,13 @@ Public Class ChartingDashboardViewModel
       Return _zoomLevel
     End Get
     Set(ByVal value As Integer)
-      _zoomLevel = value
-      'When zoom changes we need to realign all ships dynamically
-      Dimension = _zoomLevel * 15
-      'Threading.Thread.Sleep(500)
-      RetrieveShipsAndDetermineCollision()
+      If (_zoomLevel <> value) Then
+        _zoomLevel = value
+        'When zoom changes we need to realign all ships dynamically
+        Dimension = _zoomLevel * 15
+        'Threading.Thread.Sleep(500)
+        RetrieveShipsAndDetermineCollision()
+      End If
     End Set
   End Property
 

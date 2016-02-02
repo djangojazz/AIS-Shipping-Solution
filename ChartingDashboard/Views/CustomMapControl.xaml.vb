@@ -18,12 +18,6 @@ Public Class CustomMapControl
 
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)
     Dim pin As FrameworkElement = TryCast(sender, FrameworkElement)
-    Dim pos = MapLayer.GetPosition(pin)
-    Dim dc = TryCast(DataContext, ChartingDashboardViewModel)
-
-    Dim point = New Point
-
-    map.TryLocationToViewportPoint(pos, point)
 
     Dim grouping = DirectCast(pin.Tag, ShipGroupingModel)
 
