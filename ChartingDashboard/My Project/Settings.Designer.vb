@@ -103,7 +103,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.91")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.76")>  _
     Public Property MapContentHeightPercent() As Double
         Get
             Return CType(Me("MapContentHeightPercent"),Double)
@@ -127,18 +127,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.32")>  _
-    Public Property GridWidthPercent() As Double
-        Get
-            Return CType(Me("GridWidthPercent"),Double)
-        End Get
-        Set
-            Me("GridWidthPercent") = value
-        End Set
-    End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("Mapping Details")>  _
     Public Property MapLegend() As String
         Get
@@ -151,7 +139,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("4000")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("8")>  _
     Public Property MapRefreshFrequencyInSeconds() As Integer
         Get
             Return CType(Me("MapRefreshFrequencyInSeconds"),Integer)
@@ -175,7 +163,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.16")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.21")>  _
     Public Property MarqueeContentHeightPercentage() As Double
         Get
             Return CType(Me("MarqueeContentHeightPercentage"),Double)

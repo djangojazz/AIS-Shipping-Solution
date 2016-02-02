@@ -23,18 +23,18 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     
-    <!--<UniformGrid Rows="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5">
+    <UniformGrid Rows="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5">
       <Label Content="Pacific Owned:"  Style="{StaticResource LegendText}" />
       <Path Fill="{StaticResource brush.Foreground.BoatGradientOwned}" Style="{StaticResource BoatPathData}" />
       <Label Content="Contractor:"  Style="{StaticResource LegendText}"  />
       <Path Fill="{StaticResource brush.Foreground.BoatGradientContractor}" Style="{StaticResource BoatPathData}" />
       <Label Content="Other:"  Style="{StaticResource LegendText}" />
       <Path Fill="{StaticResource brush.Foreground.BoatGradientOther}" Style="{StaticResource BoatPathData}" />
-    </UniformGrid>-->
+    </UniformGrid>
     
     <local:CustomMapControl Grid.Row="1" Grid.Column="1" Height="{Binding MapContentHeight}" Margin="2" />
     
-    <!--<local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />-->
+    <local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />
     
     <Label x:Name="lblErrorMessageFooter" Grid.Row="3" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
   </Grid>

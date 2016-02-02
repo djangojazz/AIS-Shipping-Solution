@@ -15,25 +15,22 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="MapContentHeightPercent" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.91</Value>
+      <Value Profile="(Default)">0.76</Value>
     </Setting>
     <Setting Name="DataGridLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ships Details</Value>
-    </Setting>
-    <Setting Name="GridWidthPercent" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.32</Value>
     </Setting>
     <Setting Name="MapLegend" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mapping Details</Value>
     </Setting>
     <Setting Name="MapRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="DetailsRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="MarqueeContentHeightPercentage" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.16</Value>
+      <Value Profile="(Default)">0.21</Value>
     </Setting>
   </Settings>
 </SettingsFile>

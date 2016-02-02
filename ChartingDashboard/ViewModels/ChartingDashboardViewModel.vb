@@ -53,7 +53,8 @@ Public Class ChartingDashboardViewModel
       _zoomLevel = value
       'When zoom changes we need to realign all ships dynamically
       Dimension = _zoomLevel * 15
-      RetrieveShipsAndDetermineCollision()
+      'Threading.Thread.Sleep(500)
+      'RetrieveShipsAndDetermineCollision()
     End Set
   End Property
 
@@ -61,7 +62,7 @@ Public Class ChartingDashboardViewModel
   <SafeForDependencyAnalysis>
   Public ReadOnly Property MapContentHeight As Double
     Get
-      Return (MySettings.Default.Height * MySettings.Default.MapContentHeightPercent)
+      Return MySettings.Default.Height * (1 - 0.18 - MySettings.Default.MarqueeContentHeightPercentage)
     End Get
   End Property
 
@@ -80,9 +81,14 @@ Public Class ChartingDashboardViewModel
     RetrieveShipsAndDetermineCollision()
     LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
 
-    If (RefreshInstance < 1) Then
-      ErrorMessage = "LOADING INITIAL MAP VALUES"
-    End If
+    'This is happening so fast it made not be necessary to show it.
+    'If (RefreshInstance < 1) Then
+    '  ErrorMessage = "LOADING INITIAL MAP VALUES"
+    'Else
+    '  If ErrorMessage = "LOADING INITIAL MAP VALUES" Then
+    '    ErrorMessage = String.Empty
+    '  End If
+    'End If
 
     RefreshInstance += 1
     TimerRefresh.Start()
@@ -155,7 +161,7 @@ Public Class ChartingDashboardViewModel
 
 
 
-    ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
+    'ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
   End Sub
 
   Private Function DetectCollision(loc1 As Location, loc2 As Location) As Boolean

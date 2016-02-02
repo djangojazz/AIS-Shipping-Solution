@@ -29,10 +29,8 @@ Public Class CustomMapControl
     _textDictionary = New Dictionary(Of String, String) From {
       {"MMSI", $"{location.MMSI}"},
       {"ShipName", $"{location.ShipName}"},
-      {"Mapsize Height:", $"{map.ActualHeight}"},
-      {"Mapsize Width:", $"{map.ActualWidth}"},
-      {"Collision", $"{location.Collision}"},
-      {"Position", $"{pos}"}
+      {"Position", $"{pos}"},
+      {"Collision", $"{location.Collision}"}
     }
 
     '{"buffer Radius", $"{bufferRadius}"},
