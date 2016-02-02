@@ -51,7 +51,9 @@ Public Class ChartingDashboardViewModel
     End Get
     Set(ByVal value As Integer)
       _zoomLevel = value
+      'When zoom changes we need to realign all ships dynamically
       Dimension = _zoomLevel * 15
+      RetrieveShipsAndDetermineCollision()
     End Set
   End Property
 
@@ -117,20 +119,41 @@ Public Class ChartingDashboardViewModel
   End Sub
 
   Private Sub UpdateShipsInformation()
-    If (_ships?.Count > 0) Then
-      For i = 0 To _ships.Count - 1
-        Dim shipToCompare = _ships(i)
+    If (_ships?.Count > 0 AndAlso DistanceThreshold > 0) Then
+      'Dim shipGroupingModels = New List(Of ShipGroupingModel)
+      'Dim maxGroupFromShips As Func(Of Integer) = Function() _ships.ToList().Select(Function(X) X.Group).ToList().OrderByDescending(Function(x) x).FirstOrDefault()
+      'Dim shipGroupAlreadyExists As Func(Of ShipModel, Boolean) = Function(x) shipGroupingModels.Select(Function(y) y.Ships).ToList().Exists(Function(x) x.)
 
-        _ships.Where(Function(x) x IsNot shipToCompare).ToList() _
+      'Dim CollectionToEmpty As New Collection(Of ShipModel)(_ships)
+      ''Dim iCurrentIteration As Integer = 1
+      'Do While CollectionToEmpty.Count > 0
+      '  Dim currentGroup As New ShipGroupingModel With {.Ships = New List(Of ShipModel)} 'Just do the first Lat Long instead of a Key
+      '  'With { .Group = iCurrentIteration}
+      '  currentGroup.Ships.Add(CollectionToEmpty(0))
+      '  CollectionToEmpty.RemoveAt(0)
+
+      '  For i As Integer = CollectionToEmpty.Count - 1 To 0 Step -1
+      '    If DetectCollision(CollectionToEmpty(0).Location, CollectionToEmpty(i).Location) Then
+      '      currentGroup.Ships.Add(CollectionToEmpty(i))
+      '      CollectionToEmpty.RemoveAt(i)
+      '    End If
+      '  Next
+      'Loop
+
+      For Each ship In _ships
+
+        _ships.Where(Function(x) x IsNot ship).ToList() _
           .ForEach(Sub(x)
-                     Dim locationsCollide = DetectCollision(shipToCompare.Location, x.Location)
+                     Dim locationsCollide = DetectCollision(ship.Location, x.Location)
                      If (locationsCollide) Then
-                       shipToCompare.Collision = True
+                       ship.Collision = True
                        x.Collision = True
                      End If
                    End Sub)
       Next
     End If
+
+
 
     ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
   End Sub

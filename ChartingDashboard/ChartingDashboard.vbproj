@@ -109,6 +109,7 @@
     <Compile Include="Business\SettingBindingExtension.vb" />
     <Compile Include="Business\ShipsService.vb" />
     <Compile Include="Models\Enums.vb" />
+    <Compile Include="Models\ShipGroupingModel.vb" />
     <Compile Include="Models\ShipModel.vb" />
     <Compile Include="Service References\GeocodeService\Reference.vb">
       <AutoGen>True</AutoGen>
