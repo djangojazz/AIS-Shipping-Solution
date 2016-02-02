@@ -54,7 +54,7 @@ Public Class ChartingDashboardViewModel
       'When zoom changes we need to realign all ships dynamically
       Dimension = _zoomLevel * 15
       'Threading.Thread.Sleep(500)
-      'RetrieveShipsAndDetermineCollision()
+      RetrieveShipsAndDetermineCollision()
     End Set
   End Property
 
