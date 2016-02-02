@@ -4,7 +4,8 @@ Imports Microsoft.Maps.MapControl.WPF
 
 Public Class CustomMapControl
 
-  Dim _textDictionary As Dictionary(Of String, String)
+  Dim _textLegend As List(Of Tuple(Of String, String))
+  'As Dictionary(Of String, String)
 
   Public Sub New()
     InitializeComponent()
@@ -24,23 +25,46 @@ Public Class CustomMapControl
 
     map.TryLocationToViewportPoint(pos, point)
 
-    Dim location = DirectCast(pin.Tag, ShipModel)
+    Dim grouping = DirectCast(pin.Tag, ShipGroupingModel)
 
-    _textDictionary = New Dictionary(Of String, String) From {
-      {"MMSI", $"{location.MMSI}"},
-      {"ShipName", $"{location.ShipName}"},
-      {"Position", $"{pos}"},
-      {"Collision", $"{location.Collision}"}
-    }
+    If (grouping.Ships.Count > 1) Then
 
-    '{"buffer Radius", $"{bufferRadius}"},
-    'eventsPanel.Children.Clear()
+      _textLegend = New List(Of Tuple(Of String, String)) From {
+        Add("LeadingLocation", $"{grouping.Location}"),
+        Add("Grouping Of Highest ShipType", $"{grouping.ShipType}"),
+        Add("MULTIPLE", $"SHIPS {grouping.Ships.Count}")
+      }
+    Else
+      _textLegend = New List(Of Tuple(Of String, String)) From {
+        Add("Location", $"{grouping.Location}"),
+        Add("ShipType", $"{grouping.ShipType}")
+      }
+
+      AddDetailsToLegend(grouping)
+    End If
+
     AddTextBoxes()
   End Sub
 
+  Private Sub AddDetailsToLegend(grouping As ShipGroupingModel)
+    For i = 1 To grouping.Ships.Count
+      Dim currentShip = grouping.Ships(i - 1)
+      Add(String.Empty, String.Empty)
+      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("BOAT", $"{i}"))
+      _textLegend.Add(Add("MMSI", $"{currentShip.MMSI}"))
+      _textLegend.Add(Add("ShipName", $"{currentShip.ShipName}"))
+      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("Location", $"{currentShip.Location}"))
+      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("ShipType", $"{currentShip.ShipType}"))
+    Next
+  End Sub
+
+  Private Function Add(item1 As String, item2 As String) As Tuple(Of String, String)
+    Return New Tuple(Of String, String)(item1, item2)
+  End Function
+
   Private Sub AddTextBoxes()
     Dim brushToUse = CType(Application.Current.Resources("brush.Foreground.MainBoard"), LinearGradientBrush)
-    _textDictionary.ToList().ForEach(Sub(x) eventsPanel.Children.Add(New TextBlock With {.Text = $"{x.Key} {x.Value}", .Foreground = brushToUse, .FontSize = 14, .FontWeight = FontWeights.Bold}))
+    _textLegend.ToList().ForEach(Sub(x) eventsPanel.Children.Add(New TextBlock With {.Text = $"{x.Item1} {x.Item2}", .Foreground = brushToUse, .FontSize = 12}))
   End Sub
 
   Private Sub Pushpin_MouseLeave(sender As Object, e As MouseEventArgs)

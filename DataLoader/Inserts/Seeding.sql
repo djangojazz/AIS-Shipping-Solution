@@ -62,7 +62,7 @@ INSERT INTO Ships.teShipDetail (MMSI, ShipName, Latitude, Longitude, ShipTypeID)
 (384841345, 'Dudes Dud', 43.756854, -124.456789, 3),
 (397541345, 'Earles Agony', 43.897445, -124.557781, 3),
 (471233478, 'Franks SingleFleet', 45.114445, -127.654811, 2),
-(124835678, 'Forget Flying', 40.458123, -120.151451, 3),
+(124835678, 'Forget Flying', 40.458123, -123.551451, 3),
 (813545664, 'Genas Sinker', 46.124545, -127.654811, 3),
 (876541242, 'Hectors Habit', 40.114445, -127.774811, 2),
 (991233478, 'Icant Float', 45.548123, -129.811451, 3),
@@ -80,7 +80,7 @@ INSERT INTO Ships.teShipDetail (MMSI, ShipName, Latitude, Longitude, ShipTypeID)
 (101252151, 'Ugotta B KiddingMe', 30.285102, -128.452233, 3),
 (132452151, 'Versions Unknown', 33.285102, -140.454233, 3),
 (242452151, 'Wild For The Sea', 40.518102, -145.334233, 3),
-(587452151, 'X The Racer', 45.518102, -120.344233, 2),
+(587452151, 'X The Racer', 45.518102, -124.344233, 2),
 (681452151, 'Yes I can', 40.418202, -123.486233, 3)
 
 --(876452151, 'Zuess', 41.418202, -128.546233),

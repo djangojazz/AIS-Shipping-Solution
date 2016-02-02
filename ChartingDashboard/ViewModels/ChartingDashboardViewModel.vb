@@ -33,7 +33,7 @@ Public Class ChartingDashboardViewModel
   'PROPERTY
   Public Property LocationRectangle As LocationRect
 
-  Public Property ShipLocations As ObservableCollection(Of ShipModel)
+  Public Property ShipLocations As ObservableCollection(Of ShipGroupingModel)
 
   Public Property ShipLocationsFiltered As ObservableCollection(Of ShipModel)
 
@@ -79,7 +79,7 @@ Public Class ChartingDashboardViewModel
     TimerRefresh.Stop()
     TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     RetrieveShipsAndDetermineCollision()
-    LocationRectangle = GetRectangleOfLocation(ShipLocations, MySettings.Default.Padding)
+    LocationRectangle = GetRectangleOfLocation(ShipLocations.SelectMany(Function(x) x.Ships).ToList(), MySettings.Default.Padding)
 
     'This is happening so fast it made not be necessary to show it.
     'If (RefreshInstance < 1) Then
@@ -110,7 +110,7 @@ Public Class ChartingDashboardViewModel
 
   Private Sub ObtainFilteredShips()
 
-    Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.Where(Function(x) _acceptableShips.Contains(x.ShipType)))
+    Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
     _totalFilteredCount = totalsToFilter.Count
 
     ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
@@ -119,47 +119,47 @@ Public Class ChartingDashboardViewModel
 
   Private Sub RetrieveShipsAndDetermineCollision()
     _ships = New ShipsService().TestLoadShipLocations().ToList()
-    UpdateShipsInformation()
 
-    ShipLocations = New ObservableCollection(Of ShipModel)(_ships)
-  End Sub
+    If (_ships?.Count > 0) Then
+      Dim ReturnPriorityBoat As Func(Of ShipModel, ShipModel, ShipModel) = Function(x, y) If(x.ShipType <= y.ShipType, x, y)
+      Dim groupings = New List(Of ShipGroupingModel)
 
-  Private Sub UpdateShipsInformation()
-    If (_ships?.Count > 0 AndAlso DistanceThreshold > 0) Then
-      'Dim shipGroupingModels = New List(Of ShipGroupingModel)
-      'Dim maxGroupFromShips As Func(Of Integer) = Function() _ships.ToList().Select(Function(X) X.Group).ToList().OrderByDescending(Function(x) x).FirstOrDefault()
-      'Dim shipGroupAlreadyExists As Func(Of ShipModel, Boolean) = Function(x) shipGroupingModels.Select(Function(y) y.Ships).ToList().Exists(Function(x) x.)
+      Dim CollectionToEmpty = _ships.ToList()
+      Do While CollectionToEmpty.Count > 0
+        Dim currentShip = CollectionToEmpty(0)
+        Dim currentGroup As New ShipGroupingModel With {.Location = currentShip.Location, .ShipType = currentShip.ShipType, .Ships = New List(Of ShipModel)({currentShip})}
+        CollectionToEmpty.RemoveAt(0)
 
-      'Dim CollectionToEmpty As New Collection(Of ShipModel)(_ships)
-      ''Dim iCurrentIteration As Integer = 1
-      'Do While CollectionToEmpty.Count > 0
-      '  Dim currentGroup As New ShipGroupingModel With {.Ships = New List(Of ShipModel)} 'Just do the first Lat Long instead of a Key
-      '  'With { .Group = iCurrentIteration}
-      '  currentGroup.Ships.Add(CollectionToEmpty(0))
-      '  CollectionToEmpty.RemoveAt(0)
+        For i As Integer = CollectionToEmpty.Count - 1 To 0 Step -1
+          Dim shipToCompare = CollectionToEmpty(i)
+          If DetectCollision(currentShip.Location, shipToCompare.Location) Then
+            If (currentGroup.ShipType > shipToCompare.ShipType) Then
+              Dim priorityShip = ReturnPriorityBoat(currentShip, shipToCompare)
+              currentGroup.Location = priorityShip.Location
+              currentGroup.ShipType = priorityShip.ShipType
+            End If
 
-      '  For i As Integer = CollectionToEmpty.Count - 1 To 0 Step -1
-      '    If DetectCollision(CollectionToEmpty(0).Location, CollectionToEmpty(i).Location) Then
-      '      currentGroup.Ships.Add(CollectionToEmpty(i))
-      '      CollectionToEmpty.RemoveAt(i)
-      '    End If
-      '  Next
-      'Loop
+            currentGroup.Ships.Add(shipToCompare)
+            CollectionToEmpty.RemoveAt(i)
+          End If
+        Next
 
-      For Each ship In _ships
+        groupings.Add(currentGroup)
+      Loop
 
-        _ships.Where(Function(x) x IsNot ship).ToList() _
-          .ForEach(Sub(x)
-                     Dim locationsCollide = DetectCollision(ship.Location, x.Location)
-                     If (locationsCollide) Then
-                       ship.Collision = True
-                       x.Collision = True
-                     End If
-                   End Sub)
-      Next
+      ShipLocations = New ObservableCollection(Of ShipGroupingModel)(groupings)
+      'For Each ship In _ships
+
+      '  _ships.Where(Function(x) x IsNot ship).ToList() _
+      '    .ForEach(Sub(x)
+      '               Dim locationsCollide = DetectCollision(ship.Location, x.Location)
+      '               If (locationsCollide) Then
+      '                 ship.Collision = True
+      '                 x.Collision = True
+      '               End If
+      '             End Sub)
+      'Next
     End If
-
-
 
     'ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
   End Sub
