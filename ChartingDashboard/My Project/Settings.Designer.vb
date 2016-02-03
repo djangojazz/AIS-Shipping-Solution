@@ -127,7 +127,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
     Public Property MapRefreshFrequencyInSeconds() As Integer
         Get
             Return CType(Me("MapRefreshFrequencyInSeconds"),Integer)
@@ -139,7 +139,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
     Public Property DetailsRefreshFrequencyInSeconds() As Integer
         Get
             Return CType(Me("DetailsRefreshFrequencyInSeconds"),Integer)

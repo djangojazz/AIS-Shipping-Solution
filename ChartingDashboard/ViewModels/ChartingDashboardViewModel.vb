@@ -23,11 +23,6 @@ Public Class ChartingDashboardViewModel
   Public Sub New()
     TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
     TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
-
-    RefreshShipsAndResetMap()
-    FilterRefreshShips()
-    TimerRefresh.Interval = 500
-    TimerFilter.Interval = 500
   End Sub
 
   'PROPERTY
@@ -48,9 +43,12 @@ Public Class ChartingDashboardViewModel
       Return _zoomLevel
     End Get
     Set(ByVal value As Integer)
-      _zoomLevel = value
-      Dimension = _zoomLevel * 15
-      RetrieveShipsAndDetermineCollision()
+      If (_zoomLevel <> value) Then
+        _zoomLevel = value
+        Dimension = _zoomLevel * 15
+        RetrieveShipsAndDetermineCollision()
+      End If
+
     End Set
   End Property
 
@@ -118,6 +116,7 @@ Public Class ChartingDashboardViewModel
 
   Private Sub RetrieveShipsAndDetermineCollision()
     _ships = New ShipsService().TestLoadShipLocations().ToList()
+
 
     If (_ships?.Count > 0) Then
       Dim ReturnPriorityBoat As Func(Of ShipModel, ShipModel, ShipModel) = Function(x, y) If(x.ShipType <= y.ShipType, x, y)
