@@ -11,13 +11,13 @@ Public Class ChartingDashboardViewModel
 
   'VARIABLES
   Private _totalFilteredCount As Integer
-  Private _zoomRuns As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
   Private _ships As List(Of ShipModel)
   Private _initialized As Boolean
   Private TimerRefresh As Timer
   Private TimerFilter As Timer
+  Private _refreshInstance As Integer
 
   'CONSTRUCTOR
   Public Sub New()
@@ -39,8 +39,6 @@ Public Class ChartingDashboardViewModel
 
   Public Property Dimension As Double
 
-  Public Property RefreshInstance As Integer
-
   Public Property DistanceThreshold As Double
 
   Private _zoomLevel As Integer
@@ -50,14 +48,9 @@ Public Class ChartingDashboardViewModel
       Return _zoomLevel
     End Get
     Set(ByVal value As Integer)
-      If (_zoomLevel <> value Or _zoomRuns < 40) Then
-        _zoomRuns += 1
-        _zoomLevel = value
-        'When zoom changes we need to realign all ships dynamically
-        Dimension = _zoomLevel * 15
-        'Threading.Thread.Sleep(500)
-        RetrieveShipsAndDetermineCollision()
-      End If
+      _zoomLevel = value
+      Dimension = _zoomLevel * 15
+      RetrieveShipsAndDetermineCollision()
     End Set
   End Property
 
@@ -80,7 +73,10 @@ Public Class ChartingDashboardViewModel
   'METHODS
   Private Sub RefreshShipsAndResetMap()
     TimerRefresh.Stop()
-    TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
+    If (_refreshInstance > 1) Then
+      TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
+    End If
+
     RetrieveShipsAndDetermineCollision()
     LocationRectangle = GetRectangleOfLocation(ShipLocations.SelectMany(Function(x) x.Ships).ToList(), MySettings.Default.Padding)
 
@@ -93,7 +89,7 @@ Public Class ChartingDashboardViewModel
     '  End If
     'End If
 
-    RefreshInstance += 1
+    _refreshInstance += 1
     TimerRefresh.Start()
   End Sub
 
