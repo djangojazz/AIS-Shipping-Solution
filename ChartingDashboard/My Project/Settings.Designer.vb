@@ -148,18 +148,6 @@ Partial Friend NotInheritable Class MySettings
             Me("DetailsRefreshFrequencyInSeconds") = value
         End Set
     End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("0.21")>  _
-    Public Property MarqueeContentHeightPercentage() As Double
-        Get
-            Return CType(Me("MarqueeContentHeightPercentage"),Double)
-        End Get
-        Set
-            Me("MarqueeContentHeightPercentage") = value
-        End Set
-    End Property
 End Class
 
 Namespace My

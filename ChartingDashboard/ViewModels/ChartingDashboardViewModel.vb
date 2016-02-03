@@ -52,22 +52,6 @@ Public Class ChartingDashboardViewModel
     End Set
   End Property
 
-
-  <SafeForDependencyAnalysis>
-  Public ReadOnly Property MapContentHeight As Double
-    Get
-      Return MySettings.Default.Height * (1 - 0.18 - MySettings.Default.MarqueeContentHeightPercentage)
-    End Get
-  End Property
-
-  <SafeForDependencyAnalysis>
-  Public ReadOnly Property MarqueeContentHeight As Double
-    Get
-      Return (MySettings.Default.Height * MySettings.Default.MarqueeContentHeightPercentage)
-    End Get
-  End Property
-
-
   'METHODS
   Private Sub RefreshShipsAndResetMap()
     TimerRefresh.Stop()

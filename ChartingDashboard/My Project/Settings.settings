@@ -26,8 +26,5 @@
     <Setting Name="DetailsRefreshFrequencyInSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="MarqueeContentHeightPercentage" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.21</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
