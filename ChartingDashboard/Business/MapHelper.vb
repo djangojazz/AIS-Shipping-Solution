@@ -50,4 +50,12 @@ Public Module MapHelpers
     Kilometers
   End Enum
 
+  Public Function SetDistanceThreshold(zoomLevel As Double) As Double
+    Dim bingMap = New Map()
+
+    Dim oldLocation = bingMap.ViewportPointToLocation(New Point(0, 0))
+    Dim newLocation = bingMap.ViewportPointToLocation(New Point(bingMap.ZoomLevel * (15 / 2), 0))
+    Return oldLocation.DistanceTo(newLocation, DistanceUnit.Miles)
+  End Function
+
 End Module

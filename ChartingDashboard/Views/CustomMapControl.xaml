@@ -25,8 +25,11 @@
       </Grid.RowDefinitions>
       <Label Grid.Row="0" x:Name="lblCustomMapHeader" Content="{local:SettingBinding MapLegend}" Foreground="{DynamicResource brush.Foreground.MainText}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
       <Grid Grid.Row="1">
-        <bing:Map Tag="{Binding MapItem}" x:Name="map" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" 
+        <bing:Map x:Name="bingMap" CredentialsProvider="{StaticResource BingCredentials}" Margin="5" local:MapInteractivity.LocationRectangle="{Binding LocationRectangle}" 
                   ZoomLevel="{Binding ZoomLevel, Mode=OneWayToSource}" AnimationLevel="Full" TargetViewChanged="Map_ViewChangeOnFrame">
+          <bing:Map.ContextMenu>
+            <ContextMenu/>
+          </bing:Map.ContextMenu>
           <bing:MapItemsControl ItemsSource="{Binding ShipLocations}">
             <bing:MapItemsControl.ItemTemplate>
               <DataTemplate>

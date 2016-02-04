@@ -4,16 +4,19 @@ Imports Microsoft.Maps.MapControl.WPF
 
 Public Class CustomMapControl
 
-  Dim _textLegend As List(Of Tuple(Of String, String))
-  'As Dictionary(Of String, String)
-
-  Public Sub New()
-    InitializeComponent()
-  End Sub
-
+  Private _textLegend As List(Of Tuple(Of String, String))
+  Private _previousZoom As Integer
 
   Private Sub Map_ViewChangeOnFrame(ByVal sender As Object, ByVal e As MapEventArgs)
-    SetDistanceThreshold()
+    Dim zm = CInt(bingMap.TargetZoomLevel)
+    If (_previousZoom <> zm) Then
+      _previousZoom = zm
+      SetDistanceThreshold()
+      Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
+      Dim newRect = bingMap.BoundingRectangle
+      BaseViewModel.ErrorMessage = $"Old {rectangle} New {newRect}"
+    End If
+
   End Sub
 
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)
@@ -66,13 +69,12 @@ Public Class CustomMapControl
   End Sub
 
   Public Sub SetDistanceThreshold()
-    If map.ZoomLevel = 0 Then Exit Sub
+    If bingMap.ZoomLevel = 0 Then Exit Sub
 
-    Dim oldLocation = map.ViewportPointToLocation(New Point(0, 0))
-    Dim newLocation = map.ViewportPointToLocation(New Point(map.ZoomLevel * 15 / 2, 0))
+    Dim oldLocation = bingMap.ViewportPointToLocation(New Point(0, 0))
+    Dim newLocation = bingMap.ViewportPointToLocation(New Point(bingMap.ZoomLevel * (15 / 2), 0))
     Dim Dist = oldLocation.DistanceTo(newLocation, DistanceUnit.Miles)
 
     TryCast(DataContext, ChartingDashboardViewModel).DistanceThreshold = Dist
   End Sub
-
 End Class
