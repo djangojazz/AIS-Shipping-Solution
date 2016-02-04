@@ -1,4 +1,6 @@
 ﻿Imports System.Linq
+Imports System.Reflection
+Imports System.Text
 Imports Microsoft.Maps.MapControl.WPF
 
 Public Module ShipsService
@@ -102,4 +104,19 @@ Public Module ShipsService
 
     Return ((distanceThreshold * 2) > milesDistanceBetweenPoints)
   End Function
+
+  Public Function TransformShipsIntoString(ships As List(Of ShipModel)) As String
+    Dim FindPropertyInfo As Func(Of Object, PropertyInfo, String) = Function(x, y) $"({y.Name} {y.GetValue(x)}) "
+    Dim props = New ShipModel().GetType().GetProperties().ToList()
+
+    Dim sb = New StringBuilder()
+
+    ships.ForEach(Sub(x) 
+                    props.ForEach(Sub(y) sb.Append(FindPropertyInfo(x, y)))
+                    sb.Append("; ")
+                  End Sub)
+
+    Return sb.ToString()
+  End Function
+
 End Module

@@ -148,6 +148,7 @@
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.vb" />
     <Compile Include="ViewModels\ChartingDashboardViewModel.vb" />
+    <Compile Include="ViewModels\CustomMarqueeViewModel.vb" />
     <Compile Include="Views\CustomDataGrid.xaml.vb">
       <DependentUpon>CustomDataGrid.xaml</DependentUpon>
     </Compile>

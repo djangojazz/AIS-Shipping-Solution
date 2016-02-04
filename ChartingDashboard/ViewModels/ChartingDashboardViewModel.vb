@@ -20,8 +20,7 @@ Public Class ChartingDashboardViewModel
 
   'CONSTRUCTOR
   Public Sub New()
-    MarqueeText = "Test Scrolling"
-    MarqueeTimeSpan = New Duration(New TimeSpan(0, 0, 50))
+    Marquee1 = New CustomMarqueeViewModel(15)
     TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
     TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
   End Sub
@@ -37,9 +36,7 @@ Public Class ChartingDashboardViewModel
 
   Public Property DistanceThreshold As Double
 
-  Public Property MarqueeText As String
-
-  Public Property MarqueeTimeSpan As Duration
+  Public Property Marquee1 As CustomMarqueeViewModel
 
   Private _zoomLevel As Integer
 
@@ -53,7 +50,6 @@ Public Class ChartingDashboardViewModel
         Dimension = _zoomLevel * 15
         ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
       End If
-
     End Set
   End Property
 
@@ -84,27 +80,27 @@ Public Class ChartingDashboardViewModel
     TimerFilter.Stop()
     TimerFilter.Interval = TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds
     If (ShipLocations?.Count > 0) Then
-      If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
-        ObtainFilteredShips()
-      Else
-        _pagingMemoryOfFilteredShips.Clear()
-        ObtainFilteredShips()
-      End If
+      Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)).Take(2))
+      Marquee1.MarqueeText = TransformShipsIntoString(totalsToFilter)
+
+      'If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
+      '  ObtainFilteredShips()
+      'Else
+      '  _pagingMemoryOfFilteredShips.Clear()
+      '  ObtainFilteredShips()
+      'End If
     End If
     TimerFilter.Start()
   End Sub
 
-  Private Sub ObtainFilteredShips()
+  'Private Sub ObtainFilteredShips()
 
-    Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
-    _totalFilteredCount = totalsToFilter.Count
+  '  Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
+  '  _totalFilteredCount = totalsToFilter.Count
 
-    ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
-    ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
-  End Sub
-
-
-
+  '  ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
+  '  ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
+  'End Sub
 
 
 #Region "Disposing"
@@ -121,6 +117,7 @@ Public Class ChartingDashboardViewModel
       LocationRectangle = Nothing
       ShipLocations = Nothing
       ShipLocationsFiltered = Nothing
+      Marquee1 = Nothing
     End If
   End Sub
 #End Region
