@@ -13,7 +13,6 @@ Public Class ChartingDashboardViewModel
   Private _totalFilteredCount As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
   Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
-  Private _ships As List(Of ShipModel)
   Private _initialized As Boolean
   Private TimerRefresh As Timer
   Private TimerFilter As Timer
@@ -21,6 +20,8 @@ Public Class ChartingDashboardViewModel
 
   'CONSTRUCTOR
   Public Sub New()
+    MarqueeText = "Test Scrolling"
+    MarqueeTimeSpan = New Duration(New TimeSpan(0, 0, 50))
     TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
     TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
   End Sub
@@ -36,6 +37,10 @@ Public Class ChartingDashboardViewModel
 
   Public Property DistanceThreshold As Double
 
+  Public Property MarqueeText As String
+
+  Public Property MarqueeTimeSpan As Duration
+
   Private _zoomLevel As Integer
 
   Public Property ZoomLevel As Integer
@@ -46,7 +51,7 @@ Public Class ChartingDashboardViewModel
       If (_zoomLevel <> value) Then
         _zoomLevel = value
         Dimension = _zoomLevel * 15
-        RetrieveShipsAndDetermineCollision()
+        ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
       End If
 
     End Set
@@ -59,7 +64,7 @@ Public Class ChartingDashboardViewModel
       TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     End If
 
-    RetrieveShipsAndDetermineCollision()
+    ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
     LocationRectangle = GetRectangleOfLocation(ShipLocations.SelectMany(Function(x) x.Ships).ToList(), MySettings.Default.Padding)
 
     'This is happening so fast it made not be necessary to show it.
@@ -98,59 +103,9 @@ Public Class ChartingDashboardViewModel
     ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
   End Sub
 
-  Private Sub RetrieveShipsAndDetermineCollision()
-    _ships = New ShipsService().TestLoadShipLocations().ToList()
 
 
-    If (_ships?.Count > 0) Then
-      Dim ReturnPriorityBoat As Func(Of ShipModel, ShipModel, ShipModel) = Function(x, y) If(x.ShipType <= y.ShipType, x, y)
-      Dim groupings = New List(Of ShipGroupingModel)
 
-      Dim CollectionToEmpty = _ships.ToList()
-      Do While CollectionToEmpty.Count > 0
-        Dim currentShip = CollectionToEmpty(0)
-        Dim currentGroup As New ShipGroupingModel With {.Location = currentShip.Location, .ShipType = currentShip.ShipType, .Ships = New List(Of ShipModel)({currentShip})}
-        CollectionToEmpty.RemoveAt(0)
-
-        For i As Integer = CollectionToEmpty.Count - 1 To 0 Step -1
-          Dim shipToCompare = CollectionToEmpty(i)
-          If DetectCollision(currentShip.Location, shipToCompare.Location) Then
-            If (currentGroup.ShipType > shipToCompare.ShipType) Then
-              Dim priorityShip = ReturnPriorityBoat(currentShip, shipToCompare)
-              currentGroup.Location = priorityShip.Location
-              currentGroup.ShipType = priorityShip.ShipType
-            End If
-
-            currentGroup.Ships.Add(shipToCompare)
-            CollectionToEmpty.RemoveAt(i)
-          End If
-        Next
-
-        groupings.Add(currentGroup)
-      Loop
-
-      ShipLocations = New ObservableCollection(Of ShipGroupingModel)(groupings)
-      'For Each ship In _ships
-
-      '  _ships.Where(Function(x) x IsNot ship).ToList() _
-      '    .ForEach(Sub(x)
-      '               Dim locationsCollide = DetectCollision(ship.Location, x.Location)
-      '               If (locationsCollide) Then
-      '                 ship.Collision = True
-      '                 x.Collision = True
-      '               End If
-      '             End Sub)
-      'Next
-    End If
-
-    'ErrorMessage = $"Ran UpdateShipsInformation {DateTime.Now.ToString} {_ships(0).Collision} {RefreshInstance.ToString}"
-  End Sub
-
-  Private Function DetectCollision(loc1 As Location, loc2 As Location) As Boolean
-    Dim milesDistanceBetweenPoints = loc1.DistanceTo(loc2, DistanceUnit.Miles)
-
-    Return ((DistanceThreshold * 2) > milesDistanceBetweenPoints)
-  End Function
 
 #Region "Disposing"
   Public Sub Dispose() Implements IDisposable.Dispose

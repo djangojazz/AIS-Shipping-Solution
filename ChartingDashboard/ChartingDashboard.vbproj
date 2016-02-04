@@ -130,6 +130,7 @@
     <Compile Include="Business\Converters\ColorConverter.vb" />
     <Compile Include="Business\Converters\IconVisibilityConverter.vb" />
     <Compile Include="Business\Converters\HeightConverter.vb" />
+    <Compile Include="Business\Converters\NegatingConverter.vb" />
     <Compile Include="Business\Converters\WidthConverter.vb" />
     <Compile Include="Business\DelegateCommand.vb" />
     <Compile Include="Business\EnumBindingSourceExtensions.vb" />
@@ -153,6 +154,9 @@
     <Compile Include="Views\CustomMapControl.xaml.vb">
       <DependentUpon>CustomMapControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CustomMarqueeControl.xaml.vb">
+      <DependentUpon>CustomMarqueeControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChartingDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -170,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomMapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomMarqueeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

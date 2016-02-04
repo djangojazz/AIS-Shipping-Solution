@@ -1,7 +1,7 @@
 ﻿Imports System.Linq
 Imports Microsoft.Maps.MapControl.WPF
 
-Public Class ShipsService
+Public Module ShipsService
   Public Function TestLoadShipLocations() As IList(Of ShipModel)
     'Return {
     'MakeABoat(111111111, "Anne Sleuth", ShipType.Owned, 46.851859, -129.322418),
@@ -56,7 +56,7 @@ Public Class ShipsService
 
   End Function
 
-  Private Shared Function MakeABoat(mmsi As Integer, shipName As String, shipType As ShipType, latitude As Double, longitude As Double) As ShipModel
+  Private Function MakeABoat(mmsi As Integer, shipName As String, shipType As ShipType, latitude As Double, longitude As Double) As ShipModel
     Return New ShipModel With {
                               .MMSI = mmsi,
                               .ShipName = shipName,
@@ -64,4 +64,42 @@ Public Class ShipsService
                               .Location = New Location() With {.Latitude = latitude, .Longitude = longitude}
                               }
   End Function
-End Class
+
+  Public Function RetrieveShipsAndDetermineCollision(ships As List(Of ShipModel), distanceThreshold As Double) As IList(Of ShipGroupingModel)
+    If (ships?.Count > 0) Then
+      Dim ReturnPriorityBoat As Func(Of ShipModel, ShipModel, ShipModel) = Function(x, y) If(x.ShipType <= y.ShipType, x, y)
+      Dim groupings = New List(Of ShipGroupingModel)
+
+      Dim CollectionToEmpty = ships.ToList()
+      Do While CollectionToEmpty.Count > 0
+        Dim currentShip = CollectionToEmpty(0)
+        Dim currentGroup As New ShipGroupingModel With {.Location = currentShip.Location, .ShipType = currentShip.ShipType, .Ships = New List(Of ShipModel)({currentShip})}
+        CollectionToEmpty.RemoveAt(0)
+
+        For i As Integer = CollectionToEmpty.Count - 1 To 0 Step -1
+          Dim shipToCompare = CollectionToEmpty(i)
+          If DetectCollision(currentShip.Location, shipToCompare.Location, distanceThreshold) Then
+            If (currentGroup.ShipType > shipToCompare.ShipType) Then
+              Dim priorityShip = ReturnPriorityBoat(currentShip, shipToCompare)
+              currentGroup.Location = priorityShip.Location
+              currentGroup.ShipType = priorityShip.ShipType
+            End If
+
+            currentGroup.Ships.Add(shipToCompare)
+            CollectionToEmpty.RemoveAt(i)
+          End If
+        Next
+
+        groupings.Add(currentGroup)
+      Loop
+
+      Return groupings
+    End If
+  End Function
+
+  Private Function DetectCollision(loc1 As Location, loc2 As Location, distanceThreshold As Double) As Boolean
+    Dim milesDistanceBetweenPoints = loc1.DistanceTo(loc2, DistanceUnit.Miles)
+
+    Return ((distanceThreshold * 2) > milesDistanceBetweenPoints)
+  End Function
+End Module

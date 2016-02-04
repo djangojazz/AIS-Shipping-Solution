@@ -36,7 +36,7 @@
                                               Canvas.Top="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension, Converter={StaticResource ConvertHeight}}"
                                               Width="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" Height="{Binding ElementName=MapCustomControl, Path=DataContext.Dimension}" Opacity="0.9" >
                       <Grid>
-                        <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource BoatPathData}"/>
+                        <Path Fill="{Binding ShipType, Converter={StaticResource ConvertColor}}" Style="{StaticResource SmallFishingShip}"/>
                         <Border x:Name="legendIndicator" CornerRadius="25" Background="{StaticResource brush.Foreground.MainBoard}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                                 Visibility="{Binding Path=Ships.Count, Converter={StaticResource IconVisibilityConverter}}">
                           <TextBlock Margin="7,2" VerticalAlignment="Bottom" Text="{Binding Ships.Count}" HorizontalAlignment="Right" Foreground="{StaticResource brush.Foreground.MainText}" RenderOptions.ClearTypeHint="Auto" />

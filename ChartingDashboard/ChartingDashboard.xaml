@@ -23,23 +23,24 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <Border Grid.Row="0" Background="{StaticResource brush.Foreground.MainBoard}" CornerRadius="15" Margin="2"> 
+    <Border Grid.Row="0" Background="{StaticResource brush.Foreground.MainBoard}" CornerRadius="15" Margin="2">
       <Border.BitmapEffect>
         <DropShadowBitmapEffect/>
       </Border.BitmapEffect>
       <UniformGrid Rows="1"  HorizontalAlignment="Center" Margin="5">
       <Label Content="Pacific Owned:"  Style="{StaticResource LegendText}" />
-      <Path Fill="{StaticResource brush.Foreground.BoatGradientOwned}" Style="{StaticResource BoatPathData}" />
+        <Path Fill="{StaticResource brush.Foreground.BoatGradientOwned}" Style="{StaticResource SmallFishingShip}" />
       <Label Content="Contractor:"  Style="{StaticResource LegendText}"  />
-      <Path Fill="{StaticResource brush.Foreground.BoatGradientContractor}" Style="{StaticResource BoatPathData}" />
+        <Path Fill="{StaticResource brush.Foreground.BoatGradientContractor}" Style="{StaticResource SmallFishingShip}" />
       <Label Content="Other:"  Style="{StaticResource LegendText}" />
-      <Path Fill="{StaticResource brush.Foreground.BoatGradientOther}" Style="{StaticResource BoatPathData}" />
+        <Path Fill="{StaticResource brush.Foreground.BoatGradientOther}" Style="{StaticResource SmallFishingShip}" />
     </UniformGrid>
     </Border>
       
-    <local:CustomMapControl Grid.Row="1" Grid.Column="1" Height="{Binding MapContentHeight}" Margin="2" />
-    
-    <local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />
+    <local:CustomMapControl Grid.Row="1" Margin="2" />
+
+    <local:CustomMarqueeControl Grid.Row="2" Margin="2" />
+    <!--<local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />-->
     
     <Label x:Name="lblErrorMessageFooter" Grid.Row="3" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
   </Grid>
