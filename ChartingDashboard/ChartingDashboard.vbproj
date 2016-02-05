@@ -138,6 +138,7 @@
     <Compile Include="Business\MapInteractivity.vb" />
     <Compile Include="Business\SettingBindingExtension.vb" />
     <Compile Include="Business\ShipsService.vb" />
+    <Compile Include="Business\TemplateSelectors.vb" />
     <Compile Include="Models\Enums.vb" />
     <Compile Include="Models\ShipGroupingModel.vb" />
     <Compile Include="Models\ShipModel.vb" />
@@ -151,6 +152,9 @@
     <Compile Include="ViewModels\CustomMarqueeViewModel.vb" />
     <Compile Include="Views\CustomDataGrid.xaml.vb">
       <DependentUpon>CustomDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomListBox.xaml.vb">
+      <DependentUpon>CustomListBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomMapControl.xaml.vb">
       <DependentUpon>CustomMapControl.xaml</DependentUpon>
@@ -171,6 +175,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CustomDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomListBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -91,18 +91,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
-    Public Property PagingSize() As Integer
-        Get
-            Return CType(Me("PagingSize"),Integer)
-        End Get
-        Set
-            Me("PagingSize") = value
-        End Set
-    End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("Ships Details")>  _
     Public Property DataGridLegend() As String
         Get
@@ -134,6 +122,18 @@ Partial Friend NotInheritable Class MySettings
         End Get
         Set
             Me("MapRefreshFrequencyInSeconds") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
+    Public Property DetailsRefreshFrequencyInSeconds() As Integer
+        Get
+            Return CType(Me("DetailsRefreshFrequencyInSeconds"),Integer)
+        End Get
+        Set
+            Me("DetailsRefreshFrequencyInSeconds") = value
         End Set
     End Property
 End Class

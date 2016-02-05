@@ -19,8 +19,7 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="3*"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
@@ -40,8 +39,7 @@
       
     <local:CustomMapControl Grid.Row="1" Margin="2" />
 
-    <local:CustomMarqueeControl Grid.Row="2" Margin="2" Height="30" DataContext="{Binding OwnedShipsMarquee}" />
-    <local:CustomMarqueeControl Grid.Row="3" Margin="3" Height="30" DataContext="{Binding ContractorShipsMarquee}" />
+    <local:CustomListBox Grid.Row="2" Margin="2" />
     <!--<local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />-->
     
     <Label x:Name="lblErrorMessageFooter" Grid.Row="4" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />

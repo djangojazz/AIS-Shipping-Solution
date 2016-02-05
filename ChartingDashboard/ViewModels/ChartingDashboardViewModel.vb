@@ -1,8 +1,6 @@
 ﻿Imports System.Timers
 Imports System.Collections.ObjectModel
 Imports Microsoft.Maps.MapControl.WPF
-Imports System.Linq
-Imports System.ComponentModel
 Imports System.Windows.Threading
 
 <NotifyPropertyChanged>
@@ -13,19 +11,20 @@ Public Class ChartingDashboardViewModel
   'VARIABLES
   Private _totalFilteredCount As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
-  Private TimerRefresh As Timer
+  Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
+  Private _timerRefresh As Timer
+  Private _timerFilter As Timer
   Private _refreshInstance As Integer
   Private _Dispatcher As Dispatcher
 
   'CONSTRUCTOR
   Public Sub New()
-    OwnedShipsMarquee = New CustomMarqueeViewModel(10)
-    ContractorShipsMarquee = New CustomMarqueeViewModel(10)
-    TimerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
+    'OwnedShipsMarquee = New CustomMarqueeViewModel(10)
+    'ContractorShipsMarquee = New CustomMarqueeViewModel(10)
+    _timerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
+    _timerFilter = TimerHelper(TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds, Sub() FilterRefreshShips())
 
-    _Dispatcher = Application.Current.Dispatcher
-
-    'TimerFilter = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() FilterRefreshShips())
+    _Dispatcher = System.Windows.Application.Current.Dispatcher
   End Sub
 
   'PROPERTY
@@ -60,9 +59,9 @@ Public Class ChartingDashboardViewModel
 
   'METHODS
   Private Sub RefreshShipsAndResetMap()
-    TimerRefresh.Stop()
+    _timerRefresh.Stop()
     If (_refreshInstance > 1) Then
-      TimerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
+      _timerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     End If
 
     ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
@@ -79,38 +78,32 @@ Public Class ChartingDashboardViewModel
     'End If
 
     _refreshInstance += 1
-    TimerRefresh.Start()
+    _timerRefresh.Start()
   End Sub
 
   Private Sub FilterRefreshShips()
+    _timerFilter.Stop()
     If (ShipLocations?.Count > 0) Then
-      Dim ownedShips = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) x.ShipType = ShipType.Owned))
-      Dim contractorShips = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) x.ShipType = ShipType.Contractor))
-      OwnedShipsMarquee.MarqueeText = TransformShipsIntoString(ownedShips)
-      ContractorShipsMarquee.MarqueeText = TransformShipsIntoString(contractorShips)
-
-      _Dispatcher.Invoke(Sub()
-                           OwnedShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOwned"), Brush)
-                           ContractorShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientContractor"), Brush)
-                         End Sub)
-
-      'If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
-      '  ObtainFilteredShips()
-      'Else
-      '  _pagingMemoryOfFilteredShips.Clear()
-      '  ObtainFilteredShips()
-      'End If
+      If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
+        ObtainFilteredShips()
+      Else
+        _pagingMemoryOfFilteredShips.Clear()
+        ObtainFilteredShips()
+      End If
     End If
+    _timerFilter.Start()
   End Sub
 
-  'Private Sub ObtainFilteredShips()
+  Private Sub ObtainFilteredShips()
 
-  '  Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
-  '  _totalFilteredCount = totalsToFilter.Count
+    Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
+    _totalFilteredCount = totalsToFilter.Count
 
-  '  ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(MySettings.Default.PagingSize))
-  '  ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
-  'End Sub
+    Dim pagingSize = CInt(MySettings.Default.Width / 120)
+
+    ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(pagingSize))
+    ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))
+  End Sub
 
 
 #Region "Disposing"
@@ -121,7 +114,8 @@ Public Class ChartingDashboardViewModel
 
   Protected Overridable Sub Dispose(disposing As Boolean)
     If disposing Then
-      If Not IsNothing(TimerRefresh) Then TimerRefresh.Dispose()
+      If Not IsNothing(_timerRefresh) Then _timerRefresh.Dispose()
+      If Not IsNothing(_timerFilter) Then _timerFilter.Dispose()
       ErrorMessage = Nothing
       LocationRectangle = Nothing
       ShipLocations = Nothing
