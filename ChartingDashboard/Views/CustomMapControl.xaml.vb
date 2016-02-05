@@ -47,11 +47,8 @@ Public Class CustomMapControl
     For i = 1 To grouping.Ships.Count
       Dim currentShip = grouping.Ships(i - 1)
       Add(String.Empty, String.Empty)
-      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("BOAT", $"{i}"))
       _textLegend.Add(Add("MMSI", $"{currentShip.MMSI}"))
       _textLegend.Add(Add("ShipName", $"{currentShip.ShipName}"))
-      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("Location", $"{currentShip.Location}"))
-      'If (grouping.Ships.Count > 1) Then _textLegend.Add(Add("ShipType", $"{currentShip.ShipType}"))
     Next
   End Sub
 

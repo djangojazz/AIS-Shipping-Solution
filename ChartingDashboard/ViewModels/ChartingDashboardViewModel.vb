@@ -93,23 +93,6 @@ Public Class ChartingDashboardViewModel
                            OwnedShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOwned"), Brush)
                            ContractorShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientContractor"), Brush)
                          End Sub)
-      'OwnedShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOwned"), Brush)
-      'ContractorShipsMarquee.MarqueeText = TransformShipsIntoString(contractorShips)
-      '_Dispatcher.Invoke(Sub() OwnedShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientContractor"), LinearGradientBrush))
-      'ContractorShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientContractor"), Brush)
-
-      '_Dispatcher.Invoke(Sub() OwnedShipsMarquee.MarqueeColor = CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOwned"), Brush))
-
-      'New LinearGradientBrush(Colors.White, Colors.Blue, 0.5)
-      'CType(System.Windows.Application.Current.Resources("brush.Foreground.BoatGradientOwned"), Brush)
-      'CType(Application.Current.FindResource("brush.Foreground.BoatGradientOwned"), Brush)
-      'CType(Application.Current.Properties("brush.Foreground.BoatGradientOwned"), Brush)
-      'ContractorShipsMarquee.MarqueeText = TransformShipsIntoString(contractorShips)
-
-      'Brushes.Red
-
-      'System.Drawing.KnownColor.Red
-
 
       'If (_totalFilteredCount <> _pagingMemoryOfFilteredShips?.Count) Then
       '  ObtainFilteredShips()

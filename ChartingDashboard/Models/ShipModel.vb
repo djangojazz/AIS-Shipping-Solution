@@ -6,5 +6,6 @@ Public Class ShipModel
   Public Property ShipType As ShipType
   Public Property Location As Location
   Public Property BoatHale As Double
-
+  Public Property ExpectedVolume As Double
+  Public Property Catches As List(Of CatchType)
 End Class
