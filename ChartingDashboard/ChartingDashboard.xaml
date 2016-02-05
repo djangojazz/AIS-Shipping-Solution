@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Height="{local:SettingBinding Height}" 
         Width="{local:SettingBinding Width}"
-        Background="{StaticResource brush.Foreground.MainBoard}" Icon="SmallBoat.ico">
+        Background="Black" Icon="SmallBoat.ico">
   <Window.Resources>
     <Style TargetType="{x:Type Label}" x:Key="LegendText">
       <Setter Property="VerticalAlignment" Value="Bottom" />
@@ -19,6 +19,7 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="3*"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
@@ -39,10 +40,11 @@
       
     <local:CustomMapControl Grid.Row="1" Margin="2" />
 
-    <local:CustomMarqueeControl Grid.Row="2" Margin="2" Height="30" DataContext="{Binding Marquee1}" />
+    <local:CustomMarqueeControl Grid.Row="2" Margin="2" Height="30" DataContext="{Binding OwnedShipsMarquee}" />
+    <local:CustomMarqueeControl Grid.Row="3" Margin="3" Height="30" DataContext="{Binding ContractorShipsMarquee}" />
     <!--<local:CustomDataGrid Grid.Row="2" Margin="2" Height="{Binding MarqueeContentHeight}" />-->
     
-    <Label x:Name="lblErrorMessageFooter" Grid.Row="3" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
+    <Label x:Name="lblErrorMessageFooter" Grid.Row="4" Foreground="Red"  Content="{Binding Path=(local:BaseViewModel.ErrorMessage)}" FontSize="14" HorizontalAlignment="Center" />
     <!--<Label x:Name="lblTest" Grid.Row="4" Foreground="Red"  Content="TEST TEXT" FontSize="14" HorizontalAlignment="Center" />-->
   </Grid>
   

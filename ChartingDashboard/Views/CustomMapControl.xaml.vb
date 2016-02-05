@@ -11,7 +11,7 @@ Public Class CustomMapControl
     Dim zm = CInt(bingMap.TargetZoomLevel)
     If (_previousZoom <> zm) Then
       _previousZoom = zm
-      SetDistanceThreshold()
+      SetDistanceThreshold(zm)
       Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
       Dim newRect = bingMap.BoundingRectangle
       BaseViewModel.ErrorMessage = $"Old {rectangle} New {newRect}"
@@ -68,11 +68,11 @@ Public Class CustomMapControl
     eventsPanel.Children.Clear()
   End Sub
 
-  Public Sub SetDistanceThreshold()
+  Public Sub SetDistanceThreshold(zoomLevel As Integer)
     If bingMap.ZoomLevel = 0 Then Exit Sub
 
     Dim oldLocation = bingMap.ViewportPointToLocation(New Point(0, 0))
-    Dim newLocation = bingMap.ViewportPointToLocation(New Point(bingMap.ZoomLevel * (15 / 2), 0))
+    Dim newLocation = bingMap.ViewportPointToLocation(New Point((zoomLevel * 16) / 2, 0))
     Dim Dist = oldLocation.DistanceTo(newLocation, DistanceUnit.Miles)
 
     TryCast(DataContext, ChartingDashboardViewModel).DistanceThreshold = Dist

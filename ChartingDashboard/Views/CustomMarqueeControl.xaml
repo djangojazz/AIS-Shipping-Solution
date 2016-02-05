@@ -28,8 +28,8 @@
       </EventTrigger>
     </StackPanel.Triggers>
     <Canvas x:Name="canvas" Width="{Binding ActualWidth, ElementName=stack}">
-      <TextBlock Text="{Binding MarqueeText}" FontSize="25"  x:Name="textToScroll" Canvas.Left="0"/>
-      <TextBlock Text="{Binding Text, ElementName=textToScroll}" FontSize="25" Canvas.Left="{Binding Width, ElementName=canvas}"/>
+      <TextBlock Foreground="{Binding MarqueeColor}" Text="{Binding MarqueeText}" FontSize="25"  x:Name="textToScroll" Canvas.Left="0"/>
+      <TextBlock Foreground="{Binding MarqueeColor}" x:Name="text2" Text="{Binding Text, ElementName=textToScroll}" FontSize="25" />
     </Canvas>
   </StackPanel>
 </UserControl>
