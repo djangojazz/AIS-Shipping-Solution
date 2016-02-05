@@ -14,7 +14,6 @@ Public Class CustomMapControl
       SetDistanceThreshold(zm)
       Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
       Dim newRect = bingMap.BoundingRectangle
-      BaseViewModel.ErrorMessage = $"Old {rectangle} New {newRect}"
     End If
 
   End Sub

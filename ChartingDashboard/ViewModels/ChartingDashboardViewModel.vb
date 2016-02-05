@@ -19,8 +19,6 @@ Public Class ChartingDashboardViewModel
 
   'CONSTRUCTOR
   Public Sub New()
-    'OwnedShipsMarquee = New CustomMarqueeViewModel(10)
-    'ContractorShipsMarquee = New CustomMarqueeViewModel(10)
     _timerRefresh = TimerHelper(TimeSpan.FromSeconds(0.5).TotalMilliseconds, Sub() RefreshShipsAndResetMap())
     _timerFilter = TimerHelper(TimeSpan.FromSeconds(MySettings.Default.DetailsRefreshFrequencyInSeconds).TotalMilliseconds, Sub() FilterRefreshShips())
 
@@ -41,6 +39,8 @@ Public Class ChartingDashboardViewModel
   Public Property OwnedShipsMarquee As CustomMarqueeViewModel
 
   Public Property ContractorShipsMarquee As CustomMarqueeViewModel
+
+  Public Property ItemWidth As Double
 
   Private _zoomLevel As Integer
 
@@ -99,7 +99,7 @@ Public Class ChartingDashboardViewModel
     Dim totalsToFilter = New List(Of ShipModel)(ShipLocations.SelectMany(Function(x) x.Ships).Where(Function(x) _acceptableShips.Contains(x.ShipType)))
     _totalFilteredCount = totalsToFilter.Count
 
-    Dim pagingSize = CInt(MySettings.Default.Width / 120)
+    Dim pagingSize = CInt(MySettings.Default.Width / 250)
 
     ShipLocationsFiltered = New ObservableCollection(Of ShipModel)(totalsToFilter.Where(Function(x) Not _pagingMemoryOfFilteredShips.Contains(x.MMSI)).Take(pagingSize))
     ShipLocationsFiltered.ToList().ForEach(Sub(x) _pagingMemoryOfFilteredShips.Add(x.MMSI))

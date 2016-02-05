@@ -8,4 +8,5 @@ Public Class ShipModel
   Public Property BoatHale As Double
   Public Property ExpectedVolume As Double
   Public Property Catches As List(Of CatchType)
+  Public Property ItemWidth As Double
 End Class

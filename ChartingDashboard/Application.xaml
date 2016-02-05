@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:ChartingDashboard"
     xmlns:bing="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-    StartupUri="ChartingDashboard.xaml" Exit="Application_Exit">
+    StartupUri="ChartingDashboard.xaml" Exit="Application_Exit"             >
   <Application.Resources>
     
     <local:ColorConverter x:Key="ConvertColor" />
@@ -63,17 +63,20 @@
     <DataTemplate x:Key="MainTemplate">
       <Border CornerRadius="15" Background="{DynamicResource brush.Foreground.BoatGradientOwned}" Margin="5" >
         <StackPanel Margin="5">
-          <TextBlock FontWeight="Bold" Text="{Binding MMSI}" />
-          <TextBlock FontWeight="Bold" Text="{Binding ShipName}" />
-          <TextBlock FontWeight="Bold" Text="{Binding ShipType}" />
+          <TextBlock FontWeight="Bold" Text="{Binding MMSI, StringFormat='MMSI: {0}'}" />
+          <TextBlock FontWeight="Bold" Text="{Binding ShipName, StringFormat='ShipName: {0}'}" />
+          <TextBlock FontWeight="Bold" Text="{Binding ShipType, StringFormat='ShipType: {0}'}" />
+          <TextBlock FontWeight="Bold" Text="{Binding Location, StringFormat='Location: {0}'}" />
         </StackPanel>
       </Border>
     </DataTemplate>
     <DataTemplate x:Key="OtherTemplate">
-      <Border CornerRadius="15" Background="{DynamicResource brush.Foreground.BoatGradientContractor}" Margin="5" >
+      <Border CornerRadius="15" Background="{DynamicResource brush.Foreground.BoatGradientContractor}" Margin="5">
         <StackPanel Margin="5">
-          <TextBlock Text="{Binding MMSI}" />
-          <TextBlock Text="{Binding ShipName}" />
+          <TextBlock Text="{Binding MMSI, StringFormat='MMSI: {0}'}" />
+          <TextBlock Text="{Binding ShipName, StringFormat='ShipName: {0}'}" />
+          <TextBlock Text="{Binding ShipType, StringFormat='ShipType: {0}'}" />
+          <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}" />
         </StackPanel>
       </Border>
     </DataTemplate>

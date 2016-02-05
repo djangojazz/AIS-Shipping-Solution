@@ -6,10 +6,6 @@ Imports System.Windows
 Public Class MapInteractivity
   Inherits BaseViewModel
 
-  Sub New()
-    ErrorMessage = "Bad"
-  End Sub
-
 #Region "LocationRectangle"
 
   Public Shared ReadOnly LocationRectangleProperty As DependencyProperty = DependencyProperty.RegisterAttached("LocationRectangle",
@@ -33,7 +29,7 @@ Public Class MapInteractivity
       'ErrorMessage = String.Empty
       map.SetView(rectangle)
     Catch ex As Exception
-      'ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
+      ErrorMessage = $"Map could not be properly Set as {DateTime.Now}!"
     End Try
   End Sub
 #End Region
