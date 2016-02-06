@@ -16,13 +16,18 @@ BEGIN
 	EXEC sp_executesql @SQL, N'@Num decimal(24,8) output', @Num = @Num OUTPUT
   
 	SELECT
-		ShipId
-	,	MMSI
-	,	ShipName
-	,	CASE WHEN @Bit = 0 THEN Latitude + @Num ELSE Latitude - @Num END AS Latitude
-	,	CASE WHEN @Bit = 0 THEN Longitude + @Num ELSE Longitude - @Num END AS Longitude
-	,	ShipTypeId
+		sd.ShipId
+	,	sd.MMSI
+	,	sd.ShipName
+	,	CASE WHEN @Bit = 0 THEN sd.Latitude + @Num ELSE sd.Latitude - @Num END AS Latitude
+	,	CASE WHEN @Bit = 0 THEN sd.Longitude + @Num ELSE sd.Longitude - @Num END AS Longitude
+	,	sd.ShipTypeId
+	,	sv.ShipVolumeId
+	,	sv.BoatHale
+	,	sv.ExpectedVolume
+	,	sv.CatchTypeID
 	FROM Ships.teShipDetail sd
+		LEFT JOIN Ships.teShipVolume sv ON sd.ShipId = sv.ShipId
 
 END
 GO

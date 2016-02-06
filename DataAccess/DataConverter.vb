@@ -59,7 +59,9 @@ Public Class DataConverter
         Dim prop As PropertyInfo = obj.GetType().GetProperty(column.ColumnName)
         Try
           Dim value As Object = row(column.ColumnName)
-          prop.SetValue(obj, value, Nothing)
+          If (value.ToString().Length > 0) Then
+            prop.SetValue(obj, value, Nothing)
+          End If
         Catch
           ' You can log something here
           Throw

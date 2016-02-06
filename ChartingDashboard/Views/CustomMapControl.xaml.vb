@@ -15,7 +15,6 @@ Public Class CustomMapControl
       Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
       Dim newRect = bingMap.BoundingRectangle
     End If
-
   End Sub
 
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)

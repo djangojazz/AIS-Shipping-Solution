@@ -9,14 +9,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
   <Border CornerRadius="15" Background="{StaticResource brush.Foreground.MainBoard}">
     <ListBox ItemTemplateSelector="{StaticResource BoatTemplateSelector}" ItemsSource="{Binding ShipLocationsFiltered}" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0">
-    <ListBox.ItemsPanel>
-      <ItemsPanelTemplate>
-        <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
-      </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
-     
-    <!--<local:Stuff Id="1" Value="A" ShipType="Owned" MoreStuff="I have more stuff" />
-      <local:Stuff Id="2" Value="B" ShipType="Contractor" MoreStuff="I have even more stuff" />-->
-  </ListBox>
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+    </ListBox>
   </Border>
 </UserControl>
