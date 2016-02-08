@@ -44,7 +44,12 @@ Public Module ShipsService
                           .ShipName = x.Key.ShipName,
                           .ShipType = DirectCast(x.Key.ShipTypeId, ShipType),
                           .Location = New Location() With {.Latitude = x.Key.Latitude, .Longitude = x.Key.Longitude},
-                          .Volumes = x.Select(Function(y) New ShipVolume With {.BoatHale = y.BoatHale, .ExpectedVolume = y.ExpectedVolume, .CatchType = DirectCast(y.CatchTypeID, CatchType)}).ToList()
+                          .Volumes = x.Select(Function(y) New ShipVolume With
+                              {
+                              .BoatHale = y.BoatHale,
+                              .ExpectedVolume = y.ExpectedVolume,
+                              .CatchType = DirectCast(y.CatchTypeID, CatchType)}
+                              ).OrderByDescending(Function(z) z.Threshold).ToList()
                           }).ToList()
 
     'Return {

@@ -10,4 +10,5 @@ Public Enum CatchType
   Salmon = 3
   Crab = 4
   DoverSole = 5
+  Tuna = 6
 End Enum

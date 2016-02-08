@@ -28,7 +28,29 @@ Public Class ShipModel
 End Class
 
 Public Class ShipVolume
+  Public ReadOnly Property Threshold As Double
+    Get
+      Return (BoatHale / ExpectedVolume) * 100
+    End Get
+  End Property
+
   Public Property BoatHale As Double
   Public Property ExpectedVolume As Double
   Public Property CatchType As CatchType
+
+  Public ReadOnly Property ThresholdColor As Brush
+    Get
+      Return ReturnColorForThreshold()
+    End Get
+  End Property
+
+  Private Function ReturnColorForThreshold() As Brush
+    If (Threshold >= 90) Then
+      Return DirectCast(New BrushConverter().ConvertFrom("#71BC4B"), SolidColorBrush)
+    ElseIf (Threshold >= 80) Then
+      Return DirectCast(New BrushConverter().ConvertFrom("#03A093"), SolidColorBrush)
+    Else
+      Return Brushes.Gray
+    End If
+  End Function
 End Class

@@ -60,7 +60,7 @@ INSERT INTO Ships.tdShipType ( ShipTypeID, ShipTypeName) VALUES (1, 'Owned'),(2,
 SET IDENTITY_INSERT Ships.tdShipType OFF;
 
 SET IDENTITY_INSERT Ships.tdCatchType ON;
-INSERT INTO Ships.tdCatchType ( CatchTypeId, CatchTypeName) VALUES (1, 'Rockfish'), (2, 'Shrimp'), (3, 'Salmon'), (4, 'Crab'), (5, 'DoverSole');
+INSERT INTO Ships.tdCatchType ( CatchTypeId, CatchTypeName) VALUES (1, 'Rockfish'), (2, 'Shrimp'), (3, 'Salmon'), (4, 'Crab'), (5, 'DoverSole'), (6, 'Tuna');
 SET IDENTITY_INSERT Ships.tdCatchType OFF;
 
 SET IDENTITY_INSERT Ships.teShipDetail ON;
@@ -103,10 +103,11 @@ SET IDENTITY_INSERT Ships.teShipDetail OFF;
 
 SET IDENTITY_INSERT Ships.teShipVolume ON;
 INSERT INTO Ships.teShipVolume (ShipVolumeId, ShipId, BoatHale, ExpectedVolume, CatchTypeId) VALUES 
-(1,1, 3500, 4000, 5),
-(2,1, 5000, 20000, 3),
-(3,2, 500, 2000, 2),
-(4,3, 4000, 20000, 1)
+(1,1, 5000, 20000, 3),
+(2,1, 3500, 4000, 5),
+(3,1, 7600, 8000, 6),
+(4,2, 500, 2000, 2),
+(5,3, 4000, 20000, 1)
 ;
 SET IDENTITY_INSERT Ships.teShipVolume OFF;
 
