@@ -38,14 +38,14 @@ Public Module ShipsService
     '}
 
     Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC Ships.pShipsMockService 's', 100000"))
-    Return dBships.Select(Function(x) New ShipModel With
+    Return dBships.GroupBy(Function(x) New With {Key x.ShipId, Key x.MMSI, Key x.ShipName, Key x.ShipTypeId, Key x.Latitude, Key x.Longitude}).Select(Function(x) New ShipModel With
                           {
-                          .MMSI = x.MMSI,
-                          .ShipName = x.ShipName,
-                          .ShipType = DirectCast(x.ShipTypeId, ShipType),
-                          .Location = New Location() With {.Latitude = x.Latitude, .Longitude = x.Longitude}
+                          .MMSI = x.Key.MMSI,
+                          .ShipName = x.Key.ShipName,
+                          .ShipType = DirectCast(x.Key.ShipTypeId, ShipType),
+                          .Location = New Location() With {.Latitude = x.Key.Latitude, .Longitude = x.Key.Longitude},
+                          .Volumes = x.Select(Function(y) New ShipVolume With {.BoatHale = y.BoatHale, .ExpectedVolume = y.ExpectedVolume, .CatchType = DirectCast(y.CatchTypeID, CatchType)}).ToList()
                           }).ToList()
-
 
     'Return {
     '  MakeABoat(1, "Brett Home", ShipType.Owned, 45.457302, -122.754326),
