@@ -52,7 +52,7 @@ Public Class ChartingDashboardViewModel
       If (_zoomLevel <> value) Then
         _zoomLevel = value
         Dimension = _zoomLevel * 15
-        ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
+        ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations(0.0001).ToList(), DistanceThreshold))
       End If
     End Set
   End Property
@@ -64,7 +64,7 @@ Public Class ChartingDashboardViewModel
       _timerRefresh.Interval = TimeSpan.FromSeconds(MySettings.Default.MapRefreshFrequencyInSeconds).TotalMilliseconds
     End If
 
-    ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations().ToList(), DistanceThreshold))
+    ShipLocations = New ObservableCollection(Of ShipGroupingModel)(RetrieveShipsAndDetermineCollision(TestLoadShipLocations(0.0001).ToList(), DistanceThreshold))
     LocationRectangle = GetRectangleOfLocation(ShipLocations.SelectMany(Function(x) x.Ships).ToList(), MySettings.Default.Padding)
     FilterRefreshShips()
 

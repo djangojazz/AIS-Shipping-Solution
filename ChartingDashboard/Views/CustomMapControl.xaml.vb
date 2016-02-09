@@ -12,13 +12,15 @@ Public Class CustomMapControl
     If (_previousZoom <> zm) Then
       _previousZoom = zm
       SetDistanceThreshold(zm)
-      Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
-      Dim newRect = bingMap.BoundingRectangle
+      'Dim rectangle = TryCast(DataContext, ChartingDashboardViewModel).LocationRectangle
+      'Dim newRect = bingMap.BoundingRectangle
     End If
   End Sub
 
   Private Sub Pushpin_MouseEnter(sender As Object, e As MouseEventArgs)
     Dim pin As FrameworkElement = TryCast(sender, FrameworkElement)
+    Dim pos = MapLayer.GetPosition(pin)
+    mapLegend.Visibility = Visibility.Visible
 
     Dim grouping = DirectCast(pin.Tag, ShipGroupingModel)
 
@@ -61,13 +63,14 @@ Public Class CustomMapControl
 
   Private Sub Pushpin_MouseLeave(sender As Object, e As MouseEventArgs)
     eventsPanel.Children.Clear()
+    mapLegend.Visibility = Visibility.Collapsed
   End Sub
 
   Public Sub SetDistanceThreshold(zoomLevel As Integer)
     If bingMap.ZoomLevel = 0 Then Exit Sub
 
     Dim oldLocation = bingMap.ViewportPointToLocation(New Point(0, 0))
-    Dim newLocation = bingMap.ViewportPointToLocation(New Point((zoomLevel * 16) / 2, 0))
+    Dim newLocation = bingMap.ViewportPointToLocation(New Point((20 - zoomLevel) * 2, 0))
     Dim Dist = oldLocation.DistanceTo(newLocation, DistanceUnit.Miles)
 
     TryCast(DataContext, ChartingDashboardViewModel).DistanceThreshold = Dist
