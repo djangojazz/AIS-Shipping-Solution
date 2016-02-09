@@ -6,3 +6,11 @@
   Public Property Longitude As Double
   Public Property ShipTypeId As Integer
 End Class
+
+Public Class ShipVolumeDb
+  Public Property ShipVolumeId As Integer
+  Public Property ShipId As Integer
+  Public Property BoatHale As Double
+  Public Property ExpectedVolume As Double
+  Public Property CatchTypeId As Integer
+End Class
