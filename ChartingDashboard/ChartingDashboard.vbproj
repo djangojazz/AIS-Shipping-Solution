@@ -140,7 +140,7 @@
     <Compile Include="Business\MapHelper.vb" />
     <Compile Include="Business\MapInteractivity.vb" />
     <Compile Include="Business\SettingBindingExtension.vb" />
-    <Compile Include="Business\ShipsService.vb" />
+    <Compile Include="Business\ShipsCommunication.vb" />
     <Compile Include="Business\TemplateSelectors.vb" />
     <Compile Include="Models\Enums.vb" />
     <Compile Include="Models\Models.vb" />
@@ -306,6 +306,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChartingService\ChartingService.vbproj">
+      <Project>{2cdd0daa-643e-4e12-9368-5b6fe17e311f}</Project>
+      <Name>ChartingService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.vbproj">
       <Project>{546b1996-6c93-41f9-b277-cdb9aee9e39d}</Project>
       <Name>DataAccess</Name>
