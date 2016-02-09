@@ -78,6 +78,8 @@
     <Build Include="Tables\tbPerson_Address.sql" />
     <Build Include="Tables\teShipVolume.sql" />
     <Build Include="Tables\tdCatchType.sql" />
+    <Build Include="Tables\teShipPastLocation.sql" />
+    <Build Include="Procedures\pInsertOrUpdateShipPosition.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />
