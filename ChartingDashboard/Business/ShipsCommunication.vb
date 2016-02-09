@@ -1,6 +1,7 @@
 ﻿Imports System.Linq
 Imports System.Reflection
 Imports System.Text
+Imports ChartingDataProviders
 Imports ChartingService
 Imports Microsoft.Maps.MapControl.WPF
 

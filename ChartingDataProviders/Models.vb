@@ -12,5 +12,5 @@ Public Class ShipVolumeDb
   Public Property ShipId As Integer
   Public Property BoatHale As Double
   Public Property ExpectedVolume As Double
-  Public Property CatchTypeId As Integer
+  Public Property CatchTypeID As Integer
 End Class

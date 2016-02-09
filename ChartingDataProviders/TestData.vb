@@ -1,4 +1,4 @@
-﻿Public Class TestDatas
+﻿Public Class TestData
   Public Function ReturnTestShips() As IList(Of ShipDb)
     Return {
       New ShipDb With {.MMSI = 111111111, .ShipName = "Anne Sleuth", .ShipTypeId = 1, .Latitude = 46.851859, .Longitude = -129.322418},
@@ -32,7 +32,7 @@
       }
   End Function
 
-  Public Function ReturnTestShipVolume(boatHale As Integer, expectedVolume As Integer, catchTypeId As Integer) As ShipVolumeDb
-    Return New ShipVolumeDb With {.BoatHale = boatHale, .ExpectedVolume = expectedVolume, .CatchTypeId = catchTypeId}
+  Public Function CreateTestShipVolume(boatHale As Integer, expectedVolume As Integer, catchTypeId As Integer) As ShipVolumeDb
+    Return New ShipVolumeDb With {.BoatHale = boatHale, .ExpectedVolume = expectedVolume, .CatchTypeID = catchTypeId}
   End Function
 End Class
