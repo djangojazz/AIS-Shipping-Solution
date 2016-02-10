@@ -32,8 +32,8 @@
     '
     'ChartingServiceInstaller
     '
-    Me.ChartingServiceInstaller.Description = "Charting Service Installer"
-    Me.ChartingServiceInstaller.DisplayName = "Charting Service Installer"
+    Me.ChartingServiceInstaller.Description = "Charting Service For Periodic Database Updating for Charting Locations"
+    Me.ChartingServiceInstaller.DisplayName = "Charting Service"
     Me.ChartingServiceInstaller.ServiceName = "ChartingService"
     Me.ChartingServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic
     '

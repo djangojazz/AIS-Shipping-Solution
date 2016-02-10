@@ -20,24 +20,12 @@ Partial Class ChartingService
   <MTAThread()>
   <System.Diagnostics.DebuggerNonUserCode()>
   Shared Sub Main(ByVal cmdArgs() As String)
-    Dim ServicesToRun() As System.ServiceProcess.ServiceBase
-    ServicesToRun = New System.ServiceProcess.ServiceBase() {New ChartingService(cmdArgs)}
-    System.ServiceProcess.ServiceBase.Run(ServicesToRun)
+    Dim ServicesToRun() As ServiceBase
+    ServicesToRun = New ServiceBase() {New ChartingService(cmdArgs)}
+    ServiceBase.Run(ServicesToRun)
 
   End Sub
-  'Shared Sub Main()
-  '  Dim ServicesToRun() As System.ServiceProcess.ServiceBase
 
-  '  ' More than one NT Service may run within the same process. To add
-  '  ' another service to this process, change the following line to
-  '  ' create a second service object. For example,
-  '  '
-  '  '   ServicesToRun = New System.ServiceProcess.ServiceBase () {New ChartingService, New MySecondUserService}
-  '  '
-  '  ServicesToRun = New System.ServiceProcess.ServiceBase() {New ChartingService}
-
-  '  System.ServiceProcess.ServiceBase.Run(ServicesToRun)
-  'End Sub
 
   'Required by the Component Designer
   Private components As System.ComponentModel.IContainer
