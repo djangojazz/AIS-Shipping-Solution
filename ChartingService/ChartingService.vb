@@ -27,7 +27,7 @@ Public Class ChartingService
   End Sub
 
   Protected Overrides Sub OnStart(ByVal args() As String)
-    _pollingDurationInMinutes = If(args.Count() > 0, args(0), 1)
+    _pollingDurationInMinutes = If(args.Count() > 0, CInt(args(0)), 1)
     _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Charting").ToString())
     SetUpLoggingEvent()
 
