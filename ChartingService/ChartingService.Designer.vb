@@ -4,17 +4,7 @@
 Partial Class ChartingService
   Inherits System.ServiceProcess.ServiceBase
 
-  'UserService overrides dispose to clean up the component list.
-  <System.Diagnostics.DebuggerNonUserCode()>
-  Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-    Try
-      If disposing AndAlso components IsNot Nothing Then
-        components.Dispose()
-      End If
-    Finally
-      MyBase.Dispose(disposing)
-    End Try
-  End Sub
+
 
   ' The main entry point for the process
   <MTAThread()>
@@ -23,7 +13,6 @@ Partial Class ChartingService
     Dim ServicesToRun() As ServiceBase
     ServicesToRun = New ServiceBase() {New ChartingService(cmdArgs)}
     ServiceBase.Run(ServicesToRun)
-
   End Sub
 
   'Required by the Component Designer

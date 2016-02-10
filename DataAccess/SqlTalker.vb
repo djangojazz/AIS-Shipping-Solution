@@ -3,14 +3,14 @@ Imports System.IO
 Imports System.Text
 
 Public Class SQLTalker
-  Private Property Server() As String
-  Private Property Database() As String
-  Public Property Cnx() As String
+  Private _cnx As String
 
-  Public Sub New(Optional server As String = "(local)", Optional database As String = "Tester")
-    Me.Server = server
-    Me.Database = database
-    Cnx = $"Integrated Security=SSPI;Persist Security Info=False;Data Source ={server};Initial Catalog={database}"
+  Public Sub New(connectionString As String)
+    _cnx = connectionString
+  End Sub
+
+  Public Sub New(Optional server As String = "(local)", Optional database As String = "Tester", Optional user As String = Nothing, Optional password As String = Nothing)
+    _cnx = If(user?.Length > 0 AndAlso password?.Length > 0, $"Server={server};Database={database};User Id={user};Password={password}", $"Server ={server};Database={database};Trusted_Connection=True;")
   End Sub
 
 #Region "String Readers To populate a sql query from a sql file."
@@ -48,7 +48,7 @@ Public Class SQLTalker
 
 #Region "Related To populating data sets"
   Public Function Reader(sql As String, seperator As String, inclhdr As Boolean) As String
-    Using cn As New SqlConnection(Cnx)
+    Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sql, cn)
         cn.Open()
         cmd.CommandTimeout = 60
@@ -89,7 +89,7 @@ Public Class SQLTalker
   End Function
 
   Public Function Reader(sql As String, seperator As Char, delimeter As Char, inclhdr As Boolean) As String
-    Using cn As New SqlConnection(Cnx)
+    Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sql, cn)
         cn.Open()
         cmd.CommandTimeout = 60
@@ -137,7 +137,7 @@ Public Class SQLTalker
   End Function
 
   Public Function Procer(sql As String) As String
-    Using cn As New SqlConnection(Cnx)
+    Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sql, cn)
         cmd.CommandTimeout = 60
         Dim sb = New StringBuilder()
@@ -160,7 +160,7 @@ Public Class SQLTalker
   End Function
 
   Public Function Procer(sql As String, counts As Boolean) As String
-    Using cn As New SqlConnection(Cnx)
+    Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sql, cn)
         cmd.CommandTimeout = 60
         Dim sb = New StringBuilder()
@@ -194,7 +194,7 @@ Public Class SQLTalker
   End Function
 
   Public Function GetData(sqlquery As String) As DataTable
-    Using cn As New SqlConnection(Cnx)
+    Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sqlquery, cn)
         Using adapter As New SqlDataAdapter()
           Using table As New DataTable()

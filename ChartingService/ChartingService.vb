@@ -3,16 +3,23 @@
 Public Class ChartingService
 
   Private _chartingEventLog As EventLog
-  Private Property eventId As Integer
+  Private _databaseName As String
+  Private _serverName As String
+  Private _sqlTalker As DataAccess.SQLTalker
+  Private _eventId As Integer
+  Private _args As String()
+
   Declare Auto Function SetServiceStatus Lib "advapi32.dll" (ByVal handle As IntPtr, ByRef serviceStatus As ServiceStatus) As Boolean
 
   Public Sub New(ByVal cmdArgs() As String)
     InitializeComponent()
-    AssignCommandArgsForService(cmdArgs)
   End Sub
 
   Private Sub AssignCommandArgsForService(cmdArgs() As String)
+    _databaseName = If(cmdArgs.Count() > 0, cmdArgs(0), "Tester")
+    _serverName = If(cmdArgs.Count() > 1, cmdArgs(1), "(local)")
 
+    _sqlTalker = New DataAccess.SQLTalker(_serverName, _databaseName, "sqluser", "pa55word")
   End Sub
 
   Private Sub SetUpLoggingEvent()
@@ -27,6 +34,7 @@ Public Class ChartingService
   End Sub
 
   Protected Overrides Sub OnStart(ByVal args() As String)
+    _args = args
     AssignCommandArgsForService(args)
     SetUpLoggingEvent()
 
@@ -62,9 +70,12 @@ Public Class ChartingService
   End Sub
 
   Private Sub OnTimer(sender As Object, e As Timers.ElapsedEventArgs)
-    ' TODO: Insert monitoring activities here.
-    _chartingEventLog.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId)
-    eventId = eventId + 1
+    Const sqlCommand As String = "Select Count(*) From Ships.teShipDetail"
+    Dim countOfShips = _sqlTalker.GetData(sqlCommand)(0)(0)
+    Dim outputMessage = $"You have {countOfShips} ships"
+
+    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
+    _eventId += 1
   End Sub
 
   Public Enum ServiceState
@@ -87,5 +98,19 @@ Public Class ChartingService
     Public dwCheckPoint As Long
     Public dwWaitHint As Long
   End Structure
+
+  'UserService overrides dispose to clean up the component list.
+  <System.Diagnostics.DebuggerNonUserCode()>
+  Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Try
+      If disposing AndAlso components IsNot Nothing Then
+        components.Dispose()
+        _sqlTalker = Nothing
+        _chartingEventLog = Nothing
+      End If
+    Finally
+      MyBase.Dispose(disposing)
+    End Try
+  End Sub
 
 End Class
