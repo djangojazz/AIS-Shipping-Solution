@@ -1,0 +1,1 @@
+﻿installUtil /u ChartingService.exe
