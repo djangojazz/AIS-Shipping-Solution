@@ -7,6 +7,7 @@ Public Class ChartingService
   Private _serverName As String
   Private _sqlTalker As DataAccess.SQLTalker
   Private _eventId As Integer
+  Private _pollingDurationInMinutes As Integer
 
   Declare Auto Function SetServiceStatus Lib "advapi32.dll" (ByVal handle As IntPtr, ByRef serviceStatus As ServiceStatus) As Boolean
 
@@ -26,6 +27,7 @@ Public Class ChartingService
   End Sub
 
   Protected Overrides Sub OnStart(ByVal args() As String)
+    _pollingDurationInMinutes = If(args.Count() > 0, args(0), 1)
     _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Charting").ToString())
     SetUpLoggingEvent()
 
@@ -33,31 +35,32 @@ Public Class ChartingService
     Dim serviceStatus As ServiceStatus = New ServiceStatus()
     serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING
     serviceStatus.dwWaitHint = 100000
-    SetServiceStatus(Me.ServiceHandle, serviceStatus)
+    SetServiceStatus(ServiceHandle, serviceStatus)
 
     _chartingEventLog.WriteEntry("In OnStart")
 
-    Dim timer As System.Timers.Timer = New System.Timers.Timer()
-    timer.Interval = 10000 '10 seconds
-    AddHandler timer.Elapsed, AddressOf Me.OnTimer
+    Dim timer = New Timers.Timer()
+    timer.Interval = _pollingDurationInMinutes * 10000 'CHANGE THIS LATER
+    '60000
+    AddHandler timer.Elapsed, AddressOf OnTimer
     timer.Start()
 
     ' Update the service state to Running.
     serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING
-    SetServiceStatus(Me.ServiceHandle, serviceStatus)
+    SetServiceStatus(ServiceHandle, serviceStatus)
   End Sub
 
   Protected Overrides Sub OnStop()
     ' Update the service state to End Pending.
     Dim serviceStatus As ServiceStatus = New ServiceStatus()
     serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING
-    SetServiceStatus(Me.ServiceHandle, serviceStatus)
+    SetServiceStatus(ServiceHandle, serviceStatus)
 
     _chartingEventLog.WriteEntry("In OnStop.")
 
     ' Update the service state to Ending.
     serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING
-    SetServiceStatus(Me.ServiceHandle, serviceStatus)
+    SetServiceStatus(ServiceHandle, serviceStatus)
   End Sub
 
   Private Sub OnTimer(sender As Object, e As Timers.ElapsedEventArgs)
@@ -91,7 +94,7 @@ Public Class ChartingService
   End Structure
 
   'UserService overrides dispose to clean up the component list.
-  <System.Diagnostics.DebuggerNonUserCode()>
+  <DebuggerNonUserCode()>
   Protected Overrides Sub Dispose(ByVal disposing As Boolean)
     Try
       If disposing AndAlso components IsNot Nothing Then

@@ -1,14 +1,12 @@
 ﻿Imports System.ServiceProcess
 
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+<CompilerServices.DesignerGenerated()>
 Partial Class ChartingService
-  Inherits System.ServiceProcess.ServiceBase
-
-
+  Inherits ServiceBase
 
   ' The main entry point for the process
   <MTAThread()>
-  <System.Diagnostics.DebuggerNonUserCode()>
+  <DebuggerNonUserCode()>
   Shared Sub Main(ByVal cmdArgs() As String)
     Dim ServicesToRun() As ServiceBase
     ServicesToRun = New ServiceBase() {New ChartingService(cmdArgs)}
@@ -21,9 +19,9 @@ Partial Class ChartingService
   ' NOTE: The following procedure is required by the Component Designer
   ' It can be modified using the Component Designer.  
   ' Do not modify it using the code editor.
-  <System.Diagnostics.DebuggerStepThrough()> _
+  <DebuggerStepThrough()>
   Private Sub InitializeComponent()
-    components = New System.ComponentModel.Container()
+    components = New ComponentModel.Container()
     Me.ServiceName = "ChartingService"
   End Sub
 
