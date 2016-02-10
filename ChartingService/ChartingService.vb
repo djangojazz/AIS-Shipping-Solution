@@ -7,19 +7,11 @@ Public Class ChartingService
   Private _serverName As String
   Private _sqlTalker As DataAccess.SQLTalker
   Private _eventId As Integer
-  Private _args As String()
 
   Declare Auto Function SetServiceStatus Lib "advapi32.dll" (ByVal handle As IntPtr, ByRef serviceStatus As ServiceStatus) As Boolean
 
   Public Sub New(ByVal cmdArgs() As String)
     InitializeComponent()
-  End Sub
-
-  Private Sub AssignCommandArgsForService(cmdArgs() As String)
-    _databaseName = If(cmdArgs.Count() > 0, cmdArgs(0), "Tester")
-    _serverName = If(cmdArgs.Count() > 1, cmdArgs(1), "(local)")
-
-    _sqlTalker = New DataAccess.SQLTalker(_serverName, _databaseName, "sqluser", "pa55word")
   End Sub
 
   Private Sub SetUpLoggingEvent()
@@ -34,8 +26,7 @@ Public Class ChartingService
   End Sub
 
   Protected Overrides Sub OnStart(ByVal args() As String)
-    _args = args
-    AssignCommandArgsForService(args)
+    _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Charting").ToString())
     SetUpLoggingEvent()
 
     ' Update the service state to Start Pending.
