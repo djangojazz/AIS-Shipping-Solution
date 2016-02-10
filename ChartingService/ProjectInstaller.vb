@@ -4,7 +4,7 @@ Imports System.Configuration.Install
 Public Class ProjectInstaller
 
   Protected Overrides Sub OnBeforeInstall(ByVal savedState As IDictionary)
-    Dim parameter As String = "MySource"" ""MyNewLog"
+    Dim parameter As String = "MyDatabase"" ""MyServer"
     Context.Parameters("assemblypath") = """" + Context.Parameters("assemblypath") + """ """ + parameter + """"
     MyBase.OnBeforeInstall(savedState)
   End Sub

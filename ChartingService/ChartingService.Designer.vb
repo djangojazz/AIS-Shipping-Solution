@@ -26,10 +26,8 @@ Partial Class ChartingService
 
   End Sub
 
-
   'Required by the Component Designer
-  Private components As System.ComponentModel.IContainer
-  Private EventLog1 As System.Diagnostics.EventLog
+  Private components As ComponentModel.IContainer
 
   ' NOTE: The following procedure is required by the Component Designer
   ' It can be modified using the Component Designer.  

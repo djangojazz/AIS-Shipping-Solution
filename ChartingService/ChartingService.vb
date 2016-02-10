@@ -2,6 +2,7 @@
 
 Public Class ChartingService
 
+  Private _chartingEventLog As EventLog
   Private Property eventId As Integer
   Declare Auto Function SetServiceStatus Lib "advapi32.dll" (ByVal handle As IntPtr, ByRef serviceStatus As ServiceStatus) As Boolean
 
@@ -11,24 +12,23 @@ Public Class ChartingService
   End Sub
 
   Private Sub AssignCommandArgsForService(cmdArgs() As String)
-    Dim eventSourceName As String = "TestSource"
-    Dim logName As String = "TestLog"
-    If (cmdArgs.Count() > 0) Then
-      eventSourceName = cmdArgs(0)
-    End If
-    If (cmdArgs.Count() > 1) Then
-      logName = cmdArgs(1)
-    End If
 
-    EventLog1 = New EventLog()
+  End Sub
+
+  Private Sub SetUpLoggingEvent()
+    Dim eventSourceName As String = "ChartingSource"
+    Dim logName As String = "ChartingLog"
+
+    _chartingEventLog = New EventLog()
     If (Not EventLog.SourceExists(eventSourceName)) Then EventLog.CreateEventSource(eventSourceName, logName)
 
-    EventLog1.Source = eventSourceName
-    EventLog1.Log = logName
+    _chartingEventLog.Source = eventSourceName
+    _chartingEventLog.Log = logName
   End Sub
 
   Protected Overrides Sub OnStart(ByVal args() As String)
     AssignCommandArgsForService(args)
+    SetUpLoggingEvent()
 
     ' Update the service state to Start Pending.
     Dim serviceStatus As ServiceStatus = New ServiceStatus()
@@ -36,7 +36,7 @@ Public Class ChartingService
     serviceStatus.dwWaitHint = 100000
     SetServiceStatus(Me.ServiceHandle, serviceStatus)
 
-    EventLog1.WriteEntry("In OnStart")
+    _chartingEventLog.WriteEntry("In OnStart")
 
     Dim timer As System.Timers.Timer = New System.Timers.Timer()
     timer.Interval = 10000 '10 seconds
@@ -54,7 +54,7 @@ Public Class ChartingService
     serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING
     SetServiceStatus(Me.ServiceHandle, serviceStatus)
 
-    EventLog1.WriteEntry("In OnStop.")
+    _chartingEventLog.WriteEntry("In OnStop.")
 
     ' Update the service state to Ending.
     serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING
@@ -63,7 +63,7 @@ Public Class ChartingService
 
   Private Sub OnTimer(sender As Object, e As Timers.ElapsedEventArgs)
     ' TODO: Insert monitoring activities here.
-    EventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId)
+    _chartingEventLog.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId)
     eventId = eventId + 1
   End Sub
 
