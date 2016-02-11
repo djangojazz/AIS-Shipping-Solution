@@ -79,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Serializers.vb" />
     <Compile Include="SqlTalker.vb" />
   </ItemGroup>
   <ItemGroup>

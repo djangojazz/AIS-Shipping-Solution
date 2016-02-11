@@ -64,8 +64,7 @@ Public Class ChartingService
     _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Ships").ToString())
     SetUpLoggingEvent()
 
-
-    _timer.Interval = _pollingDurationInMinutes * 10000 'CHANGE THIS LATER 60000
+    _timer.Interval = _pollingDurationInMinutes * 60000
     AddHandler _timer.Elapsed, AddressOf UpdateDatabaseWithProviderValues
     _timer.Start()
 
