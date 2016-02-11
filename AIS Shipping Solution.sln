@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartingCSharp", "ChartingCSharp\ChartingCSharp.csproj", "{E651F0C9-58DA-4639-ACA2-FFB4FDE8A3C4}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DataLoader", "DataLoader\DataLoader.sqlproj", "{5A7F8B17-1882-40D0-9527-FC20B317EAFE}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ChartingDashboard", "ChartingDashboard\ChartingDashboard.vbproj", "{92AB83F0-9982-43AD-889B-EAC053106A0C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataAccess", "DataAccess\DataAccess.vbproj", "{546B1996-6C93-41F9-B277-CDB9AEE9E39D}"
@@ -14,6 +12,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ChartingService", "ChartingService\ChartingService.vbproj", "{6F63E10C-1DE3-47C1-B1A7-D520503AC30C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ChartingDataProviders", "ChartingDataProviders\ChartingDataProviders.vbproj", "{75D13B44-BDA2-4310-A59C-09C9C303BB5B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ShipsDbLoader", "ShipsDBLoader\ShipsDbLoader.sqlproj", "{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,12 +25,6 @@ Global
 		{E651F0C9-58DA-4639-ACA2-FFB4FDE8A3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E651F0C9-58DA-4639-ACA2-FFB4FDE8A3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E651F0C9-58DA-4639-ACA2-FFB4FDE8A3C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A7F8B17-1882-40D0-9527-FC20B317EAFE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{92AB83F0-9982-43AD-889B-EAC053106A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92AB83F0-9982-43AD-889B-EAC053106A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92AB83F0-9982-43AD-889B-EAC053106A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +41,12 @@ Global
 		{75D13B44-BDA2-4310-A59C-09C9C303BB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D13B44-BDA2-4310-A59C-09C9C303BB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D13B44-BDA2-4310-A59C-09C9C303BB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0076FC-EE13-4A99-A8D3-29D6A66AB49E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,5 @@
+﻿CREATE TABLE [Ships].[tdShipType]
+(
+	ShipTypeID INT IDENTITY NOT NULL CONSTRAINT PK_ShipTypeID_tdShipType PRIMARY KEY,
+	ShipTypeName VARCHAR(256)
+)
