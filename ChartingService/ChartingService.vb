@@ -61,7 +61,7 @@ Public Class ChartingService
       End Try
     End If
 
-    _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Charting").ToString())
+    _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Ships").ToString())
     SetUpLoggingEvent()
 
 
