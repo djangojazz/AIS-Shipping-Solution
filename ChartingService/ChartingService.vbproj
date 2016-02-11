@@ -134,6 +134,10 @@
     <None Include="UnInstallChartingService.cmd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChartingDataProviders\ChartingDataProviders.vbproj">
+      <Project>{75d13b44-bda2-4310-a59c-09c9c303bb5b}</Project>
+      <Name>ChartingDataProviders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.vbproj">
       <Project>{546b1996-6c93-41f9-b277-cdb9aee9e39d}</Project>
       <Name>DataAccess</Name>

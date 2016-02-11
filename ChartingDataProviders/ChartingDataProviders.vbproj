@@ -63,6 +63,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessForProviders.vb" />
+    <Compile Include="Enums.vb" />
     <Compile Include="Models.vb" />
     <Compile Include="TestData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

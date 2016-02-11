@@ -1,13 +1,15 @@
 ﻿Imports System.Runtime.InteropServices
+Imports ChartingDataProviders
 
 Public Class ChartingService
 
   Private _chartingEventLog As EventLog
-  Private _databaseName As String
-  Private _serverName As String
+  Private _timer As Timers.Timer = New Timers.Timer()
   Private _sqlTalker As DataAccess.SQLTalker
   Private _eventId As Integer
   Private _pollingDurationInMinutes As Integer
+  Private _chartingAPIProviderType As ChartingProviderAPIType
+  Private _serviceStatus As ServiceStatus = New ServiceStatus()
 
   Declare Auto Function SetServiceStatus Lib "advapi32.dll" (ByVal handle As IntPtr, ByRef serviceStatus As ServiceStatus) As Boolean
 
@@ -26,47 +28,61 @@ Public Class ChartingService
     _chartingEventLog.Log = logName
   End Sub
 
+  Private Sub SetStatus(status As ServiceState, Optional waitHint As Integer = 0)
+    _serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING
+
+    If (waitHint > 0) Then
+      _serviceStatus.dwWaitHint = waitHint
+    End If
+    SetServiceStatus(ServiceHandle, _serviceStatus)
+  End Sub
+
   Protected Overrides Sub OnStart(ByVal args() As String)
-    _pollingDurationInMinutes = If(args.Count() > 0, CInt(args(0)), 1)
+    SetStatus(ServiceState.SERVICE_START_PENDING, 100000)
+
+    If (args.Count() > 0) Then
+      Try
+        _pollingDurationInMinutes = CInt(args(0))
+      Catch ex As Exception
+        SetStatus(ServiceState.SERVICE_CONTINUE_PENDING)
+        _pollingDurationInMinutes = 1
+        SetStatus(ServiceState.SERVICE_START_PENDING)
+      End Try
+    End If
+
+    If (args.Count() > 1) Then
+      Try
+        _chartingAPIProviderType = DirectCast(CInt(args(1)), ChartingProviderAPIType)
+      Catch ex As Exception
+        SetStatus(ServiceState.SERVICE_CONTINUE_PENDING)
+        _chartingAPIProviderType = DirectCast(1, ChartingProviderAPIType)
+        SetStatus(ServiceState.SERVICE_START_PENDING)
+      End Try
+    End If
+
     _sqlTalker = New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Charting").ToString())
     SetUpLoggingEvent()
 
-    ' Update the service state to Start Pending.
-    Dim serviceStatus As ServiceStatus = New ServiceStatus()
-    serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING
-    serviceStatus.dwWaitHint = 100000
-    SetServiceStatus(ServiceHandle, serviceStatus)
 
-    _chartingEventLog.WriteEntry("In OnStart")
-
-    Dim timer = New Timers.Timer()
-    timer.Interval = _pollingDurationInMinutes * 10000 'CHANGE THIS LATER
-    '60000
-    AddHandler timer.Elapsed, AddressOf OnTimer
-    timer.Start()
+    _timer.Interval = _pollingDurationInMinutes * 10000 'CHANGE THIS LATER 60000
+    AddHandler _timer.Elapsed, AddressOf OnTimer
+    _timer.Start()
 
     ' Update the service state to Running.
-    serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING
-    SetServiceStatus(ServiceHandle, serviceStatus)
+    SetStatus(ServiceState.SERVICE_RUNNING)
+    _chartingEventLog.WriteEntry("Service Running")
   End Sub
 
   Protected Overrides Sub OnStop()
-    ' Update the service state to End Pending.
-    Dim serviceStatus As ServiceStatus = New ServiceStatus()
-    serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING
-    SetServiceStatus(ServiceHandle, serviceStatus)
-
-    _chartingEventLog.WriteEntry("In OnStop.")
-
-    ' Update the service state to Ending.
-    serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING
-    SetServiceStatus(ServiceHandle, serviceStatus)
+    SetStatus(ServiceState.SERVICE_STOP_PENDING)
+    _chartingEventLog.WriteEntry("Service Stopped.")
+    SetStatus(ServiceState.SERVICE_STOPPED)
   End Sub
 
   Private Sub OnTimer(sender As Object, e As Timers.ElapsedEventArgs)
-    Const sqlCommand As String = "Select Count(*) From Ships.teShipDetail"
-    Dim countOfShips = _sqlTalker.GetData(sqlCommand)(0)(0)
-    Dim outputMessage = $"You have {countOfShips} ships"
+    Const sqlCommand As String = "EXEC Ships.pInsertOrUpdateShipPosition 1, 111111111, 'Anne Sleuth', 46.851859, -129.322418, 1"
+    Dim countOfShips = _sqlTalker.Procer(sqlCommand)
+    Dim outputMessage = $"Provider Type: {_chartingAPIProviderType} with {countOfShips}"
 
     _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
     _eventId += 1
@@ -99,8 +115,11 @@ Public Class ChartingService
     Try
       If disposing AndAlso components IsNot Nothing Then
         components.Dispose()
-        _sqlTalker = Nothing
         _chartingEventLog = Nothing
+        _timer = Nothing
+        _sqlTalker = Nothing
+        _eventId = 0
+        _pollingDurationInMinutes = 0
       End If
     Finally
       MyBase.Dispose(disposing)
