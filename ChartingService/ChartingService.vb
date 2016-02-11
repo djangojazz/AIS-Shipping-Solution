@@ -76,8 +76,21 @@ Public Class ChartingService
 
   Protected Overrides Sub OnStop()
     SetStatus(ServiceState.SERVICE_STOP_PENDING)
+    TruncateTestRecords()
     _chartingEventLog.WriteEntry("Service Stopped.")
     SetStatus(ServiceState.SERVICE_STOPPED)
+  End Sub
+
+  Private Sub TruncateTestRecords()
+    Dim outputMessage = String.Empty
+    Dim truncateShipsHistory = "Truncate Table Ships.teShipPastLocation"
+    Dim deleteShips = "Delete Ships.teShipDetail"
+
+    Dim historyResults = _sqlTalker.Procer(truncateShipsHistory)
+    outputMessage += $"ShipsHistory {historyResults} {Environment.NewLine}"
+    Dim results = _sqlTalker.Procer(deleteShips)
+    outputMessage += $"Ships {results} {Environment.NewLine}"
+    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId + 1)
   End Sub
 
   Private Sub UpdateDatabaseWithProviderValues(sender As Object, e As Timers.ElapsedEventArgs)
@@ -103,9 +116,9 @@ Public Class ChartingService
 
                             Try
                               Dim result = _sqlTalker.Procer(sqlCommand)
-                              outputMessage += $"\tMMSI :  {x.MMSI} successfully inserted! {Environment.NewLine}"
+                              outputMessage += $"  MMSI : {x.MMSI} successfully inserted! {Environment.NewLine}"
                             Catch ex As Exception
-                              outputMessage += $"\tMMSI: {x.MMSI} could not be inserted! {Environment.NewLine}"
+                              outputMessage += $"  MMSI: {x.MMSI} could not be inserted! {Environment.NewLine}"
                             End Try
 
                           End Sub)
