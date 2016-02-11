@@ -84,7 +84,7 @@ Public Class ChartingService
   Private Sub TruncateTestRecords()
     Dim outputMessage = String.Empty
     Dim truncateShipsHistory = "Truncate Table Ships.teShipPastLocation"
-    Dim deleteShips = "Delete Ships.teShipDetail"
+    Dim deleteShips = "Delete Ships.teShipDetail; DBCC CHECKIDENT ('Ships.teShipDetail', RESEED, 0);"
 
     Dim historyResults = _sqlTalker.Procer(truncateShipsHistory)
     outputMessage += $"ShipsHistory {historyResults} {Environment.NewLine}"
@@ -97,8 +97,10 @@ Public Class ChartingService
     Dim outputMessage = String.Empty
     Dim data As IList(Of ShipDb) = New List(Of ShipDb)
 
+    Dim increment = If(_eventId > 0, _eventId * 0.00001, 0)
+
     Try
-      data = ReturnShipsFromProvider(_chartingAPIProviderType, 0.00001)
+      data = ReturnShipsFromProvider(_chartingAPIProviderType, increment)
       outputMessage += $"Count of Ships to insert {data.Count} {Environment.NewLine}"
     Catch ex As Exception
       'TODO: email out someone that we could not get data
@@ -116,7 +118,7 @@ Public Class ChartingService
 
                             Try
                               Dim result = _sqlTalker.Procer(sqlCommand)
-                              outputMessage += $"  MMSI : {x.MMSI} successfully inserted! {Environment.NewLine}"
+                              outputMessage += $"  MMSI: {x.MMSI} successfully inserted! {Environment.NewLine}"
                             Catch ex As Exception
                               outputMessage += $"  MMSI: {x.MMSI} could not be inserted! {Environment.NewLine}"
                             End Try

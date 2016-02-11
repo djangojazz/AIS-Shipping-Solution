@@ -10,6 +10,8 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 --DELETIONS
+TRUNCATE TABLE Ships.teShipPastLocation;
+
 DELETE Ships.teShipVolume
 DBCC CHECKIDENT ('Ships.teShipVolume', RESEED, 0);
 
