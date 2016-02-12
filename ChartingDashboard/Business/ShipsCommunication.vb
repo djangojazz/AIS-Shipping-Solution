@@ -49,8 +49,7 @@ Public Module ShipsCommunications
     'MakeABoat(587452151, "X The Racer", ShipType.Contractor, 45.518102, -124.344233),
     'MakeABoat(681452151, "Yes I can", ShipType.Other, 40.418202 - increment, -123.486233)
     '}
-
-    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker().GetData("EXEC Ships.pShipsMockService 's', 100000"))
+    Dim dBships = DataAccess.DataConverter.ConvertTo(Of ShipDb)(New DataAccess.SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Ships").ToString()).GetData("EXEC Ships.pShipsMockService 's', 100000"))
     Return dBships.GroupBy(Function(x) New With {Key x.ShipId, Key x.MMSI, Key x.ShipName, Key x.ShipTypeId, Key x.Latitude, Key x.Longitude}).Select(Function(x) New ShipModel With
                           {
                           .MMSI = x.Key.MMSI,

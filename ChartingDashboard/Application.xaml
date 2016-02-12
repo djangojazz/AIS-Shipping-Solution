@@ -113,7 +113,7 @@
           <TextBlock FontWeight="Bold" Text="{Binding ShipType, StringFormat='ShipType: {0}'}" />
           <TextBlock FontWeight="Bold" Text="{Binding Location, StringFormat='Location: {0}'}" />
           <Border CornerRadius="15" >
-          <ItemsControl ItemsSource="{Binding Volumes}">
+            <!--<ItemsControl ItemsSource="{Binding Volumes}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
                   <StackPanel Margin="10,1">
@@ -126,15 +126,8 @@
                 </StackPanel>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
-          </ItemsControl>
+          </ItemsControl>-->
           </Border>
-          <!--<Style x:Name="SmallerFont" TargetType="{x:Type TextBlock}">
-      <Setter Property="RenderTransform">
-        <Setter.Value>
-          <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-        </Setter.Value>
-      </Setter>
-    </Style>-->
         </StackPanel>
       </Border>
     </DataTemplate>

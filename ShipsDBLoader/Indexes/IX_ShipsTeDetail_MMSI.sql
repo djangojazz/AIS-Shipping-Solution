@@ -1,0 +1,1 @@
+﻿CREATE UNIQUE INDEX [IX_ShipsTeDetail_MMSI] ON Ships.teShipDetail(MMSI)

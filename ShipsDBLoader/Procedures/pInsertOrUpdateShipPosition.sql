@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE Ships.pInsertOrUpdateShipPosition 
 	(
-		@Incremenet INT
+		@Increment INT
 	,	@MMSI INT	
 	,	@ShipName VARCHAR(256)
 	,	@Latitude FLOAT	
@@ -12,9 +12,7 @@ AS
 
 BEGIN
 	SET NOCOUNT ON;
-	DECLARE @IncrementTime DATETIME = CASE WHEN (DATEPART(MINUTE, GETDATE()) % @Incremenet) * 60 + DATEPART(SECOND, GETDATE()) < 449 
-		THEN DATEADD(minute, datediff(minute,0, GETDATE()) / @Incremenet * @Incremenet, 0)
-		ELSE DATEADD(minute, (DATEDIFF(minute,0, GETDATE()) / @Incremenet * @Incremenet) + @Incremenet, 0) END
+	DECLARE @IncrementTime DATETIME = dbo.fDateTimeToNearestIncrement(@Increment)
 	DECLARE @ShipLastUpdated DATETIME;
 	
 	SELECT @ShipLastUpdated = LastUpdated FROM Ships.teShipDetail WHERE MMSI = @MMSI

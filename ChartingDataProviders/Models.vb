@@ -1,9 +1,18 @@
-﻿Public Class ShipDb
+﻿Imports System.Xml.Serialization
+
+<Serializable>
+Public Class ShipDb
+  <XmlAttribute>
   Public Property ShipId As Integer
+  <XmlAttribute>
   Public Property MMSI As Integer
+  <XmlAttribute>
   Public Property ShipName As String
+  <XmlAttribute>
   Public Property Latitude As Double
+  <XmlAttribute>
   Public Property Longitude As Double
+  <XmlAttribute>
   Public Property ShipTypeId As Integer
 End Class
 
