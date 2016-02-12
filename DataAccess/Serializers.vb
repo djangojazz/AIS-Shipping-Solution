@@ -2,7 +2,7 @@
 Imports System.Xml
 Imports System.Xml.Serialization
 
-Module Serializers
+Public Module Serializers
   <Extension>
   Public Function SerializeToXml(Of T)(valueToSerialize As T) As String
     Dim ns = New XmlSerializerNamespaces()

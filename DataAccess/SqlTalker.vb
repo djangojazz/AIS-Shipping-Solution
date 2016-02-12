@@ -193,6 +193,42 @@ Public Class SQLTalker
     End Using
   End Function
 
+  Public Function BlockLoadXMLShipData(duration As Integer, xmlBlob As String) As String
+    Using cn As New SqlConnection(_cnx)
+      Using cmd As New SqlCommand("Ships.pBulkXmlShipLoader", cn)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandTimeout = 60
+        Dim sb = New StringBuilder()
+
+        cmd.Parameters.AddWithValue("@Increment", duration)
+        cmd.Parameters.AddWithValue("@Xml", xmlBlob)
+
+        Dim outputParameter = New SqlParameter()
+        outputParameter.ParameterName = "@Output"
+        outputParameter.SqlDbType = SqlDbType.VarChar
+        outputParameter.Size = 1024
+        outputParameter.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(outputParameter)
+
+        Dim rtn As SqlParameter = cmd.Parameters.Add("return", SqlDbType.Int)
+        rtn.Direction = ParameterDirection.ReturnValue
+
+        cn.Open()
+
+        cmd.ExecuteNonQuery()
+        If CInt(rtn.Value) = 0 Then
+          sb.Append(outputParameter.Value)
+        Else
+          sb.Append("Result:" & vbTab & vbTab & "Failure!")
+        End If
+
+        cn.Close()
+
+        Return sb.ToString()
+      End Using
+    End Using
+  End Function
+
   Public Function GetData(sqlquery As String) As DataTable
     Using cn As New SqlConnection(_cnx)
       Using cmd As New SqlCommand(sqlquery, cn)
