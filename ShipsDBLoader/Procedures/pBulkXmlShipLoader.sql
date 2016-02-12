@@ -35,12 +35,12 @@ WITH entryIn AS
 	FROM @Xml.nodes('/ArrayOfShipDb/ShipDb') AS node(v)
 	)
 SELECT 
-	ISNULL(s.ShipId, Null) AS ShipId
-,	ISNULL(s.MMSI, i.MMSI) AS MMSI
-,	ISNULL(s.ShipName, i.ShipName) AS ShipName
-,	ISNULL(s.Latitude, i.Latitude) AS Latitude
-,	ISNULL(s.Longitude, i.Longitude) AS Longitude
-,	ISNULL(s.ShipTypeId, i.ShipTypeId) AS ShipTypeId
+	ISNULL(s.ShipId, NULL) AS ShipId
+,	ISNULL(i.MMSI, s.MMSI) AS MMSI
+,	ISNULL(i.ShipName, s.ShipName) AS ShipName
+,	ISNULL(i.Latitude, s.Latitude) AS Latitude
+,	ISNULL(i.Longitude, s.Longitude) AS Longitude
+,	ISNULL(i.ShipTypeId, s.ShipTypeId) AS ShipTypeId
 ,	s.LastUpdated
 ,	@IncrementTime AS NewTime
 ,	CASE WHEN s.LastUpdated IS NULL THEN 2 
