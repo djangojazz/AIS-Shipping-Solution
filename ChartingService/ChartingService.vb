@@ -65,7 +65,7 @@ Public Class ChartingService
     _sqlTalker = New SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Ships").ToString())
     SetUpLoggingEvent()
 
-    _timer.Interval = _pollingDurationInMinutes * 60000
+    _timer.Interval = _pollingDurationInMinutes * 6000
     AddHandler _timer.Elapsed, AddressOf UpdateDatabaseWithProviderValues
     _timer.Start()
 
@@ -109,7 +109,7 @@ Public Class ChartingService
 
     Dim xml = data.SerializeToXml()
 
-    outputMessage += _sqlTalker.BlockLoadXMLShipData(1, xml)
+    outputMessage += _sqlTalker.BlockLoadXMLShipData(_pollingDurationInMinutes, xml)
 
     _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId + 1)
     _eventId += 1
