@@ -2,6 +2,7 @@
 	(
 		@Increment INT
 	,	@Xml XML
+	,	@Output VARCHAR(1024) OUTPUT
 	)
 AS
 
@@ -14,6 +15,7 @@ DECLARE
 ,	@NewCount				INT
 ,	@AlterCount			INT
 ,	@NoCount				INT
+,	@NL							CHAR = CHAR(10)
 ,	@IncrementTime	DATETIME = dbo.fDateTimeToNearestIncrement(@Increment)
 ;
 
@@ -68,7 +70,7 @@ IF @AlterCount > 0
 
 		IF @ChangesCount > 0
 		BEGIN
-			Print 'Inserted History into Ships.teShipPastLocation for ' + CAST(@ChangesCount AS VARCHAR) + ' records';   
+			SELECT @Output = 'Inserted History into Ships.teShipPastLocation for ' + CAST(@ChangesCount AS VARCHAR) + ' records';   
 		END
 
 		UPDATE sd
@@ -82,7 +84,7 @@ IF @AlterCount > 0
 
 		IF @ChangesCount > 0
 		BEGIN
-			Print 'Updated Ships.teShipDetail for ' + CAST(@ChangesCount AS VARCHAR) + ' records';    
+			SELECT @Output += @NL + 'Updated Ships.teShipDetail for ' + CAST(@ChangesCount AS VARCHAR) + ' records';    
 		END
 	END
 
@@ -97,16 +99,17 @@ IF @NewCount > 0
 
 			IF @ChangesCount > 0
 			BEGIN
-				Print 'Inserted ' + CAST(@ChangesCount AS VARCHAR) + ' into Ships.teShipDetail'
+				SELECT @Output = 'Inserted ' + CAST(@ChangesCount AS VARCHAR) + ' into Ships.teShipDetail'
 			END
 	END
 
 IF @NoCount > 0 AND @NewCount + @AlterCount = 0
 	BEGIN
-		PRINT 'There are no records to insert or update at this time'
+		SELECT @Output =  'There are no records to insert or update at this time'
 	END
 
 SET NOCOUNT OFF;
 DROP TABLE #TempShip
 
 END
+GO
