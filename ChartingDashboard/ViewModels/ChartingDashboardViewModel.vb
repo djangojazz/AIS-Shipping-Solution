@@ -11,7 +11,7 @@ Public Class ChartingDashboardViewModel
   'VARIABLES
   Private _totalFilteredCount As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
-  Private _acceptableShips As ShipType() = {ShipType.Owned, ShipType.Contractor}
+  Private _acceptableShips As ShipType() = {ShipType.PacficSeafood, ShipType.Contractor}
   Private _timerRefresh As Timer
   Private _timerFilter As Timer
   Private _refreshInstance As Integer

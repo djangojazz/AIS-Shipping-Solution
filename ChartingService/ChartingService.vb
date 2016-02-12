@@ -7,7 +7,7 @@ Public Class ChartingService
   Private _chartingEventLog As EventLog
   Private _timer As Timers.Timer = New Timers.Timer()
   Private _sqlTalker As SQLTalker
-  Private _eventId As Integer
+  Private _eventId As Integer = 1
   Private _pollingDurationInMinutes As Integer = 1
   Private _chartingAPIProviderType As ChartingProviderAPIType
   Private _serviceStatus As ServiceStatus = New ServiceStatus()
@@ -65,7 +65,7 @@ Public Class ChartingService
     _sqlTalker = New SQLTalker(Configuration.ConfigurationManager.ConnectionStrings("Ships").ToString())
     SetUpLoggingEvent()
 
-    _timer.Interval = _pollingDurationInMinutes * 6000
+    _timer.Interval = _pollingDurationInMinutes * 60000
     AddHandler _timer.Elapsed, AddressOf UpdateDatabaseWithProviderValues
     _timer.Start()
 
@@ -90,7 +90,7 @@ Public Class ChartingService
     outputMessage += $"ShipsHistory {historyResults} {Environment.NewLine}"
     Dim results = _sqlTalker.Procer(deleteShips)
     outputMessage += $"Ships {results} {Environment.NewLine}"
-    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId + 1)
+    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
   End Sub
 
   Private Sub UpdateDatabaseWithProviderValues(sender As Object, e As Timers.ElapsedEventArgs)
@@ -111,7 +111,7 @@ Public Class ChartingService
 
     outputMessage += _sqlTalker.BlockLoadXMLShipData(_pollingDurationInMinutes, xml)
 
-    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId + 1)
+    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
     _eventId += 1
   End Sub
 

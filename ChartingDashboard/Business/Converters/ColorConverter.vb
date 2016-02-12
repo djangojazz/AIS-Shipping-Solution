@@ -3,7 +3,7 @@
 Public Class ColorConverter
   Implements IValueConverter
 
-  Public Property OwnerColor As Brush = CType(Application.Current.Resources("brush.Foreground.BoatGradientOwned"), LinearGradientBrush)
+  Public Property PacificSeafoodColor As Brush = CType(Application.Current.Resources("brush.Foreground.BoatGradientOwned"), LinearGradientBrush)
 
   Public Property ContractorBrush As Brush = CType(Application.Current.Resources("brush.Foreground.BoatGradientContractor"), LinearGradientBrush)
 
@@ -14,7 +14,7 @@ Public Class ColorConverter
     Dim shipType = DirectCast(value, ShipType)
 
     Select Case shipType
-      Case ShipType.Owned : Return OwnerColor
+      Case ShipType.PacficSeafood : Return PacificSeafoodColor
       Case ShipType.Contractor : Return ContractorBrush
       Case Else : Return OtherBrush
     End Select

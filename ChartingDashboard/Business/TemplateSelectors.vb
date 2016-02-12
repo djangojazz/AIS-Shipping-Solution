@@ -6,7 +6,7 @@
 
   Public Overrides Function SelectTemplate(item As Object, container As DependencyObject) As DataTemplate
     If TypeOf item Is ShipModel Then
-      Return If(TryCast(item, ShipModel).ShipType = ShipType.Owned, MainTemplate, OtherTemplate)
+      Return If(TryCast(item, ShipModel).ShipType = ShipType.PacficSeafood, MainTemplate, OtherTemplate)
     End If
     Return MyBase.SelectTemplate(item, container)
   End Function

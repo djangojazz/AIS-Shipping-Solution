@@ -28,7 +28,7 @@ GO
 
 --INSERTS
 SET IDENTITY_INSERT Ships.tdShipType ON;
-INSERT INTO Ships.tdShipType ( ShipTypeID, ShipTypeName) VALUES (1, 'Owned'),(2, 'Contractor'),(3, 'Other');
+INSERT INTO Ships.tdShipType ( ShipTypeID, ShipTypeName) VALUES (1, 'PacificSeafood'),(2, 'Contractor'),(3, 'Other');
 SET IDENTITY_INSERT Ships.tdShipType OFF;
 
 SET IDENTITY_INSERT Ships.tdCatchType ON;
