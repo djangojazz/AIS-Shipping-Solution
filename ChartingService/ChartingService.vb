@@ -111,24 +111,6 @@ Public Class ChartingService
 
     outputMessage += _sqlTalker.BlockLoadXMLShipData(1, xml)
 
-    'data.ToList().ForEach(Sub(x)
-    '                        Dim sqlCommand = $"EXEC Ships.pInsertOrUpdateShipPosition 
-    '                          @Incremenet = {_pollingDurationInMinutes},
-    '                          @MMSI = {x.MMSI}, 
-    '                          @ShipName = '{x.ShipName}', 
-    '                          @Latitude = {x.Latitude}, 
-    '                          @Longitude = {x.Longitude}, 
-    '                          @ShipTypeId = {x.ShipTypeId}"
-
-    '                        Try
-    '                          Dim result = _sqlTalker.Procer(sqlCommand)
-    '                          outputMessage += $"  MMSI: {x.MMSI} successfully inserted! {Environment.NewLine}"
-    '                        Catch ex As Exception
-    '                          outputMessage += $"  MMSI: {x.MMSI} could not be inserted! {Environment.NewLine}"
-    '                        End Try
-
-    '                      End Sub)
-
     _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId + 1)
     _eventId += 1
   End Sub
