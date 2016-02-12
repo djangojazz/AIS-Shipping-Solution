@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{7c0076fc-ee13-4a99-a8d3-29d6a66ab49e}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />
+    <None Include="ShipsDbLoader.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Inserts\Seeding.sql" />
