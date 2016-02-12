@@ -76,7 +76,7 @@ IF @AlterCount > 0
 		UPDATE sd
 		SET Latitude = s.Latitude, Longitude = s.Longitude, LastUpdated = @IncrementTime
 		FROM #TempShip s
-			JOIN Ships.teShipDetail sd ON s.MMSI = s.MMSI
+			JOIN Ships.teShipDetail sd ON s.MMSI = sd.MMSI
 				AND s.ShouldEnter = 1
 		;
 
