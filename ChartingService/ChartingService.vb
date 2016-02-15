@@ -97,6 +97,7 @@ Public Class ChartingService
     Dim outputMessage = String.Empty
     Dim data As IList(Of ShipDb) = New List(Of ShipDb)
     Dim serializedXml As String
+
     Try
       data = ReturnShipsFromProvider(_chartingAPIProviderType, (_eventId * 0.00001))
       outputMessage += $"Count of Ships to insert {data.Count} {Environment.NewLine}"
