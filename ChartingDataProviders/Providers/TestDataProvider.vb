@@ -1,4 +1,4 @@
-﻿Public Class TestData
+﻿Public Class TestDataProvider
   Public Function ReturnTestShips(positionChange As Double) As IList(Of ShipDb)
     Return {
       New ShipDb With {.MMSI = 111111111, .ShipName = "Anne Sleuth", .ShipTypeId = 1, .Latitude = 46.851859 - positionChange, .Longitude = -129.322418 - positionChange},

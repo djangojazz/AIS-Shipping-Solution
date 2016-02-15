@@ -8,7 +8,7 @@ Public Class ChartingService
   Private _timer As Timers.Timer = New Timers.Timer()
   Private _sqlTalker As SQLTalker
   Private _eventId As Integer = 1
-  Private _pollingDurationInMinutes As Integer = 1
+  Private _pollingDurationInMinutes As Integer = 15
   Private _chartingAPIProviderType As ChartingProviderAPIType
   Private _serviceStatus As ServiceStatus = New ServiceStatus()
 
@@ -96,20 +96,26 @@ Public Class ChartingService
   Private Sub UpdateDatabaseWithProviderValues(sender As Object, e As Timers.ElapsedEventArgs)
     Dim outputMessage = String.Empty
     Dim data As IList(Of ShipDb) = New List(Of ShipDb)
-
-    Dim increment = If(_eventId > 0, _eventId * 0.00001, 0)
-
+    Dim serializedXml As String
     Try
-      data = ReturnShipsFromProvider(_chartingAPIProviderType, increment)
+      data = ReturnShipsFromProvider(_chartingAPIProviderType, (_eventId * 0.00001))
       outputMessage += $"Count of Ships to insert {data.Count} {Environment.NewLine}"
     Catch ex As Exception
       'TODO: email out someone that we could not get data
-      outputMessage += $"Could not get a list of the ships!"
+      outputMessage += "Could not get a list of the ships!"
     End Try
 
-    Dim xml = data.SerializeToXml()
+    Try
+      serializedXml = data.SerializeToXml()
+    Catch ex As Exception
+      outputMessage += "Could not serialize data returned from API!"
+    End Try
 
-    outputMessage += _sqlTalker.BlockLoadXMLShipData(_pollingDurationInMinutes, xml)
+    Try
+      outputMessage += _sqlTalker.BlockLoadXMLShipData(_pollingDurationInMinutes, serializedXml)
+    Catch ex As Exception
+      outputMessage += "Could not load the data into the database!"
+    End Try
 
     _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
     _eventId += 1

@@ -1,5 +1,5 @@
 ﻿Public Enum ShipType
-  PacficSeafood = 1
+  PacificSeafood = 1
   Contractor = 2
   Other = 3
 End Enum

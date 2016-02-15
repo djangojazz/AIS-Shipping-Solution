@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Maps.MapControl.WPF
+﻿Imports DataAccess
+Imports Microsoft.Maps.MapControl.WPF
 
 Public Class ShipDb
   Public Property ShipId As Integer

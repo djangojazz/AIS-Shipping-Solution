@@ -9,12 +9,11 @@
   End Function
 
   Private Function ReturnShipsFromTest(incrementPositionChange As Double) As IList(Of ShipDb)
-    Return New TestData().ReturnTestShips(incrementPositionChange)
+    Return New TestDataProvider().ReturnTestShips(incrementPositionChange)
   End Function
 
   Private Function ReturnShipsFromFleetMon() As IList(Of ShipDb)
-    'TODO: stuff to do
-    Return New List(Of ShipDb)
+    Return New FleetMonProvider().ReturnMyFleetShipsFromFleetmon(FleetMonAPICall.myfleet, FleetMonAPIReturnType.xml)
   End Function
 
 End Module

@@ -3,6 +3,7 @@ Imports System.Reflection
 Imports System.Text
 Imports ChartingDataProviders
 Imports ChartingService
+Imports DataAccess
 Imports Microsoft.Maps.MapControl.WPF
 
 Public Module ShipsCommunications

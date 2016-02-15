@@ -23,3 +23,10 @@ Public Class ShipVolumeDb
   Public Property ExpectedVolume As Double
   Public Property CatchTypeID As Integer
 End Class
+
+Public Class FleetMonVesselModel
+  Public Property name As Double
+  Public Property mmsinumber As Integer
+  Public Property latitude As Double
+  Public Property longitude As Double
+End Class

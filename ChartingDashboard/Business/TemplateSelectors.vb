@@ -1,4 +1,6 @@
-﻿Public NotInheritable Class TemplateSelectorBoat
+﻿Imports DataAccess
+
+Public NotInheritable Class TemplateSelectorBoat
   Inherits DataTemplateSelector
 
   Public Property MainTemplate As DataTemplate
@@ -6,7 +8,7 @@
 
   Public Overrides Function SelectTemplate(item As Object, container As DependencyObject) As DataTemplate
     If TypeOf item Is ShipModel Then
-      Return If(TryCast(item, ShipModel).ShipType = ShipType.PacficSeafood, MainTemplate, OtherTemplate)
+      Return If(TryCast(item, ShipModel).ShipType = ShipType.PacificSeafood, MainTemplate, OtherTemplate)
     End If
     Return MyBase.SelectTemplate(item, container)
   End Function

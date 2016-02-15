@@ -1,4 +1,5 @@
 ﻿Imports System.Globalization
+Imports DataAccess
 
 Public Class ColorConverter
   Implements IValueConverter
@@ -14,7 +15,7 @@ Public Class ColorConverter
     Dim shipType = DirectCast(value, ShipType)
 
     Select Case shipType
-      Case ShipType.PacficSeafood : Return PacificSeafoodColor
+      Case ShipType.PacificSeafood : Return PacificSeafoodColor
       Case ShipType.Contractor : Return ContractorBrush
       Case Else : Return OtherBrush
     End Select

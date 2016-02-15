@@ -143,7 +143,6 @@
     <Compile Include="Business\SettingBindingExtension.vb" />
     <Compile Include="Business\ShipsCommunication.vb" />
     <Compile Include="Business\TemplateSelectors.vb" />
-    <Compile Include="Models\Enums.vb" />
     <Compile Include="Models\Models.vb" />
     <Compile Include="Service References\GeocodeService\Reference.vb">
       <AutoGen>True</AutoGen>

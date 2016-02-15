@@ -2,6 +2,7 @@
 Imports System.Collections.ObjectModel
 Imports Microsoft.Maps.MapControl.WPF
 Imports System.Windows.Threading
+Imports DataAccess
 
 <NotifyPropertyChanged>
 Public Class ChartingDashboardViewModel
@@ -11,7 +12,7 @@ Public Class ChartingDashboardViewModel
   'VARIABLES
   Private _totalFilteredCount As Integer
   Private _pagingMemoryOfFilteredShips As List(Of Integer) = New List(Of Integer)
-  Private _acceptableShips As ShipType() = {ShipType.PacficSeafood, ShipType.Contractor}
+  Private _acceptableShips As ShipType() = {ShipType.PacificSeafood, ShipType.Contractor}
   Private _timerRefresh As Timer
   Private _timerFilter As Timer
   Private _refreshInstance As Integer
