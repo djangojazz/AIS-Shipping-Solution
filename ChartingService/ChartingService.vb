@@ -76,21 +76,23 @@ Public Class ChartingService
 
   Protected Overrides Sub OnStop()
     SetStatus(ServiceState.SERVICE_STOP_PENDING)
-    TruncateTestRecords()
+    TruncateTestRecordsIfTestEnvironment()
     _chartingEventLog.WriteEntry("Service Stopped.")
     SetStatus(ServiceState.SERVICE_STOPPED)
   End Sub
 
-  Private Sub TruncateTestRecords()
-    Dim outputMessage = String.Empty
-    Dim truncateShipsHistory = "Truncate Table Ships.teShipPastLocation"
-    Dim deleteShips = "Delete Ships.teShipDetail; DBCC CHECKIDENT ('Ships.teShipDetail', RESEED, 0);"
+  Private Sub TruncateTestRecordsIfTestEnvironment()
+    If (_chartingAPIProviderType = ChartingProviderAPIType.Test) Then
+      Dim outputMessage = String.Empty
+      Dim truncateShipsHistory = "Truncate Table Ships.teShipPastLocation"
+      Dim deleteShips = "Delete Ships.teShipDetail; DBCC CHECKIDENT ('Ships.teShipDetail', RESEED, 0);"
 
-    Dim historyResults = _sqlTalker.Procer(truncateShipsHistory)
-    outputMessage += $"ShipsHistory {historyResults} {Environment.NewLine}"
-    Dim results = _sqlTalker.Procer(deleteShips)
-    outputMessage += $"Ships {results} {Environment.NewLine}"
-    _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
+      Dim historyResults = _sqlTalker.Procer(truncateShipsHistory)
+      outputMessage += $"ShipsHistory {historyResults} {Environment.NewLine}"
+      Dim results = _sqlTalker.Procer(deleteShips)
+      outputMessage += $"Ships {results} {Environment.NewLine}"
+      _chartingEventLog.WriteEntry(outputMessage, EventLogEntryType.Information, _eventId)
+    End If
   End Sub
 
   Private Sub UpdateDatabaseWithProviderValues(sender As Object, e As Timers.ElapsedEventArgs)
