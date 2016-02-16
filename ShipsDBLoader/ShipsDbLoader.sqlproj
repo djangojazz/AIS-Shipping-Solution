@@ -78,6 +78,7 @@
     <Build Include="Indexes\IX_ShipsTeDetail_MMSI.sql" />
     <Build Include="Procedures\pBulkXmlShipLoader.sql" />
     <Build Include="Functions\fDateTimeToNearestIncrement.sql" />
+    <Build Include="Indexes\IX_ShipsteShipPastLocation_ShipId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalPublish.publish.xml" />

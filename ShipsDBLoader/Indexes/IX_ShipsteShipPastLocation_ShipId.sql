@@ -1,0 +1,1 @@
+﻿CREATE NONCLUSTERED INDEX [IX_ShipsteShipPastLocation_ShipId] ON Ships.teShipPastLocation(ShipID)
